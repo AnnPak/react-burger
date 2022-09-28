@@ -1,0 +1,44 @@
+.header{
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    nav{
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+    }
+    
+}
+
+.navbar-item{
+    display: flex;
+
+    &__link{
+        display: flex;
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #8585AD;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover,
+        &_active{
+            color: #F2F2F3;
+            svg{
+                fill: #F2F2F3 !important;
+            }
+        }
+
+        svg{
+            fill:#8585AD;
+        }
+    }
+    
+}
