@@ -23,7 +23,7 @@ const BurgerIngredientsSection = ({ data, type }) => {
     } 
 
     return (
-        <div className='ingredients-section mt-10' key={type}>
+        <div className='ingredients-section' key={type}>
             <h3>{title}</h3>
 
             <div className='ingredients-items'>
@@ -54,7 +54,7 @@ const BurgerIngredientsItem = ({ item }) => {
 const BurgerIngredientsList = ({ data }) => {
 
     return (
-        <section className='ingredients-sections-list'>
+        <section className='ingredients-sections-list mt-10'>
             <BurgerIngredientsSection data={data} type='bun' />
             <BurgerIngredientsSection data={data} type='sauce' />
             <BurgerIngredientsSection data={data} type='main' />
