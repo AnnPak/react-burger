@@ -1,7 +1,6 @@
 import React from 'react'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-
 import './burgerIngredientsList.scss'
 
 const BurgerIngredientsSection = ({ data, type }) => {

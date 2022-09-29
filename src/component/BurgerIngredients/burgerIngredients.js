@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import BurgerIngredientsList from '../BurgerIngredientsList/burgerIngredientsList'
 import TabsWrapper from '../TabsWrapper/tabsWrapper'
+
 import './burgerIngredients.scss'
 
 const BurgerIngredients = ({ data }) => {
