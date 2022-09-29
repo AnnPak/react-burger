@@ -1,0 +1,13 @@
+.burgerSection-item{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 55%;
+
+  h1 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    color: #F2F2F3;
+  }
+}

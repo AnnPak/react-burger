@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.burgerSection{
+  display: flex;
+  width: 1240px;
+  margin: 0 auto;
+}
