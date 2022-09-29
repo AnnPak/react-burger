@@ -56,9 +56,7 @@ const BurgerIngredientsList = ({ data }) => {
     return (
         <section className='ingredients-sections-list'>
             <BurgerIngredientsSection data={data} type='bun' />
-
             <BurgerIngredientsSection data={data} type='sauce' />
-
             <BurgerIngredientsSection data={data} type='main' />
         </section>
         

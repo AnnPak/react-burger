@@ -10,14 +10,14 @@ const BurgerIngredients = ({ data }) => {
 
     return (
 
-        <div className='burgerSection-item'>
+        <section className='burgerSection-item'>
             <h1 className="mt-10">Соберите бургер</h1>
 
             <TabsWrapper current={current} setCurrent={setCurrent}/>
 
             <BurgerIngredientsList data={data} />
 
-        </div>
+        </section>
     )
 }
 
