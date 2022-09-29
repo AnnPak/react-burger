@@ -1,0 +1,42 @@
+.constructor-elements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .constructor-element {
+        position: relative;
+
+        &:not(:first-child):not(:last-child) {
+
+            &::before {
+                content: url(../../images/burger-constructor.svg);
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                left: -37px;
+                top: 37%;
+                cursor: pointer;
+            }
+
+            .constructor-element__action:hover svg path {
+
+                fill: rgb(229, 43, 26);
+
+            }
+
+        }
+    }
+
+}
+
+.burgerSection-constructor {
+    align-items: end;
+}
+
+.constructor-result {
+    &__price{
+        display: flex;
+        align-items: center;
+    }
+
+}

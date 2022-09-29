@@ -39,6 +39,23 @@
 
 .burgerSection{
   display: flex;
+  justify-content: space-between;
   width: 1240px;
   margin: 0 auto;
+}
+
+.pl-0 {
+  padding-left: 0;
+}
+
+.pr-0 {
+  padding-right: 0;
+}
+
+.pt-0 {
+  padding-top: 0;
+}
+
+.pb-0 {
+  padding-bottom: 0;
 }

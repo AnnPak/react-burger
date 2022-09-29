@@ -10,13 +10,10 @@ import './appHeader.scss';
 const AppHeader = () => {
     return (
         <header className='header'>
-            <div className='pt-5'>
+            <div className='pt-5 pb-5'>
                 <Logo />
             </div>
-
             <Navbar />
-
-
         </header>
     )
 }
@@ -25,7 +22,7 @@ const Navbar = () => {
     return (
         <nav className='mt-4'>
             <div className='navbar-item'>
-                <LinkItem class='navbar-item__link mr-2 p-4 navbar-item__link_active'>
+                <LinkItem class='navbar-item__link mr-2 p-4 pl-0 navbar-item__link_active'>
                     <BurgerIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Конструктор</p>
                 </LinkItem>
