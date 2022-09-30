@@ -19,10 +19,10 @@
     
 }
 
-.navbar-item{
+.navbarItem{
     display: flex;
 
-    &__link{
+    .navbarItemLink{
         display: flex;
         font-family: 'JetBrains Mono';
         font-style: normal;
@@ -34,15 +34,17 @@
         text-decoration: none;
 
         &:hover,
-        &_active{
-            color: #F2F2F3;
-            svg{
-                fill: #F2F2F3 !important;
-            }
-        }
+        
 
         svg{
             fill:#8585AD;
+        }
+    }
+
+    .navbarItemLinkActive{
+        color: #F2F2F3;
+        svg{
+            fill: #F2F2F3 !important;
         }
     }
     

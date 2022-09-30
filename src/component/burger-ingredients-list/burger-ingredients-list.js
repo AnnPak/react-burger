@@ -1,7 +1,8 @@
 import React from 'react'
+import classnames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import './burger-ingredients-list.scss'
+import styles from './burger-ingredients-list.module.scss'
 
 const BurgerIngredientsSection = ({ data, type }) => {
 
@@ -22,13 +23,13 @@ const BurgerIngredientsSection = ({ data, type }) => {
     } 
 
     return (
-        <div className='ingredients-section' key={type}>
-            <h3>{title}</h3>
+        <section key={type}>
+            <h3 className={styles.ingredientsTitle}>{title}</h3>
 
-            <div className='ingredients-items'>
+            <div className={styles.ingredientsList}>
                 {filtedIngredientsArray.map(item =>  <BurgerIngredientsItem item={item} key={item.id} />)}
             </div>
-        </div>
+        </section>
 
     )
 }
@@ -36,10 +37,10 @@ const BurgerIngredientsSection = ({ data, type }) => {
 const BurgerIngredientsItem = ({ item }) => {
 
     return (
-        <div className='ingredients-items__item mt-6 ml-4 mb-10'>
+        <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}>
             <img src={item.image} alt={item.name}/>
             
-            <div className='price mt-1 mr-4 mb-1'>
+            <div className={classnames(styles.ingredientsItemPrice, 'mt-1 mr-4 mb-1')}>
                 <p className='pr-2'>{item.price}</p>
                 <CurrencyIcon type="primary" />
             </div>
@@ -53,7 +54,7 @@ const BurgerIngredientsItem = ({ item }) => {
 const BurgerIngredientsList = ({ data }) => {
 
     return (
-        <section className='ingredients-sections-list mt-10'>
+        <section className={classnames(styles.ingredientsSectionsList, 'mt-10')}>
             <BurgerIngredientsSection data={data} type='bun' />
             <BurgerIngredientsSection data={data} type='sauce' />
             <BurgerIngredientsSection data={data} type='main' />
