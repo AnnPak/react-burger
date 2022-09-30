@@ -1,4 +1,4 @@
-.constructorElements {
+.constructorUnlockElements {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -10,8 +10,6 @@
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
         background-color: #2F2F37;
-        margin-top: 90px;
-        margin-bottom: 68px;
     }
 
     &::-webkit-scrollbar {
@@ -38,31 +36,6 @@
         background-color: #72728F,
     }
 
-    .constructor-element {
-        position: relative;
-        margin-right: 10px;
-
-        &:not(:first-child):not(:last-child) {
-
-            &::before {
-                content: url(../../images/burger-constructor.svg);
-                position: absolute;
-                width: 24px;
-                height: 24px;
-                left: -37px;
-                top: 37%;
-                cursor: pointer;
-            }
-
-            .constructor-element__action:hover svg path {
-
-                fill: rgb(229, 43, 26);
-
-            }
-
-        }
-    }
-
 }
 
 .constructorElement {
@@ -73,16 +46,9 @@
     justify-content: end;
 
     .svg {
-        display: none;
-    }
-
-    &:not(:first-child):not(:last-child) {
-        .svg {
-            position: absolute;
-            display: block;
-            left: 27px;
-            cursor: pointer;
-        }
+        position: absolute;
+        left: 27px;
+        cursor: pointer;
     }
 
 

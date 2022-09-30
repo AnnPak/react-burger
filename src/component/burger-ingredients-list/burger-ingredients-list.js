@@ -24,7 +24,7 @@ const BurgerIngredientsSection = ({ data, type }) => {
 
     return (
         <section key={type}>
-            <h3 className={styles.ingredientsTitle}>{title}</h3>
+            <h3 className={styles.ingredientsTitle} id={type + '-title'}>{title}</h3>
 
             <div className={styles.ingredientsList}>
                 {filtedIngredientsArray.map(item =>  <BurgerIngredientsItem item={item} key={item.id} />)}
