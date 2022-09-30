@@ -10,12 +10,13 @@ import dataPropTypes from '../../utils/constants';
 
 import styles from './burger-constructor.module.scss';
 
-const BurgerConstructorElement = (props ) => {
+const BurgerConstructorElement = (props) => {
 
     return (
         <section className={props.class}>
             {props.svg && <DragIcon />}
             <ConstructorElement
+                key={props.key}
                 type={props.type}
                 isLocked={props.isLocked}
                 text={props.text}
@@ -32,10 +33,11 @@ const BurgerConstructorWpaper = ({ data }) => {
     return (
 
         <section className={styles.constructorUnlockElements}>
-            
+
             {
                 <BurgerConstructorElement
                     class={classnames(styles.constructorElement, 'pr-4')}
+                    key={data[0]._id}
                     type='top'
                     isLocked='true'
                     text={data[0].name}
@@ -49,14 +51,13 @@ const BurgerConstructorWpaper = ({ data }) => {
                     unlockedData.map((item) => {
 
                         return (
-                            <>
-                                <BurgerConstructorElement
-                                    class={classnames(styles.constructorElement)}
-                                    text={item.name}
-                                    price={item.price}
-                                    thumbnail={item.image}
-                                    svg={true} />
-                            </>
+                            <BurgerConstructorElement
+                                class={classnames(styles.constructorElement)}
+                                key={item._id}
+                                text={item.name}
+                                price={item.price}
+                                thumbnail={item.image}
+                                svg={true} />
                         )
                     })
                 }
@@ -65,6 +66,7 @@ const BurgerConstructorWpaper = ({ data }) => {
             {
                 <BurgerConstructorElement
                     class={classnames(styles.constructorElement, 'pr-4')}
+                    key={data[dataLength]._id}
                     type='bottom'
                     isLocked='true'
                     text={data[dataLength].name}
