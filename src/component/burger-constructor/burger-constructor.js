@@ -3,7 +3,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import './burgerConstructor.scss';
+import './burger-constructor.scss';
 
 
 

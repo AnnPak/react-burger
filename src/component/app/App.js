@@ -1,17 +1,17 @@
 import React from 'react';
 
-import AppHeader from '../AppHeader/appHeader';
-import BurgerIngredients from '../BurgerIngredients/burgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/burgerConstructor';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import data from '../../utils/data';
 
-import './App.scss';
+import styles from'./App.module.scss';
 
 function App() {
   return (
-    <main className="App">
+    <main className={styles.App}>
       <AppHeader/>
-      <section className='burgerSection'>
+      <section className={styles.burgerSection}>
           <BurgerIngredients data={data}/>
           <BurgerConstructor data={data}/>
       </section>

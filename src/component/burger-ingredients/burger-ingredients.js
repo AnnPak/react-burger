@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import BurgerIngredientsList from '../BurgerIngredientsList/burgerIngredientsList'
-import TabsWrapper from '../TabsWrapper/tabsWrapper'
+import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
+import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
 
-import './burgerIngredients.scss'
+import './burger-ingredients.scss'
 
 const BurgerIngredients = ({ data }) => {
    

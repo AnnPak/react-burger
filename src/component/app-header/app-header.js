@@ -4,9 +4,9 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import LinkItem from '../LinkItem/LinkItem'
+import LinkItem from '../link-item/link-item'
 
-import './appHeader.scss';
+import './app-header.scss';
 
 const Navbar = () => {
     return (
