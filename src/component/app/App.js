@@ -9,13 +9,13 @@ import styles from'./App.module.scss';
 
 function App() {
   return (
-    <main className={styles.App}>
+    <div className={styles.App}>
       <AppHeader/>
-      <section className={styles.burgerSection}>
+      <main className={styles.burgerSection}>
           <BurgerIngredients data={data}/>
           <BurgerConstructor data={data}/>
-      </section>
-    </main>
+      </main>
+    </div>
   );
 }
 
