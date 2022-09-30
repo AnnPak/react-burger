@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import dataPropTypes from '../../utils/constants';
 
 import styles from './burger-constructor.module.scss';
 
@@ -67,5 +70,9 @@ const BurgerConstructor = ({ data }) => {
         </section>
     )
 }
+
+BurgerConstructor.propTypes = {
+    data:  PropTypes.arrayOf(dataPropTypes).isRequired
+}; 
 
 export default BurgerConstructor;
