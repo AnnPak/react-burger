@@ -1,11 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import styles from './tabs-wrapper.module.scss'
 
 const TabsWrapper = ({current, setCurrent}) => {
     
     return (
-        <div style={{ display: 'flex' }}>
+        <div className={styles.tabsWrapper}>
             <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                 Булки
             </Tab>
@@ -18,5 +20,10 @@ const TabsWrapper = ({current, setCurrent}) => {
         </div>
     )
 }
+
+TabsWrapper.propTypes = {
+    current:  PropTypes.string.isRequired,
+    setCurrent:  PropTypes.func.isRequired,
+};
 
 export default TabsWrapper;
