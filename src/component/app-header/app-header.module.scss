@@ -32,16 +32,16 @@
         color: #8585AD;
         cursor: pointer;
         text-decoration: none;
-
-        &:hover,
+        transition: var(--common-transition);
         
-
         svg{
             fill:#8585AD;
+            transition: var(--common-transition);
         }
     }
 
-    .navbarItemLinkActive{
+    .navbarItemLinkActive,
+    .navbarItemLink:hover{
         color: #F2F2F3;
         svg{
             fill: #F2F2F3 !important;
