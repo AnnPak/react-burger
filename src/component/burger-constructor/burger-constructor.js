@@ -12,22 +12,32 @@ import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorElement = (props) => {
 
+    let {svg, type, isLocked, text, price, thumbnail, classname} = props;
+
+    switch (type) {
+        case 'top':
+            text = text+' (верх)';
+            break;
+        case 'bottom':
+            text = text+' (низ)';
+            break;
+        default:
+    }
+
     return (
-        <section className={props.class}>
-            {props.svg && <DragIcon />}
+        <section className={classname}>
+            {svg && <DragIcon />}
             <ConstructorElement
-                key={props.key}
-                type={props.type}
-                isLocked={props.isLocked}
-                text={props.text}
-                price={props.price}
-                thumbnail={props.thumbnail} />
+                type={type}
+                isLocked={isLocked}
+                text={text}
+                price={price}
+                thumbnail={thumbnail} />
         </section>
     )
 }
 
 const BurgerConstructorWpaper = ({ data }) => {
-    const dataLength = data.length - 1;
     const unlockedData = data.slice(1, -1);
 
     return (
@@ -36,10 +46,10 @@ const BurgerConstructorWpaper = ({ data }) => {
 
             {
                 <BurgerConstructorElement
-                    class={classnames(styles.constructorElement, 'pr-4')}
+                    classname={classnames(styles.constructorElement, 'pr-4')}
                     key={data[0]._id}
                     type='top'
-                    isLocked='true'
+                    isLocked={true}
                     text={data[0].name}
                     price={data[0].price}
                     thumbnail={data[0].image} />
@@ -48,11 +58,11 @@ const BurgerConstructorWpaper = ({ data }) => {
 
             <div className={classnames(styles.constructorUnlockElements, 'pr-2')}>
                 {
+                    
                     unlockedData.map((item) => {
-
                         return (
                             <BurgerConstructorElement
-                                class={classnames(styles.constructorElement)}
+                                classname={classnames(styles.constructorElement)}
                                 key={item._id}
                                 text={item.name}
                                 price={item.price}
@@ -65,15 +75,16 @@ const BurgerConstructorWpaper = ({ data }) => {
 
             {
                 <BurgerConstructorElement
-                    class={classnames(styles.constructorElement, 'pr-4')}
-                    key={data[dataLength]._id}
+                    classname={classnames(styles.constructorElement, 'pr-4')}
+                    key={data[0]._id}
                     type='bottom'
-                    isLocked='true'
-                    text={data[dataLength].name}
-                    price={data[dataLength].price}
-                    thumbnail={data[dataLength].image} />
+                    isLocked={true}
+                    text={data[0].name}
+                    price={data[0].price}
+                    thumbnail={data[0].image} />
 
             }
+
         </section>
 
     )
@@ -87,7 +98,7 @@ const BurgerConstructorResult = () => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" htmlType='button'>
                 Оформить заказ
             </Button>
         </section>
@@ -103,6 +114,20 @@ const BurgerConstructor = ({ data }) => {
         </section>
     )
 }
+
+BurgerConstructorElement.propTypes = {
+    class: PropTypes.string,
+    type: PropTypes.string,
+    isLocked: PropTypes.bool,
+    text: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+    svg: PropTypes.bool
+};
+
+BurgerConstructorWpaper.propTypes = {
+    data: PropTypes.arrayOf(dataPropTypes).isRequired
+};
 
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(dataPropTypes).isRequired

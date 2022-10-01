@@ -26,6 +26,6 @@ const BurgerIngredients = ({ data }) => {
 
 BurgerIngredients.propTypes = {
     data:  PropTypes.arrayOf(dataPropTypes)
-}; 
+};
 
 export default BurgerIngredients;
