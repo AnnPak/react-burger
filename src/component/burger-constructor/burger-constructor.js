@@ -76,7 +76,7 @@ const BurgerConstructorWpaper = ({ data }) => {
             {
                 <BurgerConstructorElement
                     classname={classnames(styles.constructorElement, 'pr-4')}
-                    key={data[0]._id}
+                    key={data[0]._id + 'n2'}
                     type='bottom'
                     isLocked={true}
                     text={data[0].name}
