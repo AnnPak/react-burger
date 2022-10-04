@@ -7,7 +7,6 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
-import { Modal } from '../modal/modal';
 
 import styles from './burger-constructor.module.scss';
 
@@ -116,9 +115,6 @@ const BurgerConstructor = ({ data }) => {
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
             <BurgerConstructorWpaper data={data} />
             <BurgerConstructorResult />
-            <Modal title={'LOL'}>
-                <div>kek</div>
-            </Modal>
         </section>
     )
 }

@@ -7,7 +7,7 @@ import dataPropTypes from '../../utils/constants';
 
 import styles from './burger-ingredients-list.module.scss'
 
-const BurgerIngredientsSection = ({ data, type }) => {
+const BurgerIngredientsSection = ({ data, type, openModal, selectedId, setSelectedId }) => {
 
     const filtedIngredientsArray = data.filter(item => item.type === type);
     let title;
@@ -31,10 +31,14 @@ const BurgerIngredientsSection = ({ data, type }) => {
 
             <div className={styles.ingredientsList}>
                 {filtedIngredientsArray.map(item => 
-                    <BurgerIngredientsItem 
+                    <BurgerIngredientsItem
+                            openModal={openModal}
                             name={item.name} 
                             image={item.image} 
                             price={item.price} 
+                            id={item._id}
+                            selectedId={selectedId}
+                            setSelectedId={setSelectedId}
                             key={item._id}/>)}
             </div>
         </section>
@@ -42,10 +46,11 @@ const BurgerIngredientsSection = ({ data, type }) => {
     )
 }
 
-const BurgerIngredientsItem = ({ name, image, price }) => {
+const BurgerIngredientsItem = ({ name, image, price, openModal, selectedId, id, setSelectedId }) => {
 
     return (
-        <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}>
+        <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')} 
+             onClick={() => {openModal(); setSelectedId(id)}}>
             <img src={image} alt={name}/>
             
             <div className={classnames(styles.ingredientsItemPrice, 'mt-1 mr-4 mb-1')}>
@@ -59,15 +64,23 @@ const BurgerIngredientsItem = ({ name, image, price }) => {
     )
 }
 
-const BurgerIngredientsList = ({ data }) => {
+const BurgerIngredientsList = ({ data, isModalOpen, openModal, selectedId, setSelectedId }) => {
+    let typesArray = data.map(item => item.type);
+    typesArray = [...new Set(typesArray)];
 
     return (
         <section className={classnames(styles.ingredientsSectionsList, 'mt-10')}>
-            <BurgerIngredientsSection data={data} type='bun' />
-            <BurgerIngredientsSection data={data} type='sauce' />
-            <BurgerIngredientsSection data={data} type='main' />
+            {
+                typesArray.map(item => 
+                    <BurgerIngredientsSection key={item}
+                                              data={data} 
+                                              type={item}
+                                              openModal={openModal}
+                                              selectedId={selectedId} 
+                                              setSelectedId={setSelectedId}/>
+                )
+            }
         </section>
-        
     )
 }
 
