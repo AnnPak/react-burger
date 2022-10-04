@@ -7,6 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
+import { Modal } from '../modal/modal';
 
 import styles from './burger-constructor.module.scss';
 
@@ -26,13 +27,17 @@ const BurgerConstructorElement = (props) => {
 
     return (
         <section className={classname}>
-            {svg && <DragIcon />}
-            <ConstructorElement
-                type={type}
-                isLocked={isLocked}
-                text={text}
-                price={price}
-                thumbnail={thumbnail} />
+            {svg && <DragIcon className={styles.dragIcon}/>}
+            <div className={classnames(styles.constructorElementWpapper, 'pl-2')}>
+                <ConstructorElement
+                    type={type}
+                    isLocked={isLocked}
+                    text={text}
+                    price={price}
+                    thumbnail={thumbnail} />
+
+            </div>
+           
         </section>
     )
 }
@@ -111,6 +116,9 @@ const BurgerConstructor = ({ data }) => {
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
             <BurgerConstructorWpaper data={data} />
             <BurgerConstructorResult />
+            <Modal title={'LOL'}>
+                <div>kek</div>
+            </Modal>
         </section>
     )
 }

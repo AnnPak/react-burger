@@ -54,36 +54,10 @@
 
 }
 
-
-
-
-// кастомизация компонентов библиотеки
-
-.constructor-element {
-    position: relative;
-    margin-right: 10px;
-
-    &:not(:first-child):not(:last-child) {
-
-
-
-        .constructor-element__action:hover svg path {
-
-            fill: rgb(229, 43, 26);
-
-        }
-
-    }
-}
-
-.constructor-element::before {
-    content: url(../../images/burger-constructor.svg);
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    left: -37px;
-    top: 37%;
-    cursor: pointer;
+.constructorElementWpapper{
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
 }
 
 .burgerSectionConstructor {
