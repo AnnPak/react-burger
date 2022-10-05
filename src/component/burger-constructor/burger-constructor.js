@@ -4,10 +4,9 @@ import classnames from 'classnames';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
-import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './burger-constructor.module.scss';
-import doneImg from '../../images/done.png'
 
 
 const BurgerConstructorElement = (props) => {
@@ -94,7 +93,7 @@ const BurgerConstructorWpaper = ({ data }) => {
     )
 }
 
-const BurgerConstructorResult = ({openModal}) => {
+const BurgerConstructorResult = ({createOrder}) => {
     return (
         <section className={classnames(styles.constructorResult, 'mt-10')}>
             <div className={classnames(styles.constructorResultPrice, 'mr-10')}>
@@ -105,7 +104,7 @@ const BurgerConstructorResult = ({openModal}) => {
             <Button type="primary" 
                     size="large" 
                     htmlType='button'
-                    onClick={openModal}>
+                    onClick={createOrder}>
                 Оформить заказ
             </Button>
         </section>
@@ -113,35 +112,11 @@ const BurgerConstructorResult = ({openModal}) => {
     )
 }
 
-const ModalIngredientInf = ({ isModalOpen, closeModal }) => {
 
-    return (
-        <>
-            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-
-                <div className={styles.constructorModalId}>
-                    <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>034536</p>
-
-                    <p className="text text_type_main-medium mt-9">
-                        идентификатор заказа
-                    </p>
-                </div>
-
-
-                <img src={doneImg} className={styles.constructorModalImg}/>
-
-                <div className={classnames("mt-15 mp-10", styles.orgerInfo)}>
-                    <p className='text text_type_main-default'>Ваш заказ начали готовить</p>
-                    <p className={classnames("text text_type_main-default text_color_inactive", styles.orderNumber)}>Дождитесь готовности на орбитальной станции</p>
-                </div>
-
-            </Modal>
-        </>
-    )
-}
 
 const BurgerConstructor = ({data}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [orderData, setOrderData] = useState({})
 
     const openModal = () => {
         setIsModalOpen(true)
@@ -149,6 +124,14 @@ const BurgerConstructor = ({data}) => {
 
     const closeModal = () => {
         setIsModalOpen(false)
+    }
+
+    const createOrder = () => {
+        setOrderData({
+            orderNumber: '034536'
+        })
+
+        openModal()
     }
 
     useEffect(() => {
@@ -165,11 +148,14 @@ const BurgerConstructor = ({data}) => {
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
             <BurgerConstructorWpaper data={data}/>
-            <BurgerConstructorResult openModal={openModal}/>
+            <BurgerConstructorResult openModal={openModal} createOrder={createOrder}/>
 
-            <ModalIngredientInf data={data}
-                    isModalOpen={isModalOpen}
-                    closeModal={closeModal} />
+            {isModalOpen &&
+                <IngredientDetails isModalOpen={isModalOpen}
+                closeModal={closeModal}
+                orderData={orderData} />
+            }
+            
         </section>
     )
 }
@@ -192,10 +178,5 @@ BurgerConstructorWpaper.propTypes = {
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(dataPropTypes).isRequired
 };
-
-ModalIngredientInf.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    openModal: PropTypes.func.isRequired,
-}
 
 export default BurgerConstructor;
