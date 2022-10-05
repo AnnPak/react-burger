@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 
 import styles from './modal.module.scss';
 
-export const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
+const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
 
     const modalRoot = document.getElementById("react-modals");
 
@@ -41,6 +42,19 @@ const ModalOverlay = ({isModalOpen, ...props}) => {
             {props.children}
         </section>
     )
+}
+
+ModalOverlay.propTypes = {
+    isModalOpen: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+}
+
+Modal.propTypes = {
+    isHeader: PropTypes.bool,
+    isModalOpen: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+    closeModal: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
 }
 
 export default Modal;
