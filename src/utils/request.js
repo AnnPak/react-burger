@@ -11,8 +11,8 @@ const requestData = async (url, setData, setStatus) => {
             .then(json => setData(json.data))
             .then(() => setStatus('done'))
             .catch((error) => {
-                throw new Error(`Could not fetch ${url}, status: ${error.status}`);
                 setStatus('error')
+                throw new Error(`Could not fetch ${url}, status: ${error.status}`);
             })
 }
 

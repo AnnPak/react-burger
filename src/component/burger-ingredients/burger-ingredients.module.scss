@@ -11,33 +11,3 @@
     color: #F2F2F3;
   }
 }
-
-.ingredientModalContent {
-  display: flex;
-  flex-direction: column;
-}
-
-.ingredientModalImg{
-  margin: 0 auto;
-  img{
-    min-height: 240px;
-  }
-}
-
-.ingredientModalTitle{
-  margin: 0 auto;
-  margin-top: 16px;
-}
-
-.ingredientComposition{
-  display: flex;
-  justify-content: space-between;
-  max-width: 516px;
-  margin: 0 auto;
-  margin-top: 32px;
-  margin-bottom: 20px;
-}
-
-.ingredientCompositionItem{
-  text-align: center;
-}

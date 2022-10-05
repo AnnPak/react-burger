@@ -46,7 +46,7 @@ const BurgerIngredientsSection = ({ data, type, openModal, selectedId, setSelect
     )
 }
 
-const BurgerIngredientsItem = ({ name, image, price, openModal, selectedId, id, setSelectedId }) => {
+const BurgerIngredientsItem = ({ name, image, price, openModal, id, setSelectedId }) => {
 
     return (
         <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')} 
@@ -64,7 +64,7 @@ const BurgerIngredientsItem = ({ name, image, price, openModal, selectedId, id, 
     )
 }
 
-const BurgerIngredientsList = ({ data, isModalOpen, openModal, selectedId, setSelectedId }) => {
+const BurgerIngredientsList = ({ data, openModal, selectedId, setSelectedId }) => {
     let typesArray = data.map(item => item.type);
     typesArray = [...new Set(typesArray)];
 
