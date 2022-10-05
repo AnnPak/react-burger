@@ -113,9 +113,7 @@ const BurgerConstructorResult = ({openModal}) => {
     )
 }
 
-const ModalIngredientInf = (props) => {
-
-    const { isModalOpen, closeModal } = props;
+const ModalIngredientInf = ({ isModalOpen, closeModal }) => {
 
     return (
         <>
@@ -194,5 +192,10 @@ BurgerConstructorWpaper.propTypes = {
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(dataPropTypes).isRequired
 };
+
+ModalIngredientInf.propTypes = {
+    isModalOpen: PropTypes.bool.isRequired,
+    openModal: PropTypes.func.isRequired,
+}
 
 export default BurgerConstructor;
