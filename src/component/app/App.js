@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -29,14 +30,21 @@ function App() {
         return (
           <>
             <main className={styles.burgerSection}>
-
               <BurgerIngredients data={data} />
               <BurgerConstructor data={data} />
             </main>
           </>
         )
       case 'error':
-        return 'Ошибка'
+        return (
+          <>
+            <p className="text text_type_main-medium">
+              <InfoIcon type="error" />
+              Ошибка!
+            </p>
+          </>
+         
+          )
       default:
           break;
     }
