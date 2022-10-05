@@ -1,14 +1,14 @@
-import React from 'react';
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
+import Modal from '../modal/modal';
 
 import styles from './burger-constructor.module.scss';
+import doneImg from '../../images/done.png'
+
 
 const BurgerConstructorElement = (props) => {
 
@@ -46,11 +46,11 @@ const BurgerConstructorWpaper = ({ data }) => {
 
     return (
 
-        <section className={styles.constructorUnlockElements}>
+        <section className={styles.constructorElements}>
 
             {
                 <BurgerConstructorElement
-                    classname={classnames(styles.constructorElement, 'pr-4')}
+                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
                     key={data[0]._id}
                     type='top'
                     isLocked={true}
@@ -60,7 +60,7 @@ const BurgerConstructorWpaper = ({ data }) => {
 
             }
 
-            <div className={classnames(styles.constructorUnlockElements, 'pr-2')}>
+            <div className={classnames(styles.constructorElements, 'pr-2')}>
                 {
                     
                     unlockedData.map((item) => {
@@ -94,7 +94,7 @@ const BurgerConstructorWpaper = ({ data }) => {
     )
 }
 
-const BurgerConstructorResult = () => {
+const BurgerConstructorResult = ({openModal}) => {
     return (
         <section className={classnames(styles.constructorResult, 'mt-10')}>
             <div className={classnames(styles.constructorResultPrice, 'mr-10')}>
@@ -102,7 +102,10 @@ const BurgerConstructorResult = () => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" size="large" htmlType='button'>
+            <Button type="primary" 
+                    size="large" 
+                    htmlType='button'
+                    onClick={openModal}>
                 Оформить заказ
             </Button>
         </section>
@@ -110,14 +113,69 @@ const BurgerConstructorResult = () => {
     )
 }
 
-const BurgerConstructor = ({ data }) => {
+const ModalIngredientInf = (props) => {
+
+    const { isModalOpen, closeModal } = props;
+
+    return (
+        <>
+            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+
+                <div className={styles.constructorModalId}>
+                    <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>034536</p>
+
+                    <p className="text text_type_main-medium mt-9">
+                        идентификатор заказа
+                    </p>
+                </div>
+
+
+                <img src={doneImg} className={styles.constructorModalImg}/>
+
+                <div className={classnames("mt-15 mp-10", styles.orgerInfo)}>
+                    <p className='text text_type_main-default'>Ваш заказ начали готовить</p>
+                    <p className={classnames("text text_type_main-default text_color_inactive", styles.orderNumber)}>Дождитесь готовности на орбитальной станции</p>
+                </div>
+
+            </Modal>
+        </>
+    )
+}
+
+const BurgerConstructor = ({data}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
+
+    useEffect(() => {
+        const close = (e) => {
+            if (e.keyCode === 27) {
+                closeModal()
+            }
+        }
+        window.addEventListener('keydown', close)
+
+        return () => window.removeEventListener('keydown', close)
+    }, [])
+
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
-            <BurgerConstructorWpaper data={data} />
-            <BurgerConstructorResult />
+            <BurgerConstructorWpaper data={data}/>
+            <BurgerConstructorResult openModal={openModal}/>
+
+            <ModalIngredientInf data={data}
+                    isModalOpen={isModalOpen}
+                    closeModal={closeModal} />
         </section>
     )
 }
+
 
 BurgerConstructorElement.propTypes = {
     class: PropTypes.string,
