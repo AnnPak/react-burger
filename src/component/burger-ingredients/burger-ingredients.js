@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
@@ -22,17 +22,6 @@ const BurgerIngredients = ({ data }) => {
     const closeModal = () => {
         setIsModalOpen(false)
     }
-
-    useEffect(() => {
-        const close = (e) => {
-            if (e.keyCode === 27) {
-                closeModal()
-            }
-        }
-        window.addEventListener('keydown', close)
-
-        return () => window.removeEventListener('keydown', close)
-    }, [])
 
     return (
 

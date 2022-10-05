@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -133,17 +133,6 @@ const BurgerConstructor = ({data}) => {
 
         openModal()
     }
-
-    useEffect(() => {
-        const close = (e) => {
-            if (e.keyCode === 27) {
-                closeModal()
-            }
-        }
-        window.addEventListener('keydown', close)
-
-        return () => window.removeEventListener('keydown', close)
-    }, [])
 
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
