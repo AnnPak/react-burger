@@ -11,7 +11,7 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
     const modalRoot = document.getElementById("react-modals");
 
     return ReactDOM.createPortal(
-        <ModalOverlay isModalOpen={isModalOpen}>
+        <ModalOverlay isModalOpen={isModalOpen} closeModal={closeModal}>
             <div className={classnames(styles.modal, 'p-10')}>
 
                 <div className={styles.modalClose}>
@@ -36,9 +36,10 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
 
 }
 
-const ModalOverlay = ({isModalOpen, ...props}) => {
+const ModalOverlay = ({isModalOpen, closeModal, ...props}) => {
     return (
-        <section className={classnames(styles.modalOverlay, isModalOpen ? styles.modalShow : '')}>
+        <section className={classnames(styles.modalOverlay, isModalOpen ? styles.modalShow : '')}
+                  onClick={closeModal}>
             {props.children}
         </section>
     )
