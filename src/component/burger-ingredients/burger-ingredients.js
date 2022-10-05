@@ -9,6 +9,7 @@ import Modal from '../modal/modal';
 
 import styles from './burger-ingredients.module.scss'
 
+
 const BurgerIngredients = ({ data }) => {
 
     const [current, setCurrent] = useState('bun');
@@ -68,7 +69,7 @@ const ModalIngredientInf = (props) => {
 
     return (
         <>
-            
+
             <Modal title={'Детали ингредиента'}
                 isHeader={true}
                 isModalOpen={isModalOpen}
@@ -102,10 +103,8 @@ const ModalIngredientInf = (props) => {
                         <div className="text text_type_digits-medium">{selectedIngredientData.carbohydrates}</div>
                     </div>
                 </div>
-
-
             </Modal>
-           
+
         </>
 
     )
@@ -121,7 +120,6 @@ ModalIngredientInf.propTypes = {
     isModalOpen: PropTypes.bool.isRequired,
     openModal: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
-
 }
 
 export default BurgerIngredients;
