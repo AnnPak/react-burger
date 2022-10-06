@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
 import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
 import dataPropTypes from '../../utils/constants';
-import OrderDetails from '../order-details/order-details';
+import IngredientDetailsModal from '../ingredient-details/ingredient-details';
 
 import styles from './burger-ingredients.module.scss'
 
@@ -37,11 +37,10 @@ const BurgerIngredients = ({ data }) => {
                 setSelectedId={setSelectedId}
                 selectedId={selectedId} />
 
-            {isModalOpen &&
-                <OrderDetails data={data}
+            {isModalOpen && data.length > 0 &&
+                <IngredientDetailsModal data={data}
                     selectedId={selectedId}
                     isModalOpen={isModalOpen}
-                    openModal={openModal}
                     closeModal={closeModal} />
             }
 

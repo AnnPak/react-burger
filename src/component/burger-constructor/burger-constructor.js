@@ -4,14 +4,14 @@ import classnames from 'classnames';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetailsModal from '../order-details/order-details';
 
 import styles from './burger-constructor.module.scss';
 
 
-const BurgerConstructorElement = (props) => {
+const BurgerConstructorElement = ({text, ...props}) => {
 
-    let {svg, type, isLocked, text, price, thumbnail, classname} = props;
+    const {svg, isLocked, type, price, thumbnail, classname} = props;
 
     switch (type) {
         case 'top':
@@ -116,7 +116,9 @@ const BurgerConstructorResult = ({createOrder}) => {
 
 const BurgerConstructor = ({data}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [orderData, setOrderData] = useState({})
+    const [orderData, setOrderData] = useState({
+        orderNumber: null
+    })
 
     const openModal = () => {
         setIsModalOpen(true)
@@ -128,6 +130,7 @@ const BurgerConstructor = ({data}) => {
 
     const createOrder = () => {
         setOrderData({
+            ...orderData,
             orderNumber: '034536'
         })
 
@@ -137,12 +140,12 @@ const BurgerConstructor = ({data}) => {
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
             <BurgerConstructorWpaper data={data}/>
-            <BurgerConstructorResult openModal={openModal} createOrder={createOrder}/>
+            <BurgerConstructorResult createOrder={createOrder}/>
 
-            {isModalOpen &&
-                <IngredientDetails isModalOpen={isModalOpen}
-                closeModal={closeModal}
-                orderData={orderData} />
+            {isModalOpen && orderData.orderNumber > 0 &&
+                <OrderDetailsModal isModalOpen={isModalOpen}
+                    closeModal={closeModal}
+                    orderData={orderData} />
             }
             
         </section>
@@ -168,4 +171,7 @@ BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(dataPropTypes).isRequired
 };
 
+BurgerConstructorResult.propTypes = {
+    createOrder: PropTypes.func.isRequired
+}
 export default BurgerConstructor;

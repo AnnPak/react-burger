@@ -1,30 +1,19 @@
-.ingredientModalContent {
-    display: flex;
-    flex-direction: column;
-}
+.constructorModalId {
+    .orderNumber {
+        text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+    }
 
-.ingredientModalImg {
-    margin: 0 auto;
-
-    img {
-        min-height: 240px;
+    p {
+        text-align: center;
     }
 }
 
-.ingredientModalTitle {
+.constructorModalImg {
     margin: 0 auto;
-    margin-top: 16px;
+    display: block;
+    margin-top: 60px;
 }
 
-.ingredientComposition {
-    display: flex;
-    justify-content: space-between;
-    max-width: 516px;
-    margin: 0 auto;
-    margin-top: 32px;
-    margin-bottom: 20px;
-}
-
-.ingredientCompositionItem {
+.orgerInfo{
     text-align: center;
 }
