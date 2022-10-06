@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import dataPropTypes from '../../utils/constants';
 
-import styles from './ingredient-details.module.scss'
+import styles from './ingredient-details-modal.module.scss'
 
 
 const IngredientDetails = ({ data, selectedId }) => {

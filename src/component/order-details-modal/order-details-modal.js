@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import Modal from '../modal/modal';
 
-import styles from './order-details.module.scss';
+import styles from './order-details-modal.module.scss';
 import doneImg from '../../images/done.png'
 
 const OrderDetails = ({ orderData }) => {

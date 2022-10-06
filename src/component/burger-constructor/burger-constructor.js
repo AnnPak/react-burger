@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import dataPropTypes from '../../utils/constants';
-import OrderDetailsModal from '../order-details/order-details';
+import OrderDetailsModal from '../order-details-modal/order-details-modal';
 
 import styles from './burger-constructor.module.scss';
 
