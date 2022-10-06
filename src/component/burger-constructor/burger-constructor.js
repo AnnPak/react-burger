@@ -26,6 +26,7 @@ const BurgerConstructorElement = ({text, ...props}) => {
     return (
         <section className={classname}>
             {svg && <DragIcon className={styles.dragIcon}/>}
+
             <div className={classnames(styles.constructorElementWpapper, 'pl-2')}>
                 <ConstructorElement
                     type={type}
@@ -41,7 +42,7 @@ const BurgerConstructorElement = ({text, ...props}) => {
 }
 
 const BurgerConstructorWpaper = ({ data }) => {
-    const unlockedData = data.slice(1, -1);
+    const unlockedData = data.filter((item) => item.type != 'bun')
 
     return (
 
@@ -101,10 +102,11 @@ const BurgerConstructorResult = ({createOrder}) => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" 
-                    size="large" 
-                    htmlType='button'
-                    onClick={createOrder}>
+            <Button 
+                type="primary" 
+                size="large" 
+                htmlType='button'
+                onClick={createOrder}>
                 Оформить заказ
             </Button>
         </section>
@@ -143,7 +145,8 @@ const BurgerConstructor = ({data}) => {
             <BurgerConstructorResult createOrder={createOrder}/>
 
             {isModalOpen && orderData.orderNumber > 0 &&
-                <OrderDetailsModal isModalOpen={isModalOpen}
+                <OrderDetailsModal 
+                    isModalOpen={isModalOpen}
                     closeModal={closeModal}
                     orderData={orderData} />
             }
