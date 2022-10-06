@@ -12,7 +12,7 @@ import styles from './App.module.scss';
 
 function App() {
   const [status, setStatus] = useState('');
-  const [data, setData] = useState()
+  const [data, setData] = useState(null)
 
   const url = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -28,22 +28,17 @@ function App() {
         return <Preloader />
       case 'done':
         return (
-          <>
             <main className={styles.burgerSection}>
               <BurgerIngredients data={data} />
               <BurgerConstructor data={data} />
             </main>
-          </>
         )
       case 'error':
         return (
-          <>
             <p className="text text_type_main-medium">
               <InfoIcon type="error" />
               Ошибка!
             </p>
-          </>
-         
           )
       default:
           break;
