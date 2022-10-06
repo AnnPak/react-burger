@@ -2,7 +2,6 @@ const requestData = async (url, setData, setStatus) => {
     return fetch(url)
             .then((response) => {
                 if (!response.ok) {
-                    setStatus('error')
                     throw new Error(`Could not fetch ${url}, status: ${response.status}`);
                     
                 }
@@ -12,7 +11,6 @@ const requestData = async (url, setData, setStatus) => {
             .then(() => setStatus('done'))
             .catch((error) => {
                 setStatus('error')
-                throw new Error(`Could not fetch ${url}, status: ${error.status}`);
             })
 }
 
