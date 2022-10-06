@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 
+import ModalOverlay from '../modal-overlay/modal-overlay';
+
 import styles from './modal.module.scss';
 
 const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
@@ -11,24 +13,24 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
     const modalRoot = document.getElementById("react-modals");
 
     useEffect(() => {
-        const close = (e) => {
-            if (e.keyCode === 27) {
+        const closeModalByEsc = (evt) => {
+            if (evt.key === 'Escape') {
                 closeModal()
             }
         }
-        window.addEventListener('keydown', close)
 
-        return () => window.removeEventListener('keydown', close)
+        window.addEventListener('keydown', closeModalByEsc)
+
+        return () => window.removeEventListener('keydown', closeModalByEsc)
     }, [])
 
     return ReactDOM.createPortal(
         <ModalOverlay isModalOpen={isModalOpen} closeModal={closeModal}>
-            <div className={classnames(styles.modal, 'p-10')} onClick={(e) => e.stopPropagation()}>
+            <div className={classnames(styles.modal, 'p-10', isModalOpen ? styles.modalShow : '')} onClick={(e) => e.stopPropagation()}>
 
                 <div className={styles.modalClose}>
-                    <CloseIcon type="primary" onClick={closeModal}/>
+                    <CloseIcon type="primary" onClick={closeModal} />
                 </div>
-
 
                 {isHeader &&
                     <div className={styles.modalHeader}>
@@ -47,19 +49,6 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
 
 }
 
-const ModalOverlay = ({isModalOpen, closeModal, ...props}) => {
-    return (
-        <section className={classnames(styles.modalOverlay, isModalOpen ? styles.modalShow : '')}
-                  onClick={closeModal}>
-            {props.children}
-        </section>
-    )
-}
-
-ModalOverlay.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-}
 
 Modal.propTypes = {
     isHeader: PropTypes.bool,
