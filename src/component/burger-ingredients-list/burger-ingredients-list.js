@@ -33,10 +33,7 @@ const BurgerIngredientsSection = ({ data, type, openModal, selectedId, setSelect
                 {filtedIngredientsArray.map(item => 
                     <BurgerIngredientsItem
                             openModal={openModal}
-                            name={item.name} 
-                            image={item.image} 
-                            price={item.price} 
-                            id={item._id}
+                            ingredient={item}
                             selectedId={selectedId}
                             setSelectedId={setSelectedId}
                             key={item._id}/>)}
@@ -46,11 +43,13 @@ const BurgerIngredientsSection = ({ data, type, openModal, selectedId, setSelect
     )
 }
 
-const BurgerIngredientsItem = ({ name, image, price, openModal, id, setSelectedId }) => {
+const BurgerIngredientsItem = ({ ingredient, openModal, setSelectedId }) => {
+
+    const {name, image, price, _id} = ingredient;
 
     return (
         <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')} 
-             onClick={() => {openModal(); setSelectedId(id)}}>
+             onClick={() => {setSelectedId(_id); openModal(); }}>
             <img src={image} alt={name}/>
             
             <div className={classnames(styles.ingredientsItemPrice, 'mt-1 mr-4 mb-1')}>
@@ -85,18 +84,24 @@ const BurgerIngredientsList = ({ data, openModal, selectedId, setSelectedId }) =
 }
 
 BurgerIngredientsList.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes).isRequired
+    data: PropTypes.arrayOf(dataPropTypes).isRequired,
+    openModal: PropTypes.func.isRequired,
+    setSelectedId: PropTypes.func,
+    selectedId: PropTypes.string
 };
 
 BurgerIngredientsSection.propTypes = {
     data: PropTypes.arrayOf(dataPropTypes).isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired,
+    setSelectedId: PropTypes.func,
+    selectedId: PropTypes.string
 };
 
 BurgerIngredientsItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    ingredient: dataPropTypes.isRequired,
+    openModal: PropTypes.func,
+    setSelectedId: PropTypes.func
 };
 
 export default BurgerIngredientsList;
