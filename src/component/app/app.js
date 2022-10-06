@@ -7,7 +7,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import requestData from '../../utils/request';
 import Preloader from '../preloader/preloader';
 
-import styles from './App.module.scss';
+import styles from './app.module.scss';
 
 
 function App() {
