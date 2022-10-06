@@ -32,11 +32,11 @@ const BurgerIngredientsSection = ({ data, type, openModal, selectedId, setSelect
             <div className={styles.ingredientsList}>
                 {filtedIngredientsArray.map(item => 
                     <BurgerIngredientsItem
-                            openModal={openModal}
-                            ingredient={item}
-                            selectedId={selectedId}
-                            setSelectedId={setSelectedId}
-                            key={item._id}/>)}
+                        openModal={openModal}
+                        ingredient={item}
+                        selectedId={selectedId}
+                        setSelectedId={setSelectedId}
+                        key={item._id}/>)}
             </div>
         </section>
 
@@ -50,6 +50,7 @@ const BurgerIngredientsItem = ({ ingredient, openModal, setSelectedId }) => {
     return (
         <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')} 
              onClick={() => {setSelectedId(_id); openModal(); }}>
+            
             <img src={image} alt={name}/>
             
             <div className={classnames(styles.ingredientsItemPrice, 'mt-1 mr-4 mb-1')}>
@@ -71,12 +72,13 @@ const BurgerIngredientsList = ({ data, openModal, selectedId, setSelectedId }) =
         <section className={classnames(styles.ingredientsSectionsList, 'mt-10')}>
             {
                 typesArray.map(item => 
-                    <BurgerIngredientsSection key={item}
-                                              data={data} 
-                                              type={item}
-                                              openModal={openModal}
-                                              selectedId={selectedId} 
-                                              setSelectedId={setSelectedId}/>
+                    <BurgerIngredientsSection 
+                        key={item}
+                        data={data} 
+                        type={item}
+                        openModal={openModal}
+                        selectedId={selectedId} 
+                        setSelectedId={setSelectedId}/>
                 )
             }
         </section>

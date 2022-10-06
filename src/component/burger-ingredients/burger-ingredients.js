@@ -30,7 +30,8 @@ const BurgerIngredients = ({ data }) => {
 
             <TabsWrapper current={current} setCurrent={setCurrent} />
 
-            <BurgerIngredientsList data={data}
+            <BurgerIngredientsList 
+                data={data}
                 isModalOpen={isModalOpen}
                 openModal={openModal}
                 closeModal={closeModal}
@@ -38,7 +39,8 @@ const BurgerIngredients = ({ data }) => {
                 selectedId={selectedId} />
 
             {isModalOpen && data.length > 0 &&
-                <IngredientDetailsModal data={data}
+                <IngredientDetailsModal 
+                    data={data}
                     selectedId={selectedId}
                     isModalOpen={isModalOpen}
                     closeModal={closeModal} />
