@@ -6,14 +6,14 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import requestData from '../../utils/request';
 import Preloader from '../preloader/preloader';
+import { IngredientsContext } from '../../services/ingredients-context';
 
 import styles from './app.module.scss';
 
 
 function App() {
   const [status, setStatus] = useState('');
-  const [data, setData] = useState(null)
-
+  const [data, setData] = useState([]);
   const url = 'https://norma.nomoreparties.space/api/ingredients';
 
   useEffect(() => {
@@ -29,8 +29,12 @@ function App() {
       case 'done':
         return (
             <main className={styles.burgerSection}>
-              <BurgerIngredients data={data} />
-              <BurgerConstructor data={data} />
+               <BurgerIngredients data={data} />
+              <IngredientsContext.Provider value={[data, setData]}>
+               
+                <BurgerConstructor />
+              </IngredientsContext.Provider>
+             
             </main>
         )
       case 'error':
