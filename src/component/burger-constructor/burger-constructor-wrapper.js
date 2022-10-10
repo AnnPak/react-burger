@@ -104,7 +104,7 @@ BurgerConstructorElement.propTypes = {
 };
 
 BurgerConstructorWpaper.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes).isRequired
+    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
 };
 
 export default BurgerConstructorWpaper;

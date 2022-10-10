@@ -14,12 +14,11 @@ import styles from './app.module.scss';
 function App() {
   const [status, setStatus] = useState('');
   const [data, setData] = useState([]);
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
+  const ingredientsApi = 'https://norma.nomoreparties.space/api/ingredients';
 
   useEffect(() => {
     setStatus('loading');
-
-    requestData(url, setData, setStatus)
+    requestData(ingredientsApi, setData, setStatus)
   }, [])
 
   const SetContent = () => {
@@ -29,12 +28,12 @@ function App() {
       case 'done':
         return (
             <main className={styles.burgerSection}>
-               <BurgerIngredients data={data} />
-              <IngredientsContext.Provider value={[data, setData]}>
-               
-                <BurgerConstructor />
-              </IngredientsContext.Provider>
-             
+                <BurgerIngredients data={data.data} />
+
+                <IngredientsContext.Provider value={[data.data, setData]}>
+                  <BurgerConstructor />
+                </IngredientsContext.Provider>
+              
             </main>
         )
       case 'error':

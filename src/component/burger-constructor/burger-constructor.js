@@ -1,28 +1,30 @@
 import { useState, useContext } from 'react'
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import dataPropTypes from '../../utils/constants';
 import OrderDetailsModal from '../order-details-modal/order-details-modal';
 import { IngredientsContext } from '../../services/ingredients-context';
 import BurgerConstructorResult from './burger-constructor-result';
 import BurgerConstructorWpaper from './burger-constructor-wrapper';
+import requestData from '../../utils/request';
 
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructor = () => {
-    const [data] = useContext(IngredientsContext);
+    const orderApi = 'https://norma.nomoreparties.space/api/orders';
 
+    const [data] = useContext(IngredientsContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [orderData, setOrderData] = useState({
-        orderNumber: null
-    })
+    const [orderStatus, setOrderStatus] = useState('waiting')
+    const [orderData, setOrderData] = useState({})
 
     const unlockedIngredients = data.filter(item => item.type !== 'bun').map(el => ({ ...el })); //массив с перемещаемыми элементами
     let lockedIngredients = data.filter(item => item.type === 'bun').map(el => ({ ...el })); //массив с булочками
     lockedIngredients = lockedIngredients.shift(); //только одна булочка - удаляю первую в списке
 
     const resultIngredientsData = [lockedIngredients, ...unlockedIngredients, lockedIngredients] //список ингредиетов с двумя блочками
+
+    // метод для теста изменяемости цены
+    // resultIngredientsData.splice(1, 10); 
 
     const openModal = () => {
         setIsModalOpen(true)
@@ -33,10 +35,14 @@ const BurgerConstructor = () => {
     }
 
     const createOrder = () => {
-        setOrderData({
-            ...orderData,
-            orderNumber: '034536'
+        const idsObject = resultIngredientsData.map(item => item._id); //список id ингредиентов в заказе
+        const requestBody = JSON.stringify({ 
+            "ingredients": idsObject,
         })
+
+        setOrderStatus('loading');
+
+        requestData(orderApi, setOrderData, setOrderStatus, requestBody, 'POST') //запрос а api, создание заказа
 
         openModal()
     }
@@ -46,19 +52,16 @@ const BurgerConstructor = () => {
             <BurgerConstructorWpaper resultIngredientsData={resultIngredientsData}/>
             <BurgerConstructorResult createOrder={createOrder} resultIngredientsData={resultIngredientsData}/>
 
-            {isModalOpen && orderData.orderNumber > 0 &&
+            {isModalOpen &&
                 <OrderDetailsModal
                     isModalOpen={isModalOpen}
                     closeModal={closeModal}
-                    orderData={orderData} />
+                    orderData={orderData}
+                    orderStatus={orderStatus} />
             }
 
         </section>
     )
 }
-
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes).isRequired
-};
 
 export default BurgerConstructor;
