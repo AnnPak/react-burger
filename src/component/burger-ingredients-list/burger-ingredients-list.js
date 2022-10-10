@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import dataPropTypes from '../../utils/constants';
+import { dataPropTypes } from '../../utils/constants';
 
 import styles from './burger-ingredients-list.module.scss'
 

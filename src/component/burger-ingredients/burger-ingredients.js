@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
 import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
-import dataPropTypes from '../../utils/constants';
+import { dataPropTypes } from '../../utils/constants';
 import IngredientDetailsModal from '../ingredient-details-modal/ingredient-details-modal';
 
 import styles from './burger-ingredients.module.scss'

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Modal from '../modal/modal';
-import dataPropTypes from '../../utils/constants';
+import { dataPropTypes } from '../../utils/constants';
 
 import styles from './ingredient-details-modal.module.scss'
 

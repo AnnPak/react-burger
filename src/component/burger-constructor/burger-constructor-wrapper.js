@@ -2,7 +2,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import dataPropTypes from '../../utils/constants';
+import { dataPropTypes } from '../../utils/constants';
 
 import styles from './burger-constructor.module.scss';
 

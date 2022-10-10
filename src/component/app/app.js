@@ -5,6 +5,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import requestData from '../../utils/request';
+import { ingredientsApi } from '../../utils/constants';
 import Preloader from '../preloader/preloader';
 import { IngredientsContext } from '../../services/ingredients-context';
 
@@ -14,7 +15,6 @@ import styles from './app.module.scss';
 function App() {
   const [status, setStatus] = useState('');
   const [data, setData] = useState([]);
-  const ingredientsApi = 'https://norma.nomoreparties.space/api/ingredients';
 
   useEffect(() => {
     setStatus('loading');

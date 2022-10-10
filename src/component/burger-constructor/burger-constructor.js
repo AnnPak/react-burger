@@ -6,12 +6,11 @@ import { IngredientsContext } from '../../services/ingredients-context';
 import BurgerConstructorResult from './burger-constructor-result';
 import BurgerConstructorWpaper from './burger-constructor-wrapper';
 import requestData from '../../utils/request';
+import { ordersApi } from '../../utils/constants';
 
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructor = () => {
-    const orderApi = 'https://norma.nomoreparties.space/api/orders';
-
     const [data] = useContext(IngredientsContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [orderStatus, setOrderStatus] = useState('waiting')
@@ -42,7 +41,7 @@ const BurgerConstructor = () => {
 
         setOrderStatus('loading');
 
-        requestData(orderApi, setOrderData, setOrderStatus, requestBody, 'POST') //запрос а api, создание заказа
+        requestData(ordersApi, setOrderData, setOrderStatus, requestBody, 'POST') //запрос а api, создание заказа
 
         openModal()
     }

@@ -3,7 +3,7 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import dataPropTypes from '../../utils/constants';
+import { dataPropTypes } from '../../utils/constants';
 
 import styles from './burger-constructor.module.scss';
 
