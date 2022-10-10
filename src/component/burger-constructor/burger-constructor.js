@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useMemo } from 'react'
 import classnames from 'classnames';
 
 import OrderDetailsModal from '../order-details-modal/order-details-modal';
@@ -17,8 +17,8 @@ const BurgerConstructor = () => {
     const [orderStatus, setOrderStatus] = useState('waiting')
     const [orderData, setOrderData] = useState({})
 
-    const unlockedIngredients = data.filter(item => item.type !== 'bun').map(el => ({ ...el })); //массив с перемещаемыми элементами
-    let lockedIngredients = data.filter(item => item.type === 'bun').map(el => ({ ...el })); //массив с булочками
+    const unlockedIngredients = useMemo(() => data.filter(item => item.type !== 'bun').map(el => ({ ...el }))); //массив с перемещаемыми элементами
+    let lockedIngredients = useMemo(() => data.filter(item => item.type === 'bun').map(el => ({ ...el }))); //массив с булочками
     lockedIngredients = lockedIngredients.shift(); //только одна булочка - удаляю первую в списке
 
     const resultIngredientsData = [lockedIngredients, ...unlockedIngredients, lockedIngredients] //список ингредиетов с двумя блочками
