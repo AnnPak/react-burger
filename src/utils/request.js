@@ -12,11 +12,11 @@ const requestData = async (url, setData, setStatus, body=null, method='GET') => 
                 }
                 return response.json();
             })
-            .then(json => setData(json))
-            .then(() => setStatus('done'))
-            .catch((e) => {
-                setStatus('error')
-            })
+            // .then(json => setData(json))
+            // .then(() => setStatus('done'))
+            // .catch((e) => {
+            //     setStatus('error')
+            // })
 }
 
 export default requestData;

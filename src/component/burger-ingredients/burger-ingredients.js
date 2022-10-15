@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
 import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
-import { dataPropTypes } from '../../utils/constants';
 import IngredientDetailsModal from '../ingredient-details-modal/ingredient-details-modal';
 
 import styles from './burger-ingredients.module.scss'
 
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+
+    const ingregients = useSelector(store => store.ingregients)
 
     const [current, setCurrent] = useState('bun');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,16 +32,16 @@ const BurgerIngredients = ({ data }) => {
             <TabsWrapper current={current} setCurrent={setCurrent} />
 
             <BurgerIngredientsList 
-                data={data}
+                data={ingregients}
                 isModalOpen={isModalOpen}
                 openModal={openModal}
                 closeModal={closeModal}
                 setSelectedId={setSelectedId}
                 selectedId={selectedId} />
 
-            {isModalOpen && data.length > 0 &&
+            {isModalOpen && ingregients > 0 &&
                 <IngredientDetailsModal 
-                    data={data}
+                    data={ingregients}
                     selectedId={selectedId}
                     isModalOpen={isModalOpen}
                     closeModal={closeModal} />
@@ -51,8 +52,5 @@ const BurgerIngredients = ({ data }) => {
     )
 }
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes)
-};
 
 export default BurgerIngredients;
