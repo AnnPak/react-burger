@@ -25,7 +25,7 @@ function App() {
       .then(data => dispatch(getIngredientsSuccess(data.data)))
       .catch(() => dispatch(getIngredientsFailed()))
 
-  }, [])
+  }, [dispatch])
 
   const SetContent = useCallback(() => {
     switch (ingregientsStatus) {

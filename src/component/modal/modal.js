@@ -27,7 +27,7 @@ const Modal = ({ isHeader, title, ...props }) => {
 
         return () => window.removeEventListener('keydown', closeModalByEsc)
         
-    }, [])
+    }, [dispatch])
 
     return ReactDOM.createPortal(
         <ModalOverlay>

@@ -2,6 +2,8 @@ const initialState = {
     ingregients: [],
     ingregientsStatus: 'idle',
 
+    typesOfIngredients: [],
+
     ingredientInModal: [],
     isIngredientModalVisible: false,
 
@@ -14,13 +16,19 @@ const initialState = {
     orderInModal: [],
     isOrderModalVisible: false,
 
-    tabsValue: 'bun'
-
+    tabsValue: '',
+ 
 
 }
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_TYPES_OF_INGREGIENTS': {
+            return {
+                ...state, typesOfIngredients: action.payload
+            }
+        }
+
         case 'SET_TAB_VALUE': {
             return {
                 ...state, tabsValue: action.payload

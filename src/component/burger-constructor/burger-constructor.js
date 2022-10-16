@@ -12,8 +12,8 @@ import styles from './burger-constructor.module.scss';
 const BurgerConstructor = () => {
     const {isOrderModalVisible, burgerIngregients } = useSelector(store => store);
 
-    const unlockedIngredients = useMemo(() => burgerIngregients.filter(item => item.type !== 'bun').map(el => ({ ...el }))); //массив с перемещаемыми элементами
-    let lockedIngredients = useMemo(() => burgerIngregients.filter(item => item.type === 'bun').map(el => ({ ...el }))); //массив с булочками
+    const unlockedIngredients = useMemo(() => burgerIngregients.filter(item => item.type !== 'bun').map(el => ({ ...el })), [burgerIngregients]); //массив с перемещаемыми элементами
+    let lockedIngredients = useMemo(() => burgerIngregients.filter(item => item.type === 'bun').map(el => ({ ...el })), [burgerIngregients]); //массив с булочками
     lockedIngredients = lockedIngredients.shift(); //только одна булочка - удаляю первую в списке
 
     const resultIngredientsData = burgerIngregients.length ? [lockedIngredients, ...unlockedIngredients, lockedIngredients] : []; //список ингредиетов с двумя блочками

@@ -13,7 +13,7 @@ const IngredientDetails = () => {
         <>
             <div className={styles.ingredientModalContent}>
                 <div className={styles.ingredientModalImg}>
-                    <img src={ingredientInModal.image_large} />
+                    <img src={ingredientInModal.image_large} alt={ingredientInModal.name}/>
                 </div>
                 <div className={classnames(styles.ingredientModalTitle, 'text text_type_main-medium')}>
                     {ingredientInModal.name}

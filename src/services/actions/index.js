@@ -86,4 +86,14 @@ export const setTabsValue = (value) => {
     }
 }
 
+export const setTypesOfIngredients = (types) => {
+    return {
+        type: 'SET_TYPES_OF_INGREGIENTS',
+        payload: types
+
+    }
+}
+
+
+
 
