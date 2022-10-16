@@ -32,7 +32,7 @@ const BurgerIngredientsSection = ({ ingregients, type }) => {
 
  
     return (
-        <section>
+        <>
             <h3 className={styles.ingredientsTitle} id={type + '-title'}>{title}</h3>
 
             <div className={styles.ingredientsList}>
@@ -42,7 +42,7 @@ const BurgerIngredientsSection = ({ ingregients, type }) => {
                         key={ingredient._id} />)}
             </div>
 
-        </section>
+        </>
 
     )
 }
@@ -91,8 +91,8 @@ const BurgerIngredientsList = () => {
                 //вывожу секции ингредиентов по типам 
                 typesOfIngredients.map(ingredientType =>
                     <InView 
+                        id={'section-'+ ingredientType}
                         key={ingredientType} 
-                        as="section" 
                         onChange={(inView) => callTabsAction(inView, ingredientType)} 
                         threshold="0.25" 
                         rootMargin="50px 0px" 

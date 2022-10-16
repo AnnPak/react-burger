@@ -20,6 +20,10 @@ const TabsWrapper = () => {
         }
     }
 
+    const scrollToContainer = (type) => {
+        const idSection = 'section-' + type;
+        document.getElementById(idSection).scrollIntoView({top: 0, left: 0, behavior: 'smooth' });
+    }
 
     return (
         <div className={styles.tabsWrapper}>
@@ -29,8 +33,7 @@ const TabsWrapper = () => {
                         key={type} 
                         value={type} 
                         active={tabsValue === type} 
-                        // onClick={() => dispatch(setTabsValue(type))}
-                        >
+                        onClick={() => scrollToContainer(type)}>
                             
                        {getTitle(type)}
                     </Tab>
