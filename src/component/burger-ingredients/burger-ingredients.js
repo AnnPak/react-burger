@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useSelector } from 'react-redux';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
@@ -12,15 +11,12 @@ const BurgerIngredients = () => {
 
     const {isIngredientModalVisible } = useSelector(store => store);
 
-    const [current, setCurrent] = useState('bun');
-
     return (
 
         <section className={styles.burgerIngredientsSection}>
             <h1 className="mt-10">Соберите бургер</h1>
 
-            <TabsWrapper current={current} setCurrent={setCurrent} />
-
+            <TabsWrapper/>
             <BurgerIngredientsList/>
 
             {isIngredientModalVisible && <IngredientDetailsModal />}

@@ -14,11 +14,19 @@ const initialState = {
     orderInModal: [],
     isOrderModalVisible: false,
 
+    tabsValue: 'bun'
+
 
 }
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_TAB_VALUE': {
+            return {
+                ...state, tabsValue: action.payload
+            }
+        }
+
         case 'GET_ORDER_REQUEST': {
             return {
                 ...state, orderStatus: 'loading', isOrderModalVisible: true

@@ -57,9 +57,8 @@ const BurgerConstructorResult = ({ resultIngredientsData }) => {
     )
 }
 
-// BurgerConstructorResult.propTypes = {
-//     createOrder: PropTypes.func.isRequired,
-//     resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
-// }
+BurgerConstructorResult.propTypes = {
+    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
+}
 
 export default BurgerConstructorResult
