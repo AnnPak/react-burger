@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 
 import OrderDetailsModal from '../order-details-modal/order-details-modal';
@@ -17,6 +17,7 @@ const BurgerConstructor = () => {
     lockedIngredients = lockedIngredients.shift(); //только одна булочка - удаляю первую в списке
 
     const resultIngredientsData = burgerIngregients.length ? [lockedIngredients, ...unlockedIngredients, lockedIngredients] : []; //список ингредиетов с двумя блочками
+
 
 
     return (

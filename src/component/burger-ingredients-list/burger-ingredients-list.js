@@ -88,11 +88,12 @@ const BurgerIngredientsList = () => {
     )
 }
 
-// BurgerIngredientsSection.propTypes = {
-// };
+BurgerIngredientsSection.propTypes = {
+    type: PropTypes.string,
+};
 
-// BurgerIngredientsItem.propTypes = {
-//     ingredient: dataPropTypes.isRequired,
-// };
+BurgerIngredientsItem.propTypes = {
+    ingredient: dataPropTypes.isRequired,
+};
 
 export default BurgerIngredientsList;
