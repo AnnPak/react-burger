@@ -36,3 +36,17 @@ export const getBurderIngredientsFailed = () => {
     }
 }
 
+export const addIngredientToModal = (ingredient) => {
+    return {
+        type: 'ADD_MODAL_INGREDIENT',
+        payload: ingredient
+
+    }
+}
+
+export const removeIngredientFromModal = () => {
+    return {
+        type: 'REMOVE_MODAL_INGREDIENT',
+    }
+}
+

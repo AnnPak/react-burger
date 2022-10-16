@@ -2,41 +2,42 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Modal from '../modal/modal';
+import { useSelector, useDispatch } from 'react-redux';
 import { dataPropTypes } from '../../utils/constants';
 
 import styles from './ingredient-details-modal.module.scss'
 
 
-const IngredientDetails = ({ data, selectedId }) => {
-    const selectedIngredientData = data.find(item => item._id === selectedId);
+const IngredientDetails = () => {
+    const {ingredientInModal } = useSelector(store => store);
 
     return (
         <>
             <div className={styles.ingredientModalContent}>
                 <div className={styles.ingredientModalImg}>
-                    <img src={selectedIngredientData.image_large} />
+                    <img src={ingredientInModal.image_large} />
                 </div>
                 <div className={classnames(styles.ingredientModalTitle, 'text text_type_main-medium')}>
-                    {selectedIngredientData.name}
+                    {ingredientInModal.name}
                 </div>
             </div>
 
             <div className={styles.ingredientComposition}>
                 <div className={styles.ingredientCompositionItem}>
                     <div className="text text_type_main-small">Калории,ккал</div>
-                    <div className="text text_type_digits-medium">{selectedIngredientData.calories}</div>
+                    <div className="text text_type_digits-medium">{ingredientInModal.calories}</div>
                 </div>
                 <div className={styles.ingredientCompositionItem}>
                     <div className="text text_type_main-small">Белки, г</div>
-                    <div className="text text_type_digits-medium">{selectedIngredientData.proteins}</div>
+                    <div className="text text_type_digits-medium">{ingredientInModal.proteins}</div>
                 </div>
                 <div className={styles.ingredientCompositionItem}>
                     <div className="text text_type_main-small">Жиры, г</div>
-                    <div className="text text_type_digits-medium">{selectedIngredientData.fat}</div>
+                    <div className="text text_type_digits-medium">{ingredientInModal.fat}</div>
                 </div>
                 <div className={styles.ingredientCompositionItem}>
                     <div className="text text_type_main-small">Углеводы, г</div>
-                    <div className="text text_type_digits-medium">{selectedIngredientData.carbohydrates}</div>
+                    <div className="text text_type_digits-medium">{ingredientInModal.carbohydrates}</div>
                 </div>
             </div>
         </>
@@ -44,26 +45,14 @@ const IngredientDetails = ({ data, selectedId }) => {
     )
 }
 
-const IngredientDetailsModal = ({ isModalOpen, closeModal, data, selectedId, }) => {
+const IngredientDetailsModal = () => {
     return (
         <Modal title={'Детали ингредиента'}
-            isHeader={true}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}>
+            isHeader={true}>
 
-            <IngredientDetails data={data} selectedId={selectedId} />
+            <IngredientDetails/>
         </Modal>
     )
-}
-
-IngredientDetailsModal.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-}
-
-IngredientDetails.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes).isRequired,
-    selectedId: PropTypes.string.isRequired,
 }
 
 export default IngredientDetailsModal

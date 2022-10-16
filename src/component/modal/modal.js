@@ -3,19 +3,23 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
+import { useDispatch } from 'react-redux';
 
+import { removeIngredientFromModal } from '../../services/actions/index'
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.scss';
 
-const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
+const Modal = ({ isHeader, title, ...props }) => {
 
     const modalRoot = document.getElementById("react-modals");
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const closeModalByEsc = (evt) => {
             if (evt.key === 'Escape') {
-                closeModal()
+                dispatch(removeIngredientFromModal())
             }
         }
 
@@ -25,11 +29,11 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
     }, [])
 
     return ReactDOM.createPortal(
-        <ModalOverlay isModalOpen={isModalOpen} closeModal={closeModal}>
-            <div className={classnames(styles.modal, 'p-10', isModalOpen ? styles.modalShow : '')} onClick={(e) => e.stopPropagation()}>
+        <ModalOverlay>
+            <div className={classnames(styles.modal, 'p-10', styles.modalShow)} onClick={(e) => e.stopPropagation()}>
 
                 <div className={styles.modalClose}>
-                    <CloseIcon type="primary" onClick={closeModal} />
+                    <CloseIcon type="primary" onClick={() => dispatch(removeIngredientFromModal())} />
                 </div>
 
                 {isHeader &&
@@ -52,9 +56,7 @@ const Modal = ({ isHeader, title, closeModal, isModalOpen, ...props }) => {
 
 Modal.propTypes = {
     isHeader: PropTypes.bool,
-    isModalOpen: PropTypes.bool.isRequired,
     title: PropTypes.string,
-    closeModal: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
 }
 

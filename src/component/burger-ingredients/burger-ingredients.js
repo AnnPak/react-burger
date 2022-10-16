@@ -10,19 +10,9 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const ingregients = useSelector(store => store.ingregients)
+    const {isModalVisible } = useSelector(store => store);
 
     const [current, setCurrent] = useState('bun');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState('null');
-
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false)
-    }
 
     return (
 
@@ -31,22 +21,9 @@ const BurgerIngredients = () => {
 
             <TabsWrapper current={current} setCurrent={setCurrent} />
 
-            <BurgerIngredientsList 
-                data={ingregients}
-                isModalOpen={isModalOpen}
-                openModal={openModal}
-                closeModal={closeModal}
-                setSelectedId={setSelectedId}
-                selectedId={selectedId} />
+            <BurgerIngredientsList/>
 
-            {isModalOpen && ingregients > 0 &&
-                <IngredientDetailsModal 
-                    data={ingregients}
-                    selectedId={selectedId}
-                    isModalOpen={isModalOpen}
-                    closeModal={closeModal} />
-            }
-
+            {isModalVisible && <IngredientDetailsModal />}
 
         </section>
     )

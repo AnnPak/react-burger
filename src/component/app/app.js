@@ -15,12 +15,10 @@ import styles from './app.module.scss';
 
 
 function App() {
-  const [status, setStatus] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // setStatus('loading');
     dispatch(getIngredientsRequest());
 
     requestData(ingredientsApi)

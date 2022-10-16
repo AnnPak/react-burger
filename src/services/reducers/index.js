@@ -7,7 +7,8 @@ const initialState = {
     burgerIngregientsRequest: false,
     burgerIngregientsFailed: false,
 
-    selectedIngredient: [],
+    ingredientInModal: [],
+    isModalVisible: false,
 
     order: [],
 
@@ -15,10 +16,21 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'ADD_MODAL_INGREDIENT':{
+            return {
+                ...state, ingredientInModal: action.payload, isModalVisible: true
+            }
+        }
+
+        case 'REMOVE_MODAL_INGREDIENT':{
+            return {
+               ...state, ingredientInModal: [], isModalVisible: false,
+            }
+        }
+
         case 'GET_BURGER_INGREDIENTS_REQUEST':{
             return {
-                ...state,
-                burgerIngregientsRequest: true
+                ...state, burgerIngregientsRequest: true
             }
         }
 
@@ -30,9 +42,7 @@ const rootReducer = (state = initialState, action) => {
 
         case 'GET_BURGER_INGREDIENTS_FAILED':{
             return {
-                ...state,
-                burgerIngregientsFailed: true,
-                burgerIngregientsRequest: false
+                ...state, burgerIngregientsFailed: true, burgerIngregientsRequest: false
             }
         }
 
@@ -51,9 +61,7 @@ const rootReducer = (state = initialState, action) => {
 
         case 'GET_INGREDIENTS_FAILED':{
             return {
-                ...state,
-                ingregientsFailed: true,
-                ingregientsRequest: false
+                ...state, ingregientsFailed: true, ingregientsRequest: false
             }
         }
 
