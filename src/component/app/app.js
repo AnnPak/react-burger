@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,7 +27,7 @@ function App() {
 
   }, [])
 
-  const SetContent = () => {
+  const SetContent = useCallback(() => {
     switch (ingregientsStatus) {
       case 'loading':
         return <Preloader />
@@ -48,7 +48,7 @@ function App() {
       default:
           break;
     }
-  }
+  }, [ingregientsStatus])
 
 
   return (

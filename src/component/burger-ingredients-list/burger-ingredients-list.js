@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { addIngredientToModal } from '../../services/actions/index'
@@ -10,12 +10,10 @@ import { dataPropTypes } from '../../utils/constants';
 
 import styles from './burger-ingredients-list.module.scss'
 
-const BurgerIngredientsSection = ({ type }) => {
+const BurgerIngredientsSection = ({ ingregients, type }) => {
     
-    const {ingregients} = useSelector(store => store);
-
     //массив ингредиентов нужного типа
-    const filtedIngredientsArray = ingregients.filter(item => item.type === type); 
+    const filtedIngredientsArray = useMemo(() => ingregients.filter(item => item.type === type), [ingregients]); 
     let title;
 
     switch(type){
@@ -80,6 +78,7 @@ const BurgerIngredientsList = () => {
                 //вывожу секции ингредиентов по типам 
                 typesArray.map(ingredientType => 
                     <BurgerIngredientsSection 
+                        ingregients = {ingregients}
                         key={ingredientType}
                         type={ingredientType} />
                 )
@@ -90,6 +89,7 @@ const BurgerIngredientsList = () => {
 
 BurgerIngredientsSection.propTypes = {
     type: PropTypes.string,
+    ingredients: PropTypes.arrayOf(dataPropTypes).isRequired,
 };
 
 BurgerIngredientsItem.propTypes = {
