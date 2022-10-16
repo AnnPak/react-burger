@@ -14,7 +14,8 @@ const BurgerIngredientsSection = ({ type }) => {
     
     const {ingregients} = useSelector(store => store);
 
-    const filtedIngredientsArray = ingregients.filter(item => item.type === type);
+    //массив ингредиентов нужного типа
+    const filtedIngredientsArray = ingregients.filter(item => item.type === type); 
     let title;
 
     switch(type){
@@ -38,7 +39,7 @@ const BurgerIngredientsSection = ({ type }) => {
                 {filtedIngredientsArray.map(ingredient => 
                     <BurgerIngredientsItem
                         ingredient={ingredient}
-                        key={item._id}/>)}
+                        key={ingredient._id}/>)}
             </div>
         </section>
 
@@ -70,12 +71,13 @@ const BurgerIngredientsItem = ({ ingredient }) => {
 const BurgerIngredientsList = () => {
     const {ingregients } = useSelector(store => store);
 
-    let typesArray = ingregients.map(item => item.type);
-    typesArray = [...new Set(typesArray)];
+    let typesArray = ingregients.map(item => item.type); //создаю массив из типов ингредиентов
+    typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
 
     return (
         <section className={classnames(styles.ingredientsSectionsList, 'mt-10')}>
             {
+                //вывожу секции ингредиентов по типам 
                 typesArray.map(ingredientType => 
                     <BurgerIngredientsSection 
                         key={ingredientType}
@@ -86,25 +88,11 @@ const BurgerIngredientsList = () => {
     )
 }
 
-// BurgerIngredientsList.propTypes = {
-//     data: PropTypes.arrayOf(dataPropTypes).isRequired,
-//     openModal: PropTypes.func.isRequired,
-//     setSelectedId: PropTypes.func,
-//     selectedId: PropTypes.string
-// };
-
 // BurgerIngredientsSection.propTypes = {
-//     data: PropTypes.arrayOf(dataPropTypes).isRequired,
-//     type: PropTypes.string.isRequired,
-//     openModal: PropTypes.func.isRequired,
-//     setSelectedId: PropTypes.func,
-//     selectedId: PropTypes.string
 // };
 
 // BurgerIngredientsItem.propTypes = {
 //     ingredient: dataPropTypes.isRequired,
-//     openModal: PropTypes.func,
-//     setSelectedId: PropTypes.func
 // };
 
 export default BurgerIngredientsList;

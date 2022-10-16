@@ -93,18 +93,18 @@ const BurgerConstructorWpaper = ({resultIngredientsData}) => {
     )
 }
 
-BurgerConstructorElement.propTypes = {
-    class: PropTypes.string,
-    type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    text: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-    svg: PropTypes.bool
-};
+// BurgerConstructorElement.propTypes = {
+//     class: PropTypes.string,
+//     type: PropTypes.string,
+//     isLocked: PropTypes.bool,
+//     text: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     thumbnail: PropTypes.string.isRequired,
+//     svg: PropTypes.bool
+// };
 
-BurgerConstructorWpaper.propTypes = {
-    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
-};
+// BurgerConstructorWpaper.propTypes = {
+//     resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
+// };
 
 export default BurgerConstructorWpaper;

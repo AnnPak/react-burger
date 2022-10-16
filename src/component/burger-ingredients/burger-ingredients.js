@@ -10,7 +10,7 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const {isModalVisible } = useSelector(store => store);
+    const {isIngredientModalVisible } = useSelector(store => store);
 
     const [current, setCurrent] = useState('bun');
 
@@ -23,7 +23,7 @@ const BurgerIngredients = () => {
 
             <BurgerIngredientsList/>
 
-            {isModalVisible && <IngredientDetailsModal />}
+            {isIngredientModalVisible && <IngredientDetailsModal />}
 
         </section>
     )

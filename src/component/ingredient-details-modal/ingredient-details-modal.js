@@ -1,9 +1,7 @@
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 
 import Modal from '../modal/modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { dataPropTypes } from '../../utils/constants';
+import { useSelector } from 'react-redux';
 
 import styles from './ingredient-details-modal.module.scss'
 
@@ -47,7 +45,8 @@ const IngredientDetails = () => {
 
 const IngredientDetailsModal = () => {
     return (
-        <Modal title={'Детали ингредиента'}
+        <Modal 
+            title={'Детали ингредиента'}
             isHeader={true}>
 
             <IngredientDetails/>

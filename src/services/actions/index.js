@@ -36,6 +36,25 @@ export const getBurderIngredientsFailed = () => {
     }
 }
 
+export const getOrderRequest = () => {
+    return {
+        type: 'GET_ORDER_REQUEST'
+    }
+}
+
+export const getOrderSuccess = (order) => {
+    return {
+        type: 'GET_ORDER_SUCCESS',
+        payload: order
+    }
+}
+
+export const getOrderFailed = () => {
+    return {
+        type: 'GET_ORDER_FAILED'
+    }
+}
+
 export const addIngredientToModal = (ingredient) => {
     return {
         type: 'ADD_MODAL_INGREDIENT',
@@ -44,9 +63,17 @@ export const addIngredientToModal = (ingredient) => {
     }
 }
 
-export const removeIngredientFromModal = () => {
+export const addOrderToModal = (order) => {
     return {
-        type: 'REMOVE_MODAL_INGREDIENT',
+        type: 'ADD_MODAL_ORDER',
+        payload: order
+
+    }
+}
+
+export const removeModal = () => {
+    return {
+        type: 'REMOVE_MODAL',
     }
 }
 

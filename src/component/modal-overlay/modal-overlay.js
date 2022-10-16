@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { removeIngredientFromModal } from '../../services/actions/index'
+import { removeModal } from '../../services/actions/index'
 
 
 import styles from './modal-overlay.module.scss';
@@ -12,7 +12,7 @@ const ModalOverlay = (props) => {
 
     return (
         <section className={classnames(styles.modalOverlay, styles.modalShow)}
-                  onClick={() => dispatch(removeIngredientFromModal())}>
+                  onClick={() => dispatch(removeModal())}>
             {props.children}
         </section>
     )

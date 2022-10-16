@@ -1,4 +1,4 @@
-const requestData = async (url, setData, setStatus, body=null, method='GET') => {
+const requestData = async (url,body=null, method='GET') => {
     const requestOptions = {
         method: method,
         headers: { 'Content-Type': 'application/json' },
@@ -12,11 +12,7 @@ const requestData = async (url, setData, setStatus, body=null, method='GET') => 
                 }
                 return response.json();
             })
-            // .then(json => setData(json))
-            // .then(() => setStatus('done'))
-            // .catch((e) => {
-            //     setStatus('error')
-            // })
+
 }
 
 export default requestData;

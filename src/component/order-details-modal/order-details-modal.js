@@ -3,17 +3,19 @@ import classnames from 'classnames';
 import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
+import { useSelector } from 'react-redux';
 import Preloader from '../preloader/preloader';
 
 import styles from './order-details-modal.module.scss';
 import doneImg from '../../images/done.png'
 
-const OrderDetails = ({ orderData }) => {
+const OrderDetails = () => {
+    const {order } = useSelector(store => store);
 
     return (
         <>
             <div className={styles.constructorModalId}>
-                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>{orderData.order.number}</p>
+                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>{order.order.number}</p>
 
                 <p className="text text_type_main-medium mt-9">
                     идентификатор заказа
@@ -32,15 +34,16 @@ const OrderDetails = ({ orderData }) => {
     )
 }
 
-const OrderDetailsModal = ({isModalOpen, closeModal, orderData, orderStatus}) => {
+const OrderDetailsModal = () => {
+    const {orderStatus } = useSelector(store => store);
 
     const SetContent = () => {
         switch (orderStatus) {
             case 'loading':
                 return <Preloader />
-            case 'done':
+            case 'success':
                 return (
-                    <OrderDetails orderData={orderData}/>
+                    <OrderDetails/>
                 )
             case 'error':
                 return (
@@ -55,21 +58,10 @@ const OrderDetailsModal = ({isModalOpen, closeModal, orderData, orderStatus}) =>
     }
 
     return(
-        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+        <Modal>
             <SetContent/>
         </Modal>
     )
-}
-
-OrderDetails.propTypes = {
-    orderData: PropTypes.object.isRequired
-}
-
-OrderDetailsModal.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    orderData: PropTypes.object.isRequired,
-    orderStatus: PropTypes.string.isRequired
 }
 
 export default OrderDetailsModal

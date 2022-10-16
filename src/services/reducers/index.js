@@ -1,67 +1,94 @@
 const initialState = {
     ingregients: [],
-    ingregientsRequest: false,
-    ingregientsFailed: false,
-
-    burgerIngregients: [],
-    burgerIngregientsRequest: false,
-    burgerIngregientsFailed: false,
+    ingregientsStatus: 'idle',
 
     ingredientInModal: [],
-    isModalVisible: false,
+    isIngredientModalVisible: false,
+
+    burgerIngregients: [],
+    burgerIngregientsStatus: 'idle',
 
     order: [],
+    orderStatus: 'idle',
+
+    orderInModal: [],
+    isOrderModalVisible: false,
+
 
 }
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_MODAL_INGREDIENT':{
+        case 'GET_ORDER_REQUEST': {
             return {
-                ...state, ingredientInModal: action.payload, isModalVisible: true
+                ...state, orderStatus: 'loading', isOrderModalVisible: true
             }
         }
 
-        case 'REMOVE_MODAL_INGREDIENT':{
+        case 'GET_ORDER_SUCCESS': {
             return {
-               ...state, ingredientInModal: [], isModalVisible: false,
+                ...state, order: action.payload, orderStatus: 'success',
+            }
+        }
+
+        case 'GET_ORDER_FAILED': {
+            return {
+                ...state, orderStatus: 'error',
+            }
+        }
+
+        case 'ADD_MODAL_INGREDIENT':{
+            return {
+                ...state, ingredientInModal: action.payload, isIngredientModalVisible: true,
+            }
+        }
+
+        case 'ADD_MODAL_ORDER':{
+            return {
+                ...state, orderInModal: action.payload, isIngredientModalVisible: true
+            }
+        }
+
+        case 'REMOVE_MODAL':{
+            return {
+               ...state, ingredientInModal: [], isIngredientModalVisible: false, orderInModal: [], isOrderModalVisible: false
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_REQUEST':{
             return {
-                ...state, burgerIngregientsRequest: true
+                ...state, burgerIngregientsStatus: 'loading'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_SUCCESS':{
             return {
-                ...state, burgerIngregientsFailed: false, burgerIngregients: action.payload, burgerIngregientsRequest: false
+                ...state, burgerIngregients: action.payload, burgerIngregientsStatus: 'success'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_FAILED':{
             return {
-                ...state, burgerIngregientsFailed: true, burgerIngregientsRequest: false
+                ...state, burgerIngregientsStatus: 'error'
             }
         }
 
         case 'GET_INGREDIENTS_REQUEST':{
             return {
                 ...state,
-                ingregientsRequest: true
+                ingregientsStatus: 'loading'
             }
         }
 
         case 'GET_INGREDIENTS_SUCCESS':{
             return {
-                ...state, ingregientsFailed: false, ingregients: action.payload, ingregientsRequest: false
+                ...state, ingregients: action.payload, ingregientsStatus: 'success'
             }
         }
 
         case 'GET_INGREDIENTS_FAILED':{
             return {
-                ...state, ingregientsFailed: true, ingregientsRequest: false
+                ...state, ingregientsStatus: 'error'
             }
         }
 
