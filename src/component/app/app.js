@@ -1,6 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -33,20 +35,23 @@ function App() {
         return <Preloader />
       case 'success':
         return (
-          <main className={styles.burgerSection}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
+          <DndProvider backend={HTML5Backend}>
+            <main className={styles.burgerSection}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </main>
+          </DndProvider>
+
         )
       case 'error':
         return (
-            <p className="text text_type_main-medium">
-              <InfoIcon type="error" />
-              Ошибка!
-            </p>
-          )
+          <p className="text text_type_main-medium">
+            <InfoIcon type="error" />
+            Ошибка!
+          </p>
+        )
       default:
-          break;
+        break;
     }
   }, [ingregientsStatus])
 
