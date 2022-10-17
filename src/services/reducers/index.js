@@ -11,6 +11,7 @@ const initialState = {
     burgerIngregientsStatus: 'idle',
 
     order: [],
+    orderIngredients: [],
     orderStatus: 'idle',
 
     orderInModal: [],
@@ -23,6 +24,13 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case 'SET_ORDER_INGREDIENTS': {
+            return {
+                ...state, orderIngredients: action.payload
+            }
+        }
+
         case 'SET_TYPES_OF_INGREGIENTS': {
             return {
                 ...state, typesOfIngredients: action.payload
@@ -105,6 +113,20 @@ const rootReducer = (state = initialState, action) => {
         case 'GET_INGREDIENTS_FAILED':{
             return {
                 ...state, ingregientsStatus: 'error'
+            }
+        }
+
+        case 'ADD_COMPONENT': {
+            return {
+                ...state, 
+                burgerIngregients: [ ...state.burgerIngregients, action.payload]
+            }
+        }
+
+        case 'REPLASE_BUN_COMPONENT': {
+            return {
+                ...state, 
+                burgerIngregients: state.burgerIngregients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient)
             }
         }
 

@@ -1,11 +1,105 @@
+import { useEffect } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
-import { dataPropTypes } from '../../utils/constants';
+import { addComponent, replaseBunComponent, setOrderIngregients } from '../../services/actions/index'
 
 import styles from './burger-constructor.module.scss';
 
+
+
+const BurgerConstructorWpaper = () => {
+
+    const { burgerIngregients } = useSelector(store => store);
+    const dispatch = useDispatch();
+
+    const [{ isHover }, dropTargerRef] = useDrop({
+        accept: "ingredients",
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+        drop(ingredient) {
+            if (burgerIngregients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
+                dispatch(replaseBunComponent(ingredient, uuidv4()));
+            } else {
+                dispatch(addComponent(ingredient, uuidv4()));
+            }
+
+        },
+    });
+
+    const elementTypeBun = burgerIngregients.find(item => item.type === 'bun');
+
+    //формирую массив с ингредиетами для заказа
+    useEffect(() => {
+        if (elementTypeBun) {
+            const resultIndredients = [...burgerIngregients, elementTypeBun]
+
+            dispatch(setOrderIngregients(resultIndredients));
+        } else {
+            dispatch(setOrderIngregients(burgerIngregients));
+
+        }
+
+
+    }, [burgerIngregients, elementTypeBun, dispatch])
+
+
+
+    return (
+
+        <section className={styles.constructorElements} ref={dropTargerRef}>
+
+            {elementTypeBun &&
+                <BurgerConstructorElement
+                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
+                    key={uuidv4()}
+                    type='top'
+                    isLocked={true}
+                    text={elementTypeBun.name}
+                    price={elementTypeBun.price}
+                    thumbnail={elementTypeBun.image} />
+
+            }
+
+            <div className={classnames(styles.constructorElements, 'pr-2')} >
+                {burgerIngregients &&
+
+                    burgerIngregients.filter(item => item.type !== 'bun').map((item) => {
+                        return (
+                            <BurgerConstructorElement
+                                classname={classnames(styles.constructorElement)}
+                                key={uuidv4()}
+                                text={item.name}
+                                price={item.price}
+                                thumbnail={item.image}
+                                svg={true} />
+                        )
+                    })
+                }
+            </div>
+
+            {elementTypeBun &&
+                <BurgerConstructorElement
+                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
+                    key={uuidv4()}
+                    type='bottom'
+                    isLocked={true}
+                    text={elementTypeBun.name}
+                    price={elementTypeBun.price}
+                    thumbnail={elementTypeBun.image} />
+
+            }
+
+        </section>
+    )
+
+
+}
 
 const BurgerConstructorElement = ({ text, ...props }) => {
 
@@ -39,59 +133,6 @@ const BurgerConstructorElement = ({ text, ...props }) => {
     )
 }
 
-const BurgerConstructorWpaper = ({resultIngredientsData}) => {
-
-    const elementTypeBun = resultIngredientsData.find(item => item.type === 'bun');
-
-    return (
-
-        <section className={styles.constructorElements}>
-
-            {
-                <BurgerConstructorElement
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={elementTypeBun._id}
-                    type='top'
-                    isLocked={true}
-                    text={elementTypeBun.name}
-                    price={elementTypeBun.price}
-                    thumbnail={elementTypeBun.image} />
-
-            }
-
-            <div className={classnames(styles.constructorElements, 'pr-2')}>
-                {
-
-                    resultIngredientsData.filter(item => item.type !== 'bun').map((item) => {
-                        return (
-                            <BurgerConstructorElement
-                                classname={classnames(styles.constructorElement)}
-                                key={item._id}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                svg={true} />
-                        )
-                    })
-                }
-            </div>
-
-            {
-                <BurgerConstructorElement
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={elementTypeBun._id + 'n2'}
-                    type='bottom'
-                    isLocked={true}
-                    text={elementTypeBun.name}
-                    price={elementTypeBun.price}
-                    thumbnail={elementTypeBun.image} />
-
-            }
-
-        </section>
-
-    )
-}
 
 BurgerConstructorElement.propTypes = {
     class: PropTypes.string,
@@ -103,8 +144,5 @@ BurgerConstructorElement.propTypes = {
     svg: PropTypes.bool
 };
 
-BurgerConstructorWpaper.propTypes = {
-    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
-};
 
 export default BurgerConstructorWpaper;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { addIngredientToModal } from '../../services/actions/index'
 import { InView } from "react-intersection-observer";
+import { useDrag } from 'react-dnd';
 
 import classnames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -50,11 +51,24 @@ const BurgerIngredientsSection = ({ ingregients, type }) => {
 const BurgerIngredientsItem = ({ ingredient }) => {
 
     const { name, image, price } = ingredient;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const [{ opacity }, dragRef] = useDrag({
+        type: 'ingredients',
+        item: {...ingredient},
+        collect: monitor => ({
+          opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    })
+
+
+
 
     return (
-        <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}
-            onClick={() => { dispatch(addIngredientToModal(ingredient)) }}>
+        <div ref={dragRef} 
+             className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}
+             onClick={() => { dispatch(addIngredientToModal(ingredient)) }} 
+             style={{ opacity }}>
 
             <img src={image} alt={name} />
 

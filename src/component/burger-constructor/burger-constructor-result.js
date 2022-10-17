@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -12,14 +12,17 @@ import { getOrderSuccess, getOrderRequest, getOrderFailed } from '../../services
 
 import styles from './burger-constructor.module.scss';
 
-const BurgerConstructorResult = ({ resultIngredientsData }) => {
+const BurgerConstructorResult = () => {
     const [totalPrice, setTotalPrice] = useState(0);
+
+    const { orderIngredients } = useSelector(store => store)
     const dispatch = useDispatch();
+
     
     const createOrder = () => {
-        //const idsObject = resultIngredientsData.map(item => item._id); //список id ингредиентов в заказе
+        const idsObject = orderIngredients.map(item => item._id); //список id ингредиентов в заказе
         
-        const requestBody = JSON.stringify({ "ingredients": ["60d3b41abdacab0026a733c6"] })
+        const requestBody = JSON.stringify({ "ingredients": idsObject })
 
         
         dispatch(getOrderRequest())
@@ -33,10 +36,10 @@ const BurgerConstructorResult = ({ resultIngredientsData }) => {
     }
 
     useEffect(() => {
-        const getAllPrice = resultIngredientsData.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+        const getAllPrice = orderIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
         
         setTotalPrice(getAllPrice)
-    }, [resultIngredientsData])
+    }, [orderIngredients])
 
     return (
         <section className={classnames(styles.constructorResult, 'mt-10')}>

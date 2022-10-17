@@ -94,6 +94,30 @@ export const setTypesOfIngredients = (types) => {
     }
 }
 
+export const addComponent = (ingredient, id) => {
+    return {
+        type: 'ADD_COMPONENT',
+        payload: ingredient,
+        id: id
+    }
+}
+
+export const replaseBunComponent = (ingredient, id) => {
+    return {
+        type: 'REPLASE_BUN_COMPONENT',
+        payload: ingredient,
+        id: id
+    }
+}
+
+export const setOrderIngregients = (ingredients) => {
+    return {
+        type: 'SET_ORDER_INGREDIENTS',
+        payload: ingredients
+    }
+}
+
+
 
 
 
