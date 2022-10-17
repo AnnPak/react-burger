@@ -4,11 +4,9 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { dataPropTypes } from '../../utils/constants';
 import requestData from '../../utils/request';
-import { ordersApi } from '../../utils/constants';
-import { addOrderToModal } from '../../services/actions/index'
-import { getOrderSuccess, getOrderRequest, getOrderFailed } from '../../services/actions/index'
+import { ordersApi,dataPropTypes } from '../../utils/constants';
+import { getOrderSuccess, getOrderRequest, getOrderFailed, addOrderToModal } from '../../services/actions/index'
 
 import styles from './burger-constructor.module.scss';
 
@@ -21,18 +19,15 @@ const BurgerConstructorResult = () => {
     
     const createOrder = () => {
         const idsObject = orderIngredients.map(item => item._id); //список id ингредиентов в заказе
-        
         const requestBody = JSON.stringify({ "ingredients": idsObject })
 
-        
         dispatch(getOrderRequest())
 
         requestData(ordersApi, requestBody, 'POST')
             .then(order => dispatch(getOrderSuccess(order)))
             .catch(() => dispatch(getOrderFailed()))
-
-        addOrderToModal()
-       
+        
+        dispatch(addOrderToModal())
     }
 
     useEffect(() => {

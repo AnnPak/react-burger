@@ -18,7 +18,7 @@ import styles from './app.module.scss';
 function App() {
 
   const dispatch = useDispatch();
-  const { ingregientsStatus } = useSelector(store => store);
+  const { ingredientsStatus } = useSelector(store => store);
 
   useEffect(() => {
     dispatch(getIngredientsRequest());
@@ -30,7 +30,7 @@ function App() {
   }, [dispatch])
 
   const SetContent = useCallback(() => {
-    switch (ingregientsStatus) {
+    switch (ingredientsStatus) {
       case 'loading':
         return <Preloader />
       case 'success':
@@ -53,7 +53,7 @@ function App() {
       default:
         break;
     }
-  }, [ingregientsStatus])
+  }, [ingredientsStatus])
 
 
   return (

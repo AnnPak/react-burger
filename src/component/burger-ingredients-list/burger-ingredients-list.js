@@ -61,16 +61,12 @@ const BurgerIngredientsItem = ({ ingredient }) => {
         })
     })
 
-
-
-
     return (
-        <div ref={dragRef} 
-             className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}
+        <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}
              onClick={() => { dispatch(addIngredientToModal(ingredient)) }} 
              style={{ opacity }}>
 
-            <img src={image} alt={name} />
+            <img src={image} alt={name} ref={dragRef}/>
 
             <div className={classnames(styles.ingredientsItemPrice, 'mt-1 mr-4 mb-1')}>
                 <p className='pr-2'>{price}</p>

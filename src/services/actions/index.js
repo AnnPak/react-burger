@@ -88,29 +88,27 @@ export const setTabsValue = (value) => {
 
 export const setTypesOfIngredients = (types) => {
     return {
-        type: 'SET_TYPES_OF_INGREGIENTS',
-        payload: types
+        type: 'SET_TYPES_OF_ingredients',
+        payload: types,
 
     }
 }
 
-export const addComponent = (ingredient, id) => {
+export const addComponent = (ingredient) => {
     return {
-        type: 'ADD_COMPONENT',
+        type: 'ADD_COMPONENT_TO_CONSTRUCTOR',
         payload: ingredient,
-        id: id
     }
 }
 
-export const replaseBunComponent = (ingredient, id) => {
+export const replaseBunComponent = (ingredient) => {
     return {
         type: 'REPLASE_BUN_COMPONENT',
         payload: ingredient,
-        id: id
     }
 }
 
-export const setOrderIngregients = (ingredients) => {
+export const setOrderingredients = (ingredients) => {
     return {
         type: 'SET_ORDER_INGREDIENTS',
         payload: ingredients

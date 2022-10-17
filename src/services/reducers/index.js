@@ -1,14 +1,14 @@
 const initialState = {
-    ingregients: [],
-    ingregientsStatus: 'idle',
+    ingredients: [],
+    ingredientsStatus: 'idle',
 
     typesOfIngredients: [],
 
     ingredientInModal: [],
     isIngredientModalVisible: false,
 
-    burgerIngregients: [],
-    burgerIngregientsStatus: 'idle',
+    burgeringredients: [],
+    burgeringredientsStatus: 'idle',
 
     order: [],
     orderIngredients: [],
@@ -31,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
             }
         }
 
-        case 'SET_TYPES_OF_INGREGIENTS': {
+        case 'SET_TYPES_OF_ingredients': {
             return {
                 ...state, typesOfIngredients: action.payload
             }
@@ -81,52 +81,59 @@ const rootReducer = (state = initialState, action) => {
 
         case 'GET_BURGER_INGREDIENTS_REQUEST':{
             return {
-                ...state, burgerIngregientsStatus: 'loading'
+                ...state, burgeringredientsStatus: 'loading'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_SUCCESS':{
             return {
-                ...state, burgerIngregients: action.payload, burgerIngregientsStatus: 'success'
+                ...state, burgeringredients: action.payload, burgeringredientsStatus: 'success'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_FAILED':{
             return {
-                ...state, burgerIngregientsStatus: 'error'
+                ...state, burgeringredientsStatus: 'error'
             }
         }
 
         case 'GET_INGREDIENTS_REQUEST':{
             return {
                 ...state,
-                ingregientsStatus: 'loading'
+                ingredientsStatus: 'loading'
             }
         }
 
         case 'GET_INGREDIENTS_SUCCESS':{
             return {
-                ...state, ingregients: action.payload, ingregientsStatus: 'success'
+                ...state, ingredients: action.payload, ingredientsStatus: 'success'
             }
         }
 
         case 'GET_INGREDIENTS_FAILED':{
             return {
-                ...state, ingregientsStatus: 'error'
+                ...state, ingredientsStatus: 'error'
             }
         }
 
-        case 'ADD_COMPONENT': {
+        case 'ADD_COMPONENT_TO_CONSTRUCTOR': {
             return {
                 ...state, 
-                burgerIngregients: [ ...state.burgerIngregients, action.payload]
+                burgeringredients: [ ...state.burgeringredients, action.payload]
+            }
+        }
+
+        case 'REMOVE_COMPONENT_FROM_CONSTRUCTOR': {
+            return {
+                ...state, 
+                burgeringredients: [ ...state.burgeringredients, action.payload]
             }
         }
 
         case 'REPLASE_BUN_COMPONENT': {
             return {
                 ...state, 
-                burgerIngregients: state.burgerIngregients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient)
+                burgeringredients: state.burgeringredients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient)
             }
         }
 

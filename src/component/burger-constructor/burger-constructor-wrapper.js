@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addComponent, replaseBunComponent, setOrderIngregients } from '../../services/actions/index'
+import { addComponent, replaseBunComponent, setOrderingredients } from '../../services/actions/index'
 
 import styles from './burger-constructor.module.scss';
 
@@ -14,7 +14,7 @@ import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorWpaper = () => {
 
-    const { burgerIngregients } = useSelector(store => store);
+    const { burgeringredients } = useSelector(store => store);
     const dispatch = useDispatch();
 
     const [{ isHover }, dropTargerRef] = useDrop({
@@ -23,30 +23,30 @@ const BurgerConstructorWpaper = () => {
             isHover: monitor.isOver(),
         }),
         drop(ingredient) {
-            if (burgerIngregients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
-                dispatch(replaseBunComponent(ingredient, uuidv4()));
+            if (burgeringredients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
+                dispatch(replaseBunComponent(ingredient));
             } else {
-                dispatch(addComponent(ingredient, uuidv4()));
+                dispatch(addComponent(ingredient));
             }
 
         },
     });
 
-    const elementTypeBun = burgerIngregients.find(item => item.type === 'bun');
+    const elementTypeBun = burgeringredients.find(item => item.type === 'bun');
 
     //формирую массив с ингредиетами для заказа
     useEffect(() => {
         if (elementTypeBun) {
-            const resultIndredients = [...burgerIngregients, elementTypeBun]
+            const resultIndredients = [...burgeringredients, elementTypeBun]
 
-            dispatch(setOrderIngregients(resultIndredients));
+            dispatch(setOrderingredients(resultIndredients));
         } else {
-            dispatch(setOrderIngregients(burgerIngregients));
+            dispatch(setOrderingredients(burgeringredients));
 
         }
 
 
-    }, [burgerIngregients, elementTypeBun, dispatch])
+    }, [burgeringredients, elementTypeBun, dispatch])
 
 
 
@@ -67,9 +67,9 @@ const BurgerConstructorWpaper = () => {
             }
 
             <div className={classnames(styles.constructorElements, 'pr-2')} >
-                {burgerIngregients &&
+                {burgeringredients &&
 
-                    burgerIngregients.filter(item => item.type !== 'bun').map((item) => {
+                    burgeringredients.filter(item => item.type !== 'bun').map((item) => {
                         return (
                             <BurgerConstructorElement
                                 classname={classnames(styles.constructorElement)}
