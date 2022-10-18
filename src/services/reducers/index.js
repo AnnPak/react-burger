@@ -9,6 +9,7 @@ const initialState = {
 
     burgerIngredients: [],
     burgerIngredientsStatus: 'idle',
+    ingredientsWithOutBun: [],
 
     order: [],
     orderIngredients: [],
@@ -119,16 +120,11 @@ const rootReducer = (state = initialState, action) => {
         case 'ADD_COMPONENT_TO_CONSTRUCTOR': {
             return {
                 ...state, 
-                burgerIngredients: [ ...state.burgerIngredients, action.payload]
+                burgerIngredients: [ ...state.burgerIngredients, action.payload],
+                ingredientsWithOutBun: action.payload.type !== "bun" ? [ ...state.ingredientsWithOutBun, action.payload] : state.ingredientsWithOutBun
             }
         }
 
-        case 'REMOVE_COMPONENT_FROM_CONSTRUCTOR': {
-            return {
-                ...state, 
-                burgerIngredients: [ ...state.burgerIngredients, action.payload]
-            }
-        }
 
         case 'REPLASE_BUN_COMPONENT': {
             return {
@@ -140,7 +136,7 @@ const rootReducer = (state = initialState, action) => {
         case 'UPDATE_CONSTRUCTOR_LIST': {
             return {
                 ...state, 
-                burgerIngredients: action.payload ?  action.payload : state.burgerIngredients
+                ingredientsWithOutBun: action.payload ?  action.payload : state.burgerIngredients
             }
         }
 

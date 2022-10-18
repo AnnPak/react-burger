@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { dataPropTypes } from '../../utils/constants';
-import { addComponent, replaseBunComponent, setOrderIngredients, updateConstructorList, sortConstructorList } from '../../services/actions/index'
+import { addComponent, replaseBunComponent, setOrderIngredients, updateConstructorList } from '../../services/actions/index'
 
 import styles from './burger-constructor.module.scss';
 
@@ -15,7 +14,7 @@ import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorWpaper = () => {
 
-    const { burgerIngredients } = useSelector(store => store);
+    const { burgerIngredients, ingredientsWithOutBun } = useSelector(store => store);
     const dispatch = useDispatch();
 
     const [{ isHover }, dropTargerRef] = useDrop({
@@ -28,18 +27,6 @@ const BurgerConstructorWpaper = () => {
                 dispatch(replaseBunComponent(ingredient));
             } else {
                 dispatch(addComponent(ingredient));
-            }
-
-            // Перемещаю булку в начало массива для dnd
-            const bun = burgerIngredients.find(item => item.type === 'bun');
-            const bunIndex = burgerIngredients.indexOf(bun);
-
-            if(bunIndex > 0){
-                const newArr =  burgerIngredients;
-                newArr.splice(bunIndex, 1)
-                newArr.splice(0, 0, bun)
-
-                dispatch(sortConstructorList(newArr))
             }
 
         },
@@ -55,17 +42,21 @@ const BurgerConstructorWpaper = () => {
         } else {
             dispatch(setOrderIngredients(burgerIngredients));
         }
-    }, [burgerIngredients, dispatch])
+    }, [burgerIngredients, elementTypeBun, dispatch])
 
-    const moveCard = useCallback((dragIndex, hoverIndex, ingredientsArray) => {
-        const dragCard = ingredientsArray[dragIndex];
-        const newCards = [...ingredientsArray]
+    const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithOutBun) => {
+        const dragCard = ingredientsWithOutBun[dragIndex];
+        const newCards = [...ingredientsWithOutBun]
 
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
 
+        
+
         dispatch(updateConstructorList(newCards))
     }, [dispatch]);
+
+    
 
     const renderCard = useCallback((item, index) => {
         return (
@@ -78,11 +69,11 @@ const BurgerConstructorWpaper = () => {
                 key={uuidv4()}
                 svg={true} />
         )
-    }, [isHover, moveCard])
+    }, [])
 
     return (
 
-        <section className={styles.constructorElements} ref={dropTargerRef}>
+        <section className={styles.constructorElements} >
 
             {elementTypeBun &&
                 <BurgerConstructorElement
@@ -95,11 +86,10 @@ const BurgerConstructorWpaper = () => {
 
             }
 
-            <div className={classnames(styles.constructorElements, 'pr-2')} >
-                {burgerIngredients &&
+            <div className={classnames(styles.constructorElements, 'pr-2')} ref={dropTargerRef}>
+                {ingredientsWithOutBun &&
 
-                    burgerIngredients
-                        .filter(item => item.type !== 'bun')
+                    ingredientsWithOutBun
                         .map((item, index) => renderCard(item, index))
 
                 }
@@ -123,18 +113,18 @@ const BurgerConstructorWpaper = () => {
 }
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { burgerIngredients } = useSelector(store => store);
+    const { ingredientsWithOutBun } = useSelector(store => store);
 
     const { svg, isLocked, type, classname, index, isHover, moveCard } = props;
-    const { price, image } = ingredient
-    let { name } = ingredient
+    const { price, image, _id, name } = ingredient
+    let { text } = ingredient
 
     switch (type) {
         case 'top':
-            name = name + ' (верх)';
+            text = text + ' (верх)';
             break;
         case 'bottom':
-            name = name + ' (низ)';
+            text = text + ' (низ)';
             break;
         default:
     }
@@ -152,8 +142,10 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             if (!ref.current) {
                 return;
             }
+
             const dragIndex = item.index;
             const hoverIndex = index;
+            
 
             if (dragIndex === hoverIndex) {
                 return;
@@ -172,7 +164,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                 return;
             }
 
-            moveCard(dragIndex, hoverIndex, burgerIngredients);
+            moveCard(dragIndex, hoverIndex, ingredientsWithOutBun);
             item.index = hoverIndex;
         }
     })
@@ -208,14 +200,15 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 }
 
 
-BurgerConstructorElement.propTypes = {
-    class: PropTypes.string,
-    isLocked: PropTypes.bool,
-    text: PropTypes.string.isRequired,
-    svg: PropTypes.bool,
-    ingredient: PropTypes.arrayOf(dataPropTypes).isRequired,
-    moveCard: PropTypes.func,
-};
+// BurgerConstructorElement.propTypes = {
+//     class: PropTypes.string,
+//     type: PropTypes.string,
+//     isLocked: PropTypes.bool,
+//     text: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     thumbnail: PropTypes.string.isRequired,
+//     svg: PropTypes.bool
+// };
 
 
 export default BurgerConstructorWpaper;
