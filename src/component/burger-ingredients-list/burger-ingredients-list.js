@@ -13,9 +13,9 @@ import { dataPropTypes } from '../../utils/constants';
 
 import styles from './burger-ingredients-list.module.scss'
 
-const BurgerIngredientsSection = ({ ingregients, type }) => {
+const BurgerIngredientsSection = ({ ingredients, type }) => {
      //массив ингредиентов нужного типа
-    const filtedIngredientsArray = useMemo(() => ingregients.filter(item => item.type === type), [ingregients, type]);
+    const filtedIngredientsArray = useMemo(() => ingredients.filter(item => item.type === type), [ingredients, type]);
     let title;
 
     switch (type) {
@@ -80,16 +80,16 @@ const BurgerIngredientsItem = ({ ingredient }) => {
 }
 
 const BurgerIngredientsList = () => {
-    const { ingregients, typesOfIngredients } = useSelector(store => store);
+    const { ingredients, typesOfIngredients } = useSelector(store => store);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        let typesArray = ingregients.map(item => item.type); //создаю массив из типов ингредиентов
+        let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов
         typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
 
         dispatch(setTypesOfIngredients(typesArray));
 
-    }, [ingregients, dispatch])
+    }, [ingredients, dispatch])
 
     const callTabsAction = (inView, type) => {
         inView === true && dispatch(setTabsValue(type));
@@ -97,7 +97,7 @@ const BurgerIngredientsList = () => {
 
     return (
         <section className={classnames(styles.ingredientsSectionsList, 'mt-10')}>
-            {ingregients &&
+            {ingredients &&
                 //вывожу секции ингредиентов по типам 
                 typesOfIngredients.map(ingredientType =>
                     <InView 
@@ -109,7 +109,7 @@ const BurgerIngredientsList = () => {
                         initialInView={ingredientType === 'bun' ? true : false}>
                             
                         <BurgerIngredientsSection
-                            ingregients={ingregients}
+                            ingredients={ingredients}
                             type={ingredientType} />
                     </InView>
                 )

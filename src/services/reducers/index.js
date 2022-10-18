@@ -7,8 +7,8 @@ const initialState = {
     ingredientInModal: [],
     isIngredientModalVisible: false,
 
-    burgeringredients: [],
-    burgeringredientsStatus: 'idle',
+    burgerIngredients: [],
+    burgerIngredientsStatus: 'idle',
 
     order: [],
     orderIngredients: [],
@@ -81,19 +81,19 @@ const rootReducer = (state = initialState, action) => {
 
         case 'GET_BURGER_INGREDIENTS_REQUEST':{
             return {
-                ...state, burgeringredientsStatus: 'loading'
+                ...state, burgerIngredientsStatus: 'loading'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_SUCCESS':{
             return {
-                ...state, burgeringredients: action.payload, burgeringredientsStatus: 'success'
+                ...state, burgerIngredients: action.payload, burgerIngredientsStatus: 'success'
             }
         }
 
         case 'GET_BURGER_INGREDIENTS_FAILED':{
             return {
-                ...state, burgeringredientsStatus: 'error'
+                ...state, burgerIngredientsStatus: 'error'
             }
         }
 
@@ -119,23 +119,39 @@ const rootReducer = (state = initialState, action) => {
         case 'ADD_COMPONENT_TO_CONSTRUCTOR': {
             return {
                 ...state, 
-                burgeringredients: [ ...state.burgeringredients, action.payload]
+                burgerIngredients: [ ...state.burgerIngredients, action.payload]
             }
         }
 
         case 'REMOVE_COMPONENT_FROM_CONSTRUCTOR': {
             return {
                 ...state, 
-                burgeringredients: [ ...state.burgeringredients, action.payload]
+                burgerIngredients: [ ...state.burgerIngredients, action.payload]
             }
         }
 
         case 'REPLASE_BUN_COMPONENT': {
             return {
                 ...state, 
-                burgeringredients: state.burgeringredients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient)
+                burgerIngredients: state.burgerIngredients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient)
             }
         }
+
+        case 'UPDATE_CONSTRUCTOR_LIST': {
+            return {
+                ...state, 
+                burgerIngredients: action.payload ?  action.payload : state.burgerIngredients
+            }
+        }
+
+        case 'SORT_CONSTRUCTOR_LIST': {
+
+            return {
+                ...state, 
+                burgerIngredients: action.payload
+            }
+        }
+        
 
         default: {
             return state;

@@ -108,10 +108,24 @@ export const replaseBunComponent = (ingredient) => {
     }
 }
 
-export const setOrderingredients = (ingredients) => {
+export const setOrderIngredients = (ingredients) => {
     return {
         type: 'SET_ORDER_INGREDIENTS',
         payload: ingredients
+    }
+}
+
+export const updateConstructorList = (ingredients) => {
+    return {
+        type: 'UPDATE_CONSTRUCTOR_LIST',
+        payload: ingredients
+    }
+}
+
+export const sortConstructorList = (ingredients) => {
+    return {
+        type: 'SORT_CONSTRUCTOR_LIST',
+        payload: ingredients,
     }
 }
 

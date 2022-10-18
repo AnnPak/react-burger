@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 
 import requestData from '../../utils/request';
-import { ordersApi,dataPropTypes } from '../../utils/constants';
+import { ordersApi } from '../../utils/constants';
 import { getOrderSuccess, getOrderRequest, getOrderFailed, addOrderToModal } from '../../services/actions/index'
 
 import styles from './burger-constructor.module.scss';
@@ -31,9 +30,10 @@ const BurgerConstructorResult = () => {
     }
 
     useEffect(() => {
-        const getAllPrice = orderIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
-        
+        const getAllPrice = orderIngredients ? orderIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
+    
         setTotalPrice(getAllPrice)
+
     }, [orderIngredients])
 
     return (
@@ -53,10 +53,6 @@ const BurgerConstructorResult = () => {
         </section>
 
     )
-}
-
-BurgerConstructorResult.propTypes = {
-    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
 }
 
 export default BurgerConstructorResult
