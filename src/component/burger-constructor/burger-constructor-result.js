@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import requestData from '../../utils/request';
 import { ordersApi } from '../../utils/constants';
-import { getOrderSuccess, getOrderRequest, getOrderFailed, addOrderToModal } from '../../services/actions/index'
+import { getOrderSuccess, getOrderRequest, getOrderFailed, addOrderToModal } from '../../store/slice'
 
 import styles from './burger-constructor.module.scss';
 

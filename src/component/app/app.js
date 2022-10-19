@@ -10,7 +10,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import requestData from '../../utils/request';
 import { ingredientsApi } from '../../utils/constants';
 import Preloader from '../preloader/preloader';
-import { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } from '../../services/actions/index'
+import { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } from '../../store/slice'
 
 import styles from './app.module.scss';
 

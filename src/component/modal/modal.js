@@ -5,7 +5,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import { useDispatch } from 'react-redux';
 
-import { removeModal } from '../../services/actions/index'
+import { removeModal } from '../../store/slice'
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.scss';

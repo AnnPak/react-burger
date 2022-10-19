@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addComponent, replaseBunComponent, setOrderIngredients, updateConstructorList } from '../../services/actions/index'
+import { addBurgerIngredient, replaceBurderIngredientBun, setOrderIngredients, updateBurderIngredients } from '../../store/slice'
+// import { addBurgerIngredient, replaceBurderIngredientBun, setOrderIngredients, updateBurderIngredients } from '../../store/slice';
 import BurgerConstructorElement from './burger-constructor-element';
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorWpaper = () => {
 
-    const { burgerIngredients, ingredientsWithOutBun } = useSelector(store => store);
+    const { burgerIngredients, ingredientsWithoutBun } = useSelector(store => store);
     const dispatch = useDispatch();
 
     const [{ isHover }, dropTargerRef] = useDrop({
@@ -20,9 +21,9 @@ const BurgerConstructorWpaper = () => {
         }),
         drop(ingredient) {
             if (burgerIngredients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
-                dispatch(replaseBunComponent(ingredient));
+                dispatch(replaceBurderIngredientBun(ingredient));
             } else {
-                dispatch(addComponent(ingredient));
+                dispatch(addBurgerIngredient(ingredient));
             }
 
         },
@@ -40,16 +41,16 @@ const BurgerConstructorWpaper = () => {
         }
     }, [burgerIngredients, elementTypeBun, dispatch])
 
-    const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithOutBun) => {
-        const dragCard = ingredientsWithOutBun[dragIndex];
-        const newCards = [...ingredientsWithOutBun]
+    const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithoutBun) => {
+        const dragCard = ingredientsWithoutBun[dragIndex];
+        const newCards = [...ingredientsWithoutBun]
 
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
 
         
 
-        dispatch(updateConstructorList(newCards))
+        dispatch(updateBurderIngredients(newCards))
     }, [dispatch]);
 
     
@@ -83,9 +84,9 @@ const BurgerConstructorWpaper = () => {
             }
 
             <div className={classnames(styles.constructorElements, 'pr-2')} ref={dropTargerRef}>
-                {ingredientsWithOutBun &&
+                {ingredientsWithoutBun &&
 
-                    ingredientsWithOutBun
+                    ingredientsWithoutBun
                         .map((item, index) => renderCard(item, index))
 
                 }

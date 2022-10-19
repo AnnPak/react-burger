@@ -12,7 +12,7 @@ import styles from './burger-constructor.module.scss';
 
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { ingredientsWithOutBun } = useSelector(store => store);
+    const { ingredientsWithoutBun } = useSelector(store => store);
 
     const { svg, isLocked, type, classname, index, isHover, moveCard } = props;
     const { price, image } = ingredient
@@ -63,7 +63,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                 return;
             }
 
-            moveCard(dragIndex, hoverIndex, ingredientsWithOutBun);
+            moveCard(dragIndex, hoverIndex, ingredientsWithoutBun);
             item.index = hoverIndex;
         }
     })

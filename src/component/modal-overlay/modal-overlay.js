@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { removeModal } from '../../services/actions/index'
+import { removeModal } from '../../store/slice'
 
 
 import styles from './modal-overlay.module.scss';

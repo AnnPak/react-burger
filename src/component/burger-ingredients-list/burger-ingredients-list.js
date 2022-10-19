@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { addIngredientToModal } from '../../services/actions/index'
+import { addIngredientToModal } from '../../store/slice'
 import { InView } from "react-intersection-observer";
 import { useDrag } from 'react-dnd';
 
 import classnames from 'classnames';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setTabsValue, setTypesOfIngredients } from '../../services/actions/index'
+import { setTabsValue, setTypesOfIngredients } from '../../store/slice'
 
 import { dataPropTypes } from '../../utils/constants';
 
