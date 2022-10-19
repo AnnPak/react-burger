@@ -11,8 +11,9 @@ const ModalOverlay = (props) => {
     const dispatch = useDispatch();
 
     return (
-        <section className={classnames(styles.modalOverlay, styles.modalShow)}
-                  onClick={() => dispatch(removeModal())}>
+        <section 
+            className={classnames(styles.modalOverlay, styles.modalShow)}
+            onClick={() => dispatch(removeModal())}>
             {props.children}
         </section>
     )

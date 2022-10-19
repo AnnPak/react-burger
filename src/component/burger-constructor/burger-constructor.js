@@ -12,12 +12,9 @@ const BurgerConstructor = () => {
 
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
-
             <BurgerConstructorWpaper/>
             <BurgerConstructorResult/>
-
             {isOrderModalVisible &&  <OrderDetailsModal/>}
-
         </section>
     )
 }

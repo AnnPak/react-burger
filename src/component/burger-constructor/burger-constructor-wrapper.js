@@ -5,7 +5,7 @@ import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 import { addBurgerIngredient, replaceBurderIngredientBun, setOrderIngredients, updateBurderIngredients } from '../../store/slice'
-// import { addBurgerIngredient, replaceBurderIngredientBun, setOrderIngredients, updateBurderIngredients } from '../../store/slice';
+
 import BurgerConstructorElement from './burger-constructor-element';
 import styles from './burger-constructor.module.scss';
 
@@ -48,12 +48,8 @@ const BurgerConstructorWpaper = () => {
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
 
-        
-
         dispatch(updateBurderIngredients(newCards))
     }, [dispatch]);
-
-    
 
     const renderCard = useCallback((item, index) => {
         return (
@@ -105,10 +101,6 @@ const BurgerConstructorWpaper = () => {
 
         </section>
     )
-
-
 }
-
-
 
 export default BurgerConstructorWpaper;

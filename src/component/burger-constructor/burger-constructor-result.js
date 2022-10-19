@@ -15,7 +15,6 @@ const BurgerConstructorResult = () => {
     const { orderIngredients } = useSelector(store => store)
     const dispatch = useDispatch();
 
-    
     const createOrder = () => {
         const idsObject = orderIngredients.map(item => item._id); //список id ингредиентов в заказе
         const requestBody = JSON.stringify({ "ingredients": idsObject })

@@ -18,9 +18,8 @@ const BurgerIngredients = () => {
 
             <TabsWrapper/>
             <BurgerIngredientsList/>
-
             {isIngredientModalVisible && <IngredientDetailsModal />}
-
+            
         </section>
     )
 }

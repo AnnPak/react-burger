@@ -45,7 +45,6 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             const dragIndex = item.index;
             const hoverIndex = index;
             
-
             if (dragIndex === hoverIndex) {
                 return;
             }
@@ -98,7 +97,6 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     )
 }
 
-
 BurgerConstructorElement.propTypes = {
     class: PropTypes.string,
     type: PropTypes.string,
@@ -106,7 +104,6 @@ BurgerConstructorElement.propTypes = {
     svg: PropTypes.bool,
     ingredient: dataPropTypes.isRequired,
 };
-
 
 export default BurgerConstructorElement;
 
