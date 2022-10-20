@@ -11,7 +11,7 @@ const initialState = {
     burgerIngredientsStatus: 'idle',
     ingredientsWithoutBun: null,
 
-    order: null,
+    orderNumber: null,
     orderIngredients: null,
     orderStatus: 'idle',
 
@@ -56,7 +56,7 @@ const ingredientsSlice  = createSlice({
             state.orderStatus = 'loading';
         },
         getOrderSuccess: ( state, action ) => {
-            state.order = action.payload; 
+            state.orderNumber = action.payload; 
             state.orderStatus = 'success';
         },
         getOrderFailed: state => {state.orderStatus = 'error'},

@@ -9,12 +9,12 @@ import styles from './order-details-modal.module.scss';
 import doneImg from '../../images/done.png'
 
 const OrderDetails = () => {
-    const {order } = useSelector(store => store);
+    const {orderNumber } = useSelector(store => store);
 
     return (
         <>
             <div className={styles.constructorModalId}>
-                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>{order.order.number}</p>
+                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>{orderNumber}</p>
 
                 <p className="text text_type_main-medium mt-9">
                     идентификатор заказа

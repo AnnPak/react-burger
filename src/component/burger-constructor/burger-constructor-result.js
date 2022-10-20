@@ -22,7 +22,7 @@ const BurgerConstructorResult = () => {
         dispatch(getOrderRequest())
 
         requestData(ordersApi, requestBody, 'POST')
-            .then(order => dispatch(getOrderSuccess(order)))
+            .then(order => dispatch(getOrderSuccess(order.order.number)))
             .catch(() => dispatch(getOrderFailed()))
         
         dispatch(addOrderToModal())
