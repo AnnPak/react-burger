@@ -6,7 +6,7 @@ import { InView } from "react-intersection-observer";
 import { useDrag } from 'react-dnd';
 
 import classnames from 'classnames';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setTabsValue, setTypesOfIngredients } from '../../store/slice'
 
 import { dataPropTypes } from '../../utils/constants';
@@ -49,8 +49,9 @@ const BurgerIngredientsSection = ({ ingredients, type }) => {
 }
 
 const BurgerIngredientsItem = ({ ingredient }) => {
+    const { orderIngredients } = useSelector(store => store);
 
-    const { name, image, price } = ingredient;
+    const { name, image, price, _id } = ingredient;
     const dispatch = useDispatch();
 
     const [{ opacity }, dragRef] = useDrag({
@@ -61,10 +62,18 @@ const BurgerIngredientsItem = ({ ingredient }) => {
         })
     })
 
+    const ingredientsCounter = orderIngredients.filter(ingredient => ingredient._id === _id).length;
+
     return (
         <div className={classnames(styles.ingredientsItem, 'mt-6 ml-4 mb-10')}
              onClick={() => { dispatch(addIngredientToModal(ingredient)) }} 
              style={{ opacity }}>
+                
+                {
+                    ingredientsCounter > 0 &&
+                    <Counter count={ingredientsCounter} size="small" />
+
+                }
 
             <img src={image} alt={name} ref={dragRef}/>
 

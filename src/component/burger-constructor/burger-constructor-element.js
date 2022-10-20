@@ -1,19 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 import { dataPropTypes } from '../../utils/constants';
+import { deleteBurderIngredient } from '../../store/slice'
+
 
 import styles from './burger-constructor.module.scss';
 
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { ingredientsWithoutBun } = useSelector(store => store);
-
+    const { ingredientsWithoutBun, burgerIngredients } = useSelector(store => store);
+    const dispatch = useDispatch();
     const { svg, isLocked, type, classname, index, isHover, moveCard } = props;
     const { price, image } = ingredient
     let { name } = ingredient
@@ -27,6 +29,42 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             break;
         default:
     }
+
+    const removeIngredient = useCallback(function(e) {
+        const index1 = +e.currentTarget.closest("section").getAttribute('index'); //нашла индекс элемента в массиве без булок
+        const element = ingredientsWithoutBun[index1];
+        
+        const index2 = +burgerIngredients.indexOf(element);
+
+        dispatch(deleteBurderIngredient({index1, index2 }))
+
+        e.currentTarget.removeEventListener('click', removeIngredient, false);
+    })
+    
+    useEffect(() => {
+        const deleteBtn = document.querySelectorAll(".constructor-element__action");
+       
+    
+        if(deleteBtn){
+                
+            deleteBtn.forEach(function (item) {
+                item.addEventListener('click', removeIngredient, false);
+                
+            });
+
+        }
+        return () => {
+            deleteBtn.forEach(function (item) {
+                item.removeEventListener('click', removeIngredient, false);
+                
+            });
+        }
+
+       
+        // return () => window.removeEventListener('click', removeIngredient)
+        // console.log(burgerIngredients)
+    }, [])
+
 
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
@@ -80,7 +118,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const preventDefault = (e) => e.preventDefault();
 
     return (
-        <section className={classname} onDrop={preventDefault} ref={ref} data-handler-id={handlerId}>
+        <section className={classname} onDrop={preventDefault} ref={ref} data-handler-id={handlerId} index={index}>
             {svg && <DragIcon className={styles.dragIcon} />}
 
             <div className={classnames(styles.constructorElementWpapper, isDragComponents && styles.opacity, isHover && styles.opacity, 'pl-2')}>

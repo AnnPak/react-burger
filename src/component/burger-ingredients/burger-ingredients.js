@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
+import BurgerIngredientsList from './burger-ingredients-list'
 import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
 import IngredientDetailsModal from '../ingredient-details-modal/ingredient-details-modal';
 

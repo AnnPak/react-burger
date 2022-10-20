@@ -40,6 +40,11 @@ const ingredientsSlice  = createSlice({
             state.burgerIngredients = action.payload;
             state.burgerIngredientsStatus = 'success';
         } ,
+        deleteBurderIngredient: (state, action) => {
+            const {index1, index2 } = action.payload;
+            state.ingredientsWithoutBun = state.ingredientsWithoutBun.filter((ingregient, index) => index !== index1);
+            state.burgerIngredients = state.burgerIngredients.filter((ingregient, index) => index !== index2);
+        },
         getBurderIngredientsFailed: state => {state.burgerIngredientsStatus = 'error'},
 
         updateBurderIngredients: (state, action) => {state.ingredientsWithoutBun = action.payload ? action.payload : state.ingredientsWithoutBun},//rename
@@ -104,6 +109,7 @@ export const {
     getBurderIngredientsRequest,
     getBurderIngredientsSuccess,
     getBurderIngredientsFailed,
+    deleteBurderIngredient,
     updateBurderIngredients,
     addBurgerIngredient,
     replaceBurderIngredientBun,

@@ -19,10 +19,15 @@
     width: 46%;
     min-width: 272px;
     cursor: pointer;
+    position: relative;
 
     img {
         width: 240px;
         height: 120px;
+    }
+
+    .ingredientsCounter {
+        
     }
 }
 
