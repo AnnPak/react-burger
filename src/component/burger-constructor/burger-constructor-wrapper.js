@@ -20,13 +20,10 @@ const BurgerConstructorWpaper = () => {
     const { burgerIngredients, ingredientsWithoutBun } = useSelector(store => store);
     const dispatch = useDispatch();
 
-    const [{ isHover }, dropTargerRef] = useDrop({
+    const [, dropTargerRef] = useDrop({
         accept: "ingredients",
-        collect: monitor => ({
-            isHover: monitor.isOver(),
-        }),
         drop(ingredient) {
-            if (burgerIngredients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
+            if (burgerIngredients && burgerIngredients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
                 dispatch(replaceBurderIngredientBun(ingredient));
             } else {
                 dispatch(addBurgerIngredient(ingredient));
@@ -35,18 +32,18 @@ const BurgerConstructorWpaper = () => {
         },
     });
 
-    const elementTypeBun = useMemo(() => burgerIngredients ? burgerIngredients.find(item => item.type === 'bun') : [], [burgerIngredients]);
+    const elementTypeBun = useMemo(() => burgerIngredients ? burgerIngredients.find(item => item.type === 'bun') : null, [burgerIngredients]);
 
     //формирую массив с ингредиетами для заказа
     useEffect(() => {
-        if (elementTypeBun) {
+        if (elementTypeBun && burgerIngredients) {
             const resultIndredients = [...burgerIngredients, elementTypeBun]
             dispatch(setOrderIngredients(resultIndredients));
         } else {
             dispatch(setOrderIngredients(burgerIngredients));
         }
 
-        const arrayWithoutBun = burgerIngredients.filter(item => item.type !== 'bun');
+        const arrayWithoutBun = burgerIngredients ? burgerIngredients.filter(item => item.type !== 'bun') : [];
 
         dispatch(setIngredientsWithoutBun(arrayWithoutBun))
         
@@ -69,11 +66,10 @@ const BurgerConstructorWpaper = () => {
                 classname={classnames(styles.constructorElement)}
                 ingredient={item}
                 index={index}
-                isHover={isHover}
                 key={uuidv4()}
                 svg={true} />
         )
-    }, [isHover, moveCard])
+    }, [moveCard])
 
     return (
 

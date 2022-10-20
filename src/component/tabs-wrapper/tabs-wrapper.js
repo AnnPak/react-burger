@@ -27,7 +27,7 @@ const TabsWrapper = () => {
 
     return (
         <div className={styles.tabsWrapper}>
-            {
+            {typesOfIngredients &&
                 typesOfIngredients.map(type => 
                     <Tab 
                         key={type} 

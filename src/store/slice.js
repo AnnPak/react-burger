@@ -2,23 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    ingredients: [],
+    ingredients: null,
     ingredientsStatus: 'idle',
 
-    typesOfIngredients: [],
+    typesOfIngredients: null,
 
-    ingredientInModal: [],
+    ingredientInModal: null,
     isIngredientModalVisible: false,
 
-    burgerIngredients: [],
+    burgerIngredients: null,
     burgerIngredientsStatus: 'idle',
-    ingredientsWithoutBun: [],
+    ingredientsWithoutBun: null,
 
-    order: [],
-    orderIngredients: [],
+    order: null,
+    orderIngredients: null,
     orderStatus: 'idle',
 
-    orderInModal: [],
+    orderInModal: null,
     isOrderModalVisible: false,
 
     tabsValue: '',
@@ -47,7 +47,7 @@ const ingredientsSlice  = createSlice({
 
         updateBurderIngredients: (state, action) => {state.ingredientsWithoutBun = action.payload ? action.payload : state.ingredientsWithoutBun},//rename
         addBurgerIngredient: (state, action) => {
-            state.burgerIngredients = [ ...state.burgerIngredients, action.payload];
+            state.burgerIngredients = state.burgerIngredients ? [ ...state.burgerIngredients, action.payload] : [action.payload] ;
         },
         setIngredientsWithoutBun: ( state, action ) => {
             state.ingredientsWithoutBun = action.payload; 

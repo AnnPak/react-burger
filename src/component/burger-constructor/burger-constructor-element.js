@@ -16,7 +16,7 @@ import styles from './burger-constructor.module.scss';
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const { ingredientsWithoutBun, burgerIngredients } = useSelector(store => store);
     const dispatch = useDispatch();
-    const { svg, isLocked, type, classname, index, isHover, moveCard } = props;
+    const { svg, isLocked, type, classname, index, moveCard } = props;
     const { price, image } = ingredient
     let { name } = ingredient
 
@@ -108,10 +108,10 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const preventDefault = (e) => e.preventDefault();
 
     return (
-        <section className={classname} onDrop={preventDefault} ref={ref} data-handler-id={handlerId} index={index}>
+        <section className={classnames(classname, isDragComponents && styles.opacity) } onDrop={preventDefault} ref={ref} data-handler-id={handlerId} index={index}>
             {svg && <DragIcon className={styles.dragIcon} />}
 
-            <div className={classnames(styles.constructorElementWpapper, isDragComponents && styles.opacity, isHover && styles.opacity, 'pl-2')}>
+            <div className={classnames(styles.constructorElementWpapper, isDragComponents && styles.opacity, 'pl-2')}>
                 <ConstructorElement
                     type={type}
                     isLocked={isLocked}
