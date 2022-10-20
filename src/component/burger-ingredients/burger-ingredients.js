@@ -12,6 +12,7 @@ const BurgerIngredients = () => {
 
     const {ingredientInModal, ingredients } = useSelector(store => store);
     const [typesOfIngredients, setTypesOfIngredients] = useState(null)
+    const [tabsValue, setTabsValue] = useState(null)
 
     useEffect(() => {
         let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов
@@ -28,11 +29,14 @@ const BurgerIngredients = () => {
 
             <TabsWrapper 
                 typesOfIngredients={typesOfIngredients} 
-                setTypesOfIngredients={setTypesOfIngredients}/>
+                setTypesOfIngredients={setTypesOfIngredients}
+                tabsValue={tabsValue}/>
 
             <BurgerIngredientsList 
                 typesOfIngredients={typesOfIngredients} 
-                setTypesOfIngredients={setTypesOfIngredients}/>
+                setTypesOfIngredients={setTypesOfIngredients}
+                tabsValue={tabsValue}
+                setTabsValue={setTabsValue}/>
 
             {ingredientInModal && <IngredientDetailsModal />}
             

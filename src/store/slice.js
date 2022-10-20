@@ -15,8 +15,6 @@ const initialState = {
 
     isOrderModalVisible: false,
     ingredientInModal: null,
-
-    tabsValue: '',
 }
 
 const ingredientsSlice  = createSlice({
@@ -75,11 +73,7 @@ const ingredientsSlice  = createSlice({
         removeModal: state => {
             state.ingredientInModal = null;
             state.isOrderModalVisible = false ; 
-        }, 
-
-        setTabsValue: ( state, action ) => {
-            state.tabsValue = action.payload; 
-        }, 
+        },
         
     }
 

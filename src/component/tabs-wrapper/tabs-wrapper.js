@@ -1,12 +1,9 @@
 import React from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux';
 
 import styles from './tabs-wrapper.module.scss'
 
-const TabsWrapper = ({typesOfIngredients}) => {
-
-    const { tabsValue } = useSelector(store => store);
+const TabsWrapper = ({typesOfIngredients, tabsValue}) => { 
 
     const getTitle = (type) => {
         switch (type) {
