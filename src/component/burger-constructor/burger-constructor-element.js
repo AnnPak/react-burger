@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -30,28 +30,22 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
         default:
     }
 
-    const removeIngredient = useCallback(function(e) {
-        const index1 = +e.currentTarget.closest("section").getAttribute('index'); //нашла индекс элемента в массиве без булок
-        const element = ingredientsWithoutBun[index1];
-        
-        const index2 = +burgerIngredients.indexOf(element);
+    const removeIngredient = function(e) {
+        const indexInConstructor = +e.currentTarget.closest("section").getAttribute('index'); // индекс элемента в массиве без булок
+        const element = ingredientsWithoutBun[indexInConstructor];
 
-        dispatch(deleteBurderIngredient({index1, index2 }))
+        const indexInBurgerIngredientsList = +burgerIngredients.indexOf(element); //индекс элемена в общем массиве ингредиентов
 
-        e.currentTarget.removeEventListener('click', removeIngredient, false);
-    })
+        dispatch(deleteBurderIngredient(indexInBurgerIngredientsList))
+    }
     
     useEffect(() => {
         const deleteBtn = document.querySelectorAll(".constructor-element__action");
-       
-    
+        
         if(deleteBtn){
-                
             deleteBtn.forEach(function (item) {
-                item.addEventListener('click', removeIngredient, false);
-                
+                item.addEventListener('click', removeIngredient, false); 
             });
-
         }
         return () => {
             deleteBtn.forEach(function (item) {
@@ -59,10 +53,6 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                 
             });
         }
-
-       
-        // return () => window.removeEventListener('click', removeIngredient)
-        // console.log(burgerIngredients)
     }, [])
 
 

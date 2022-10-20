@@ -1,10 +1,16 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addBurgerIngredient, replaceBurderIngredientBun, setOrderIngredients, updateBurderIngredients } from '../../store/slice'
+import { 
+    addBurgerIngredient, 
+    replaceBurderIngredientBun, 
+    setOrderIngredients, 
+    updateBurderIngredients, 
+    setIngredientsWithoutBun 
+} from '../../store/slice'
 
 import BurgerConstructorElement from './burger-constructor-element';
 import styles from './burger-constructor.module.scss';
@@ -29,7 +35,7 @@ const BurgerConstructorWpaper = () => {
         },
     });
 
-    const elementTypeBun = burgerIngredients ? burgerIngredients.find(item => item.type === 'bun') : [];
+    const elementTypeBun = useMemo(() => burgerIngredients ? burgerIngredients.find(item => item.type === 'bun') : [], [burgerIngredients]);
 
     //формирую массив с ингредиетами для заказа
     useEffect(() => {
@@ -39,6 +45,11 @@ const BurgerConstructorWpaper = () => {
         } else {
             dispatch(setOrderIngredients(burgerIngredients));
         }
+
+        const arrayWithoutBun = burgerIngredients.filter(item => item.type !== 'bun');
+
+        dispatch(setIngredientsWithoutBun(arrayWithoutBun))
+        
     }, [burgerIngredients, elementTypeBun, dispatch])
 
     const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithoutBun) => {
@@ -62,7 +73,7 @@ const BurgerConstructorWpaper = () => {
                 key={uuidv4()}
                 svg={true} />
         )
-    }, [])
+    }, [isHover, moveCard])
 
     return (
 

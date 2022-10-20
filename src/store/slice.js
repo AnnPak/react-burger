@@ -41,17 +41,17 @@ const ingredientsSlice  = createSlice({
             state.burgerIngredientsStatus = 'success';
         } ,
         deleteBurderIngredient: (state, action) => {
-            const {index1, index2 } = action.payload;
-            state.ingredientsWithoutBun = state.ingredientsWithoutBun.filter((ingregient, index) => index !== index1);
-            state.burgerIngredients = state.burgerIngredients.filter((ingregient, index) => index !== index2);
+            state.burgerIngredients = state.burgerIngredients.filter((el, index) => index !== action.payload);
         },
         getBurderIngredientsFailed: state => {state.burgerIngredientsStatus = 'error'},
 
         updateBurderIngredients: (state, action) => {state.ingredientsWithoutBun = action.payload ? action.payload : state.ingredientsWithoutBun},//rename
         addBurgerIngredient: (state, action) => {
             state.burgerIngredients = [ ...state.burgerIngredients, action.payload];
-            state.ingredientsWithoutBun = action.payload.type !== "bun" ? [ ...state.ingredientsWithoutBun, action.payload] : state.ingredientsWithoutBun;
         },
+        setIngredientsWithoutBun: ( state, action ) => {
+            state.ingredientsWithoutBun = action.payload; 
+        }, 
         replaceBurderIngredientBun: (state, action) => {
             state.burgerIngredients = state.burgerIngredients.map(ingregient => ingregient.type === "bun" ? action.payload : ingregient);
         },
@@ -111,6 +111,7 @@ export const {
     getBurderIngredientsFailed,
     deleteBurderIngredient,
     updateBurderIngredients,
+    setIngredientsWithoutBun,
     addBurgerIngredient,
     replaceBurderIngredientBun,
     getOrderRequest,
