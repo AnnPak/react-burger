@@ -8,13 +8,13 @@ import BurgerConstructorWpaper from './burger-constructor-wrapper';
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructor = () => {
-    const { orderInModal } = useSelector(store => store);
+    const { isOrderModalVisible } = useSelector(store => store);
 
     return (
         <section className={classnames('mt-25', styles.burgerSectionConstructor)}>
             <BurgerConstructorWpaper/>
             <BurgerConstructorResult/>
-            {orderInModal &&  <OrderDetailsModal/>}
+            {isOrderModalVisible &&  <OrderDetailsModal/>}
         </section>
     )
 }
