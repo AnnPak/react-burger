@@ -5,10 +5,7 @@ const initialState = {
     ingredients: null,
     ingredientsStatus: 'idle',
 
-    typesOfIngredients: null,
-
     ingredientInModal: null,
-    isIngredientModalVisible: false,
 
     burgerIngredients: null,
     burgerIngredientsStatus: 'idle',
@@ -19,7 +16,6 @@ const initialState = {
     orderStatus: 'idle',
 
     orderInModal: null,
-    isOrderModalVisible: false,
 
     tabsValue: '',
 }
@@ -58,7 +54,6 @@ const ingredientsSlice  = createSlice({
 
         getOrderRequest: state  => {
             state.orderStatus = 'loading';
-            state.isOrderModalVisible = true
         },
         getOrderSuccess: ( state, action ) => {
             state.order = action.payload; 
@@ -72,29 +67,20 @@ const ingredientsSlice  = createSlice({
 
         addIngredientToModal: ( state, action ) => {
             state.ingredientInModal = action.payload; 
-            state.isIngredientModalVisible = true;
         }, 
 
         addOrderToModal: ( state, action ) => {
             state.orderInModal = action.payload; 
-            state.isIngredientModalVisible = true;
         }, 
         removeModal: state => {
             state.ingredientInModal = [];
-            state.isIngredientModalVisible = false; 
             state.orderInModal = []; 
-            state.isOrderModalVisible = false
         }, 
 
         setTabsValue: ( state, action ) => {
             state.tabsValue = action.payload; 
         }, 
         
-        setTypesOfIngredients: ( state, action ) => {
-            state.typesOfIngredients = action.payload; 
-        }, 
-
-
     }
 
 })

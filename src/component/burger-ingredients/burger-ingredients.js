@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
 import BurgerIngredientsList from './burger-ingredients-list'
@@ -9,16 +10,31 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const {isIngredientModalVisible } = useSelector(store => store);
+    const {ingredientInModal, ingredients } = useSelector(store => store);
+    const [typesOfIngredients, setTypesOfIngredients] = useState(null)
+
+    useEffect(() => {
+        let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов
+        typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
+
+        setTypesOfIngredients(typesArray);
+
+    }, [])
 
     return (
 
         <section className={styles.burgerIngredientsSection}>
             <h1 className="mt-10">Соберите бургер</h1>
 
-            <TabsWrapper/>
-            <BurgerIngredientsList/>
-            {isIngredientModalVisible && <IngredientDetailsModal />}
+            <TabsWrapper 
+                typesOfIngredients={typesOfIngredients} 
+                setTypesOfIngredients={setTypesOfIngredients}/>
+
+            <BurgerIngredientsList 
+                typesOfIngredients={typesOfIngredients} 
+                setTypesOfIngredients={setTypesOfIngredients}/>
+
+            {ingredientInModal && <IngredientDetailsModal />}
             
         </section>
     )

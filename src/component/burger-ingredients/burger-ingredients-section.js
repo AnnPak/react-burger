@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
+import PropTypes from 'prop-types';
 import BurgerIngredientsItem from './burger-ingredients-item';
 
-import styles from './burger-ingredients-list.module.scss'
+import styles from './burger-ingredients-list.module.scss';
+import { dataPropTypes } from '../../utils/constants';
 
 const BurgerIngredientsSection = ({ ingredients, type }) => {
     //массив ингредиентов нужного типа
@@ -36,5 +38,11 @@ const BurgerIngredientsSection = ({ ingredients, type }) => {
 
    )
 }
+
+BurgerIngredientsSection.propTypes = {
+    type: PropTypes.string,
+    ingredients: PropTypes.arrayOf(dataPropTypes),
+};
+
 
 export default BurgerIngredientsSection;

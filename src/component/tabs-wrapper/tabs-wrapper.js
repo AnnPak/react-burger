@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 
 import styles from './tabs-wrapper.module.scss'
 
-const TabsWrapper = () => {
+const TabsWrapper = ({typesOfIngredients}) => {
 
-    const { tabsValue, typesOfIngredients } = useSelector(store => store);
+    const { tabsValue } = useSelector(store => store);
 
     const getTitle = (type) => {
         switch (type) {
