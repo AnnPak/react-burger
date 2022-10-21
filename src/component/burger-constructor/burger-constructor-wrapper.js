@@ -39,8 +39,8 @@ const BurgerConstructorWpaper = () => {
         } else {
             dispatch(setOrderIngredients(constructorIngredients));
         }
-
-    }, [constructorIngredients, bun, dispatch])
+        // eslint-disable-next-line
+    }, [constructorIngredients, bun])
 
     const moveCard = useCallback((dragIndex, hoverIndex, constructorIngredients) => {
         const dragCard = constructorIngredients[dragIndex];
