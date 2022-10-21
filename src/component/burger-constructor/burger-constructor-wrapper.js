@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { 
-    updateBurderIngredients, 
+import { setOrderIngredients } from '../../store/order/slice'
+import {
+    updateBurderIngredients,
     setIngredientsWithoutBun,
     setBun
 } from '../../store/constructor/slice'
-import { setOrderIngredients } from '../../store/order/slice'
 
 
 import BurgerConstructorElement from './burger-constructor-element';
@@ -28,7 +28,6 @@ const BurgerConstructorWpaper = () => {
             } else {
                 dispatch(setIngredientsWithoutBun(ingredient));
             }
-
         },
     });
 
@@ -68,35 +67,26 @@ const BurgerConstructorWpaper = () => {
     return (
 
         <section className={styles.constructorElements} >
-
-            {bun &&
-                <BurgerConstructorElement
-                    moveCard={moveCard}
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={uuidv4()}
-                    type='top'
-                    isLocked={true}
-                    ingredient={bun} />
-
+            {bun && <BurgerConstructorElement
+                        moveCard={moveCard}
+                        classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
+                        key={uuidv4()}
+                        type='top'
+                        isLocked={true}
+                        ingredient={bun} />
             }
 
             <div className={classnames(styles.constructorElements, 'pr-2')} ref={dropTargerRef}>
-                {constructorIngredients != null &&
-
-                    constructorIngredients
-                        .map((item, index) => renderCard(item, index))
-
-                }
+                { constructorIngredients != null && constructorIngredients.map((item, index) => renderCard(item, index))}
             </div>
 
-            {bun &&
-                <BurgerConstructorElement
-                    moveCard={moveCard}
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={uuidv4()}
-                    type='bottom'
-                    ingredient={bun}
-                    isLocked={true} />
+            {bun && <BurgerConstructorElement
+                        moveCard={moveCard}
+                        classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
+                        key={uuidv4()}
+                        type='bottom'
+                        ingredient={bun}
+                        isLocked={true} />
 
             }
 

@@ -10,10 +10,9 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const {ingredientInModal, ingredients } = useSelector(store => store.ingredients);
+    const { ingredientInModal, ingredients } = useSelector(store => store.ingredients);
     const [typesOfIngredients, setTypesOfIngredients] = useState(null)
     const [tabsValue, setTabsValue] = useState(null)
-
 
     useEffect(() => {
         let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов
@@ -28,19 +27,19 @@ const BurgerIngredients = () => {
         <section className={styles.burgerIngredientsSection}>
             <h1 className="mt-10">Соберите бургер</h1>
 
-            <TabsWrapper 
-                typesOfIngredients={typesOfIngredients} 
+            <TabsWrapper
+                typesOfIngredients={typesOfIngredients}
                 setTypesOfIngredients={setTypesOfIngredients}
-                tabsValue={tabsValue}/>
+                tabsValue={tabsValue} />
 
-            <BurgerIngredientsList 
-                typesOfIngredients={typesOfIngredients} 
+            <BurgerIngredientsList
+                typesOfIngredients={typesOfIngredients}
                 setTypesOfIngredients={setTypesOfIngredients}
                 tabsValue={tabsValue}
-                setTabsValue={setTabsValue}/>
+                setTabsValue={setTabsValue} />
 
             {ingredientInModal && <IngredientDetailsModal />}
-            
+
         </section>
     )
 }

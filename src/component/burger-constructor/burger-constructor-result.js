@@ -28,15 +28,15 @@ const BurgerConstructorResult = () => {
         requestData(ordersApi, requestBody, 'POST')
             .then(order => dispatch(getOrderSuccess(order.order.number)))
             .catch(() => dispatch(getOrderFailed()))
-        
+
         dispatch(addOrderToModal())
     }
 
     useEffect(() => {
         const withoutBunPrice = constructorIngredients ? constructorIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
         const bunPrice = bun && bun.length > 0 ? bun.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
-    
-        const summ = withoutBunPrice + bunPrice*2;
+
+        const summ = withoutBunPrice + bunPrice * 2;
 
         setTotalPrice(summ)
 

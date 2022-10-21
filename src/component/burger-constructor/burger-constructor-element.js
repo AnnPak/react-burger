@@ -36,7 +36,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
         dispatch(deleteBurderIngredient(currentIngredientIndex))
     }
-    
+
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: 'component',
@@ -53,7 +53,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
             const dragIndex = item.index;
             const hoverIndex = index;
-            
+
             if (dragIndex === hoverIndex) {
                 return;
             }
@@ -89,7 +89,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const preventDefault = (e) => e.preventDefault();
 
     return (
-        <section className={classnames(classname, isDragComponents && styles.opacity) } onDrop={preventDefault} ref={ref} data-handler-id={handlerId} index={index}>
+        <section className={classnames(classname, isDragComponents && styles.opacity)} onDrop={preventDefault} ref={ref} data-handler-id={handlerId} index={index}>
             {svg && <DragIcon className={styles.dragIcon} />}
 
             <div className={classnames(styles.constructorElementWpapper, isDragComponents && styles.opacity, 'pl-2')}>
