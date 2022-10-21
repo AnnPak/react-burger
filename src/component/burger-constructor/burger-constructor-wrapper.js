@@ -5,18 +5,19 @@ import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 import { 
-    setOrderIngredients, 
     updateBurderIngredients, 
     setIngredientsWithoutBun,
     setBun
-} from '../../store/slice'
+} from '../../store/constructor/slice'
+import { setOrderIngredients } from '../../store/order/slice'
+
 
 import BurgerConstructorElement from './burger-constructor-element';
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorWpaper = () => {
 
-    const { bun, ingredientsWithoutBun } = useSelector(store => store);
+    const { bun, constructorIngredients } = useSelector(store => store.burgerConstructor);
     const dispatch = useDispatch();
 
     const [, dropTargerRef] = useDrop({
@@ -34,17 +35,17 @@ const BurgerConstructorWpaper = () => {
     //формирую массив с ингредиетами для заказа
     useEffect(() => {
         if (bun) {
-            const resultIndredients = ingredientsWithoutBun ? [bun, ...ingredientsWithoutBun, bun] : [bun, bun];
+            const resultIndredients = constructorIngredients ? [bun, ...constructorIngredients, bun] : [bun, bun];
             dispatch(setOrderIngredients(resultIndredients));
         } else {
-            dispatch(setOrderIngredients(ingredientsWithoutBun));
+            dispatch(setOrderIngredients(constructorIngredients));
         }
 
-    }, [ingredientsWithoutBun, bun, dispatch])
+    }, [constructorIngredients, bun, dispatch])
 
-    const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithoutBun) => {
-        const dragCard = ingredientsWithoutBun[dragIndex];
-        const newCards = [...ingredientsWithoutBun]
+    const moveCard = useCallback((dragIndex, hoverIndex, constructorIngredients) => {
+        const dragCard = constructorIngredients[dragIndex];
+        const newCards = [...constructorIngredients]
 
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
@@ -80,9 +81,9 @@ const BurgerConstructorWpaper = () => {
             }
 
             <div className={classnames(styles.constructorElements, 'pr-2')} ref={dropTargerRef}>
-                {ingredientsWithoutBun != null &&
+                {constructorIngredients != null &&
 
-                    ingredientsWithoutBun
+                    constructorIngredients
                         .map((item, index) => renderCard(item, index))
 
                 }

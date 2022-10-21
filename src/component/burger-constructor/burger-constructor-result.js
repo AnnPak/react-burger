@@ -5,18 +5,22 @@ import classnames from 'classnames';
 
 import requestData from '../../utils/request';
 import { ordersApi } from '../../utils/constants';
-import { getOrderSuccess, getOrderRequest, getOrderFailed, addOrderToModal } from '../../store/slice'
+import { addOrderToModal } from '../../store/modal/slice'
+import { getOrderSuccess, getOrderRequest, getOrderFailed } from '../../store/order/slice'
 
 import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorResult = () => {
     const [totalPrice, setTotalPrice] = useState(0);
-
-    const { orderIngredients } = useSelector(store => store)
+    const { constructorIngredients, bun } = useSelector(store => store.burgerConstructor)
     const dispatch = useDispatch();
 
     const createOrder = () => {
-        const idsObject = orderIngredients.map(item => item._id); //список id ингредиентов в заказе
+
+        const constructorIngredientsIds = constructorIngredients.map(item => item._id); //список id ингредиентов 
+        const bunIds = constructorIngredients.map(item => item._id); //список id ингредиентов 
+
+        const idsObject = constructorIngredientsIds.concat(bunIds);
         const requestBody = JSON.stringify({ "ingredients": idsObject })
 
         dispatch(getOrderRequest())
@@ -29,11 +33,14 @@ const BurgerConstructorResult = () => {
     }
 
     useEffect(() => {
-        const getAllPrice = orderIngredients ? orderIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
+        const withoutBunPrice = constructorIngredients ? constructorIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
+        const bunPrice = bun && bun.length > 0 ? bun.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
     
-        setTotalPrice(getAllPrice)
+        const summ = withoutBunPrice + bunPrice*2;
 
-    }, [orderIngredients])
+        setTotalPrice(summ)
+
+    }, [constructorIngredients, bun])
 
     return (
         <section className={classnames(styles.constructorResult, 'mt-10')}>

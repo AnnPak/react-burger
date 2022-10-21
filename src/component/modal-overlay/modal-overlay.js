@@ -1,13 +1,11 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { removeModal } from '../../store/slice'
-
+import { removeModal } from '../../store/modal/slice'
 
 import styles from './modal-overlay.module.scss';
 
 const ModalOverlay = (props) => {
-
     const dispatch = useDispatch();
 
     return (

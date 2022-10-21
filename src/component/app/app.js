@@ -10,7 +10,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import requestData from '../../utils/request';
 import { ingredientsApi } from '../../utils/constants';
 import Preloader from '../preloader/preloader';
-import { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } from '../../store/slice'
+import { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } from '../../store/ingredients/slice'
 
 import styles from './app.module.scss';
 
@@ -18,7 +18,7 @@ import styles from './app.module.scss';
 function App() {
 
   const dispatch = useDispatch();
-  const { ingredientsStatus } = useSelector(store => store);
+  const { ingredientsStatus } = useSelector(store => store.ingredients);
 
   useEffect(() => {
     dispatch(getIngredientsRequest());

@@ -7,14 +7,14 @@ import { useDrop, useDrag } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 import { dataPropTypes } from '../../utils/constants';
-import { deleteBurderIngredient } from '../../store/slice'
+import { deleteBurderIngredient } from '../../store/constructor/slice'
 
 
 import styles from './burger-constructor.module.scss';
 
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { ingredientsWithoutBun } = useSelector(store => store);
+    const { constructorIngredients } = useSelector(store => store.burgerConstructor);
     const dispatch = useDispatch();
     const { svg, isLocked, type, classname, index, moveCard } = props;
     const { price, image } = ingredient
@@ -71,7 +71,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                 return;
             }
 
-            moveCard(dragIndex, hoverIndex, ingredientsWithoutBun);
+            moveCard(dragIndex, hoverIndex, constructorIngredients);
             item.index = hoverIndex;
         }
     })

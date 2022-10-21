@@ -5,8 +5,7 @@ const initialState = {
     ingredients: null,
     ingredientsStatus: 'idle',
 
-    burgerIngredients: null,
-    ingredientsWithoutBun: null,
+    constructorIngredients: null,
     bun: null,
 
     orderNumber: null,
@@ -29,20 +28,21 @@ const ingredientsSlice = createSlice({
         getIngredientsFailed: state => { state.ingredientsStatus = 'error' },
 
         deleteBurderIngredient: (state, action) => {
-            state.ingredientsWithoutBun = state.ingredientsWithoutBun.filter((el, index) => index !== +action.payload);
+            state.constructorIngredients = state.constructorIngredients.filter((el, index) => index !== +action.payload);
         },
-        updateBurderIngredients: (state, action) => { state.ingredientsWithoutBun = action.payload ? action.payload : state.ingredientsWithoutBun },
+        updateBurderIngredients: (state, action) => { state.constructorIngredients = action.payload ? action.payload : state.constructorIngredients },
 
         setBun: (state, action) => { state.bun = action.payload; },
         setIngredientsWithoutBun: (state, action) => {
-            state.ingredientsWithoutBun = state.ingredientsWithoutBun ? [...state.ingredientsWithoutBun, action.payload] : [action.payload];
+            state.constructorIngredients = state.constructorIngredients ? [...state.constructorIngredients, action.payload] : [action.payload];
         },
 
         getOrderRequest: state => { state.orderStatus = 'loading'; },
         getOrderSuccess: (state, action) => {
             state.orderNumber = action.payload;
             state.orderStatus = 'success';
-            state.burgerIngredients = null;
+            state.constructorIngredients = null;
+            state.bun = null;
         },
         getOrderFailed: state => { state.orderStatus = 'error' },
         setOrderIngredients: (state, action) => { state.orderIngredients = action.payload; },

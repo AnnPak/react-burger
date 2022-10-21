@@ -1,15 +1,15 @@
-import { addIngredientToModal } from '../../store/slice'
 import { useDrag } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
-
 import classnames from 'classnames';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import { dataPropTypes } from '../../utils/constants';
+import { addIngredientToModal } from '../../store/modal/slice'
 
 import styles from './burger-ingredients-list.module.scss'
 
 const BurgerIngredientsItem = ({ ingredient }) => {
-    const { orderIngredients } = useSelector(store => store);
+    const { orderIngredients } = useSelector(store => store.order);
 
     const { name, image, price, _id } = ingredient;
     const dispatch = useDispatch();

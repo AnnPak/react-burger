@@ -10,9 +10,10 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const {ingredientInModal, ingredients } = useSelector(store => store);
+    const {ingredientInModal, ingredients } = useSelector(store => store.ingredients);
     const [typesOfIngredients, setTypesOfIngredients] = useState(null)
     const [tabsValue, setTabsValue] = useState(null)
+
 
     useEffect(() => {
         let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов

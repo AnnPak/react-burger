@@ -9,7 +9,7 @@ import styles from './order-details-modal.module.scss';
 import doneImg from '../../images/done.png'
 
 const OrderDetails = () => {
-    const {orderNumber } = useSelector(store => store);
+    const {orderNumber } = useSelector(store => store.order);
 
     return (
         <>
@@ -34,7 +34,7 @@ const OrderDetails = () => {
 }
 
 const OrderDetailsModal = () => {
-    const {orderStatus } = useSelector(store => store);
+    const {orderStatus } = useSelector(store => store.order);
 
     const SetContent = () => {
         switch (orderStatus) {

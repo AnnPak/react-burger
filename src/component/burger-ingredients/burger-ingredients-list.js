@@ -10,7 +10,7 @@ import styles from './burger-ingredients-list.module.scss'
 
 const BurgerIngredientsList = (props) => {
     const {typesOfIngredients, setTabsValue} = props
-    const { ingredients } = useSelector(store => store);
+    const { ingredients } = useSelector(store => store.ingredients);
 
     const callTabsAction = (inView, type) => {
         inView === true && setTabsValue(type);

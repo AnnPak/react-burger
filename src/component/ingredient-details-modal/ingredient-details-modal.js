@@ -7,7 +7,7 @@ import styles from './ingredient-details-modal.module.scss'
 
 
 const IngredientDetails = () => {
-    const { ingredientInModal } = useSelector(store => store);
+    const { ingredientInModal } = useSelector(store => store.modal);
 
     return (
         <>
