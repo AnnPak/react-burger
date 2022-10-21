@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid'
 
 import { dataPropTypes } from '../../utils/constants';
 import { deleteBurderIngredient } from '../../store/constructor/slice'
@@ -74,7 +74,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
     const [{ isDragComponents }, drag] = useDrag({
         type: 'component',
-        item: () => ({ id: uuidv4(), index }),
+        item: () => ({ id: nanoid(), index }),
         collect: (monitor) => ({
             isDragComponents: monitor.isDragging(),
         }),

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid'
 
 import { setOrderIngredients } from '../../store/order/slice';
 import {
@@ -69,7 +69,7 @@ const BurgerConstructorWpaper = () => {
             {bun && <BurgerConstructorElement
                         moveCard={moveCard}
                         classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                        key={uuidv4()}
+                        key={nanoid()}
                         type='top'
                         isLocked={true}
                         ingredient={bun} />
