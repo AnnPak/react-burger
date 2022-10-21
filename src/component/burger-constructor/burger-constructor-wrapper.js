@@ -59,7 +59,6 @@ const BurgerConstructorWpaper = () => {
                 classname={classnames(styles.constructorElement)}
                 ingredient={item}
                 index={index}
-                key={uuidv4()}
                 svg={true} />
         )
     }, [moveCard])
@@ -83,7 +82,6 @@ const BurgerConstructorWpaper = () => {
             {bun && <BurgerConstructorElement
                         moveCard={moveCard}
                         classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                        key={uuidv4()}
                         type='bottom'
                         ingredient={bun}
                         isLocked={true} />
