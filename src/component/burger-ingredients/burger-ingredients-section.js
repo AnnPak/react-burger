@@ -22,7 +22,7 @@ const BurgerIngredientsSection = ({ ingredients, type }) => {
                 {filtedIngredientsArray.map(ingredient =>
                     <BurgerIngredientsItem
                         ingredient={ingredient}
-                        key={ingredient._id} />)}
+                        key={ingredient._id}/>)}
             </div>
         </>
     )

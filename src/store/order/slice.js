@@ -30,10 +30,12 @@ const ingredientsSlice = createSlice({
             .addCase(fetchOrder.fulfilled, (state, action) => {
                 state.orderNumber = action.payload.order.number;
                 state.orderStatus = 'success';
-                state.constructorIngredients = null;
                 state.bun = null;
             })
-            .addCase(fetchOrder.rejected, state => { state.orderStatus = 'error' })
+            .addCase(fetchOrder.rejected, state => { 
+                state.orderStatus = 'error' ;
+                state.orderNumber = null;
+            })
             .addDefaultCase(() => {})
     }
 

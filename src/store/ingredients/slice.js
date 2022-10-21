@@ -30,7 +30,8 @@ const ingredientsSlice = createSlice({
             })
             .addCase(fetchIngredients.rejected, state => {
                 state.isLoading = false; 
-                state.isError = true
+                state.isError = true;
+                state.ingredients = null;
             })
             .addDefaultCase(() => {})
     }
