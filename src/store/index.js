@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import burgerConstructor from './constructor/slice';
 import ingredients from './ingredients/slice';
 import modal from './modal/slice';
-import order from './modal/slice';
+import order from './order/slice';
 
 
 const store = configureStore({

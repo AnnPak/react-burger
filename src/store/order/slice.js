@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
     orderNumber: null,
     orderIngredients: null,
@@ -19,7 +18,9 @@ const ingredientsSlice = createSlice({
             state.bun = null;
         },
         getOrderFailed: state => { state.orderStatus = 'error' },
-        setOrderIngredients: (state, action) => { state.orderIngredients = action.payload; },
+        setOrderIngredients: (state, action) => { 
+            state.orderIngredients = action.payload; 
+        },
     }
 
 })

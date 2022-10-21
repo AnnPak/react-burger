@@ -29,30 +29,26 @@ const Modal = ({ isHeader, title, ...props }) => {
     }, [dispatch])
 
     return ReactDOM.createPortal(
-        <ModalOverlay>
-            <div className={classnames(styles.modal, 'p-10', styles.modalShow)} onClick={(e) => e.stopPropagation()}>
+        <>
+            <ModalOverlay />
 
+            <div className={classnames(styles.modal, 'p-10', styles.modalShow)} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalClose}>
                     <CloseIcon type="primary" onClick={() => dispatch(removeModal())} />
                 </div>
-
                 {isHeader &&
                     <div className={styles.modalHeader}>
                         <p className="text text_type_main-default">{title}</p>
                     </div>
                 }
-
                 <div className={styles.modalBody}>
                     {props.children}
                 </div>
             </div>
-        </ModalOverlay>
-        ,
+        </>,
         modalRoot
     )
-
 }
-
 
 Modal.propTypes = {
     isHeader: PropTypes.bool,

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { setOrderIngredients } from '../../store/order/slice'
+import { setOrderIngredients } from '../../store/order/slice';
 import {
     updateBurderIngredients,
     setIngredientsWithoutBun,
@@ -35,10 +35,16 @@ const BurgerConstructorWpaper = () => {
     useEffect(() => {
         if (bun) {
             const resultIndredients = constructorIngredients ? [bun, ...constructorIngredients, bun] : [bun, bun];
+            // console.log(resultIndredients)
             dispatch(setOrderIngredients(resultIndredients));
         } else {
-            dispatch(setOrderIngredients(constructorIngredients));
+            console.log(constructorIngredients)
+
+            // dispatch(setOrderIngredients(constructorIngredients));
         }
+
+        // console.log(orderIngredients)
+
 
     }, [constructorIngredients, bun, dispatch])
 

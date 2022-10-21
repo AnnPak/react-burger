@@ -10,7 +10,8 @@ import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-    const { ingredientInModal, ingredients } = useSelector(store => store.ingredients);
+    const { ingredients } = useSelector(store => store.ingredients);
+    const { ingredientInModal } = useSelector(store => store.modal);
     const [typesOfIngredients, setTypesOfIngredients] = useState(null)
     const [tabsValue, setTabsValue] = useState(null)
 

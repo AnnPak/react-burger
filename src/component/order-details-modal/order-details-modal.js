@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import classnames from 'classnames';
 import { InfoIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -9,7 +10,7 @@ import styles from './order-details-modal.module.scss';
 import doneImg from '../../images/done.png'
 
 const OrderDetails = () => {
-    const {orderNumber } = useSelector(store => store.order);
+    const { orderNumber } = useSelector(store => store.order);
 
     return (
         <>
@@ -22,43 +23,40 @@ const OrderDetails = () => {
             </div>
 
 
-            <img src={doneImg} className={styles.constructorModalImg} alt="Заказ создан"/>
+            <img src={doneImg} className={styles.constructorModalImg} alt="Заказ создан" />
 
             <div className={classnames("mt-15 mp-10", styles.orgerInfo)}>
                 <p className='text text_type_main-default'>Ваш заказ начали готовить</p>
                 <p className={classnames("text text_type_main-default text_color_inactive", styles.orderNumber)}>Дождитесь готовности на орбитальной станции</p>
             </div>
-           
+
         </>
     )
 }
 
 const OrderDetailsModal = () => {
-    const {orderStatus } = useSelector(store => store.order);
+    const { orderStatus } = useSelector(store => store.order);
 
-    const SetContent = () => {
-        switch (orderStatus) {
-            case 'loading':
-                return <Preloader />
-            case 'success':
-                return (
-                    <OrderDetails/>
-                )
-            case 'error':
-                return (
+    const SetContent = useCallback(() => {
+        return (
+            <>
+                {orderStatus === 'loading' && <Preloader />}
+
+                {orderStatus === 'success' && <OrderDetails />}
+
+                {orderStatus === 'error' && (
                     <p className="text text_type_main-medium">
-                    <InfoIcon type="error" />
+                        <InfoIcon type="error" />
                         Ошибка!
                     </p>
-                )
-            default:
-                break;
-        }
-    }
+                )}
+            </>
+        )
+    }, [orderStatus])
 
-    return(
+    return (
         <Modal>
-            <SetContent/>
+            <SetContent />
         </Modal>
     )
 }
