@@ -1,20 +1,25 @@
-import classnames from 'classnames';
+import classnames from "classnames";
 
-import Modal from '../modal/modal';
-import { useSelector } from 'react-redux';
+import Modal from "../modal/modal";
+import { useSelector } from "react-redux";
 
-import styles from './ingredient-details-modal.module.scss'
+import styles from "./ingredient-details-modal.module.scss";
 
 const IngredientDetailsModal = () => {
-    const { ingredientInModal } = useSelector(store => store.modal);
+    const { ingredientInModal } = useSelector((store) => store.modal);
 
     return (
-        <Modal title={'Детали ингредиента'}>
+        <Modal title={"Детали ингредиента"}>
             <div className={styles.ingredientModalContent}>
                 <div className={styles.ingredientModalImg}>
                     <img src={ingredientInModal.image_large} alt={ingredientInModal.name} />
                 </div>
-                <div className={classnames(styles.ingredientModalTitle, 'text text_type_main-medium')}>
+                <div
+                    className={classnames(
+                        styles.ingredientModalTitle,
+                        "text text_type_main-medium"
+                    )}
+                >
                     {ingredientInModal.name}
                 </div>
             </div>
@@ -34,11 +39,13 @@ const IngredientDetailsModal = () => {
                 </div>
                 <div className={styles.ingredientCompositionItem}>
                     <div className="text text_type_main-small">Углеводы, г</div>
-                    <div className="text text_type_digits-medium">{ingredientInModal.carbohydrates}</div>
+                    <div className="text text_type_digits-medium">
+                        {ingredientInModal.carbohydrates}
+                    </div>
                 </div>
             </div>
         </Modal>
-    )
-}
+    );
+};
 
-export default IngredientDetailsModal
+export default IngredientDetailsModal;
