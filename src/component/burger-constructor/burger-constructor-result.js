@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
@@ -25,7 +25,7 @@ const BurgerConstructorResult = () => {
         dispatch(addOrderToModal())
     }
 
-    useEffect(() => {
+    useMemo(() => {
         const withoutBunPrice = constructorIngredients ? constructorIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
         const bunPrice = bun ? bun.price : 0;
 

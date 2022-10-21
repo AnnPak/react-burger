@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -14,27 +14,23 @@ import styles from './burger-constructor.module.scss';
 
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { constructorIngredients } = useSelector(store => store.burgerConstructor);
-    const dispatch = useDispatch();
     const { svg, isLocked, type, classname, index, moveCard } = props;
-    const { price, image } = ingredient
-    let { name } = ingredient
+    const { price, image, name } = ingredient
 
-    switch (type) {
-        case 'top':
-            name = name + ' (верх)';
-            break;
-        case 'bottom':
-            name = name + ' (низ)';
-            break;
-        default:
-    }
+    const { constructorIngredients } = useSelector(store => store.burgerConstructor);
+    const [ bunIndicators] = useState({
+        'top':' (верх)',
+        'bottom': ' (низ)',
+    })
 
+    const elementName = type ? name + bunIndicators[type] : name;
+
+    const dispatch = useDispatch();
     const deleteIngredient = (e) => {
         const currentIngredient = e.target.closest('section');
         const currentIngredientIndex = currentIngredient.getAttribute('index');
 
-        dispatch(deleteBurderIngredient(currentIngredientIndex))
+        dispatch(deleteBurderIngredient(currentIngredientIndex));
     }
 
     const ref = useRef(null);
@@ -97,7 +93,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                     type={type}
                     handleClose={(e) => deleteIngredient(e)}
                     isLocked={isLocked}
-                    text={name}
+                    text={elementName}
                     price={price}
                     thumbnail={image} />
 
