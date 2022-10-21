@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 
-import request from '../../utils/request';
-import { ordersApi } from '../../utils/constants';
 import { addOrderToModal } from '../../store/modal/slice'
-import { getOrderSuccess, getOrderRequest, getOrderFailed } from '../../store/order/slice'
+import { fetchOrder } from '../../store/order/slice'
 
 import styles from './burger-constructor.module.scss';
 
@@ -17,24 +15,19 @@ const BurgerConstructorResult = () => {
 
     const createOrder = () => {
 
-        const constructorIngredientsIds = constructorIngredients.map(item => item._id); //список id ингредиентов 
-        const bunIds = constructorIngredients.map(item => item._id); //список id ингредиентов 
+        const constructorIngredientsIds = constructorIngredients ? constructorIngredients.map(item => item._id) : null; //список id ингредиентов 
+        const bunIds = bun ? bun._id : null; // id булки
+        const idsObject = bunIds ? constructorIngredientsIds.concat(bunIds) : constructorIngredientsIds;//список всех id ингредиентов 
 
-        const idsObject = constructorIngredientsIds.concat(bunIds);
         const requestBody = JSON.stringify({ "ingredients": idsObject })
 
-        dispatch(getOrderRequest())
-
-        request(ordersApi, requestBody, 'POST')
-            .then(order => dispatch(getOrderSuccess(order.order.number)))
-            .catch(() => dispatch(getOrderFailed()))
-
+        dispatch(fetchOrder(requestBody))
         dispatch(addOrderToModal())
     }
 
     useEffect(() => {
         const withoutBunPrice = constructorIngredients ? constructorIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
-        const bunPrice = bun && bun.length > 0 ? bun.map(item => item.price).reduce((prev, curr) => prev + curr, 0) : 0;
+        const bunPrice = bun ? bun.price : 0;
 
         const summ = withoutBunPrice + bunPrice * 2;
 

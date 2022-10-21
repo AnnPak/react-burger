@@ -1,4 +1,5 @@
 const request = async (url,body=null, method='GET') => {
+    console.log(body)
     const requestOptions = {
         method: method,
         headers: { 'Content-Type': 'application/json' },
