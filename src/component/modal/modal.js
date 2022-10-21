@@ -10,7 +10,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.scss';
 
-const Modal = ({ isHeader, title, ...props }) => {
+const Modal = ({ title, ...props }) => {
 
     const modalRoot = document.getElementById("react-modals");
 
@@ -36,7 +36,7 @@ const Modal = ({ isHeader, title, ...props }) => {
                 <div className={styles.modalClose}>
                     <CloseIcon type="primary" onClick={() => dispatch(removeModal())} />
                 </div>
-                {isHeader &&
+                {title &&
                     <div className={styles.modalHeader}>
                         <p className="text text_type_main-default">{title}</p>
                     </div>
@@ -51,7 +51,6 @@ const Modal = ({ isHeader, title, ...props }) => {
 }
 
 Modal.propTypes = {
-    isHeader: PropTypes.bool,
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
 }

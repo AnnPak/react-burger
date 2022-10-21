@@ -5,12 +5,11 @@ import { useSelector } from 'react-redux';
 
 import styles from './ingredient-details-modal.module.scss'
 
-
-const IngredientDetails = () => {
+const IngredientDetailsModal = () => {
     const { ingredientInModal } = useSelector(store => store.modal);
-    return (
 
-        <>
+    return (
+        <Modal title={'Детали ингредиента'}>
             <div className={styles.ingredientModalContent}>
                 <div className={styles.ingredientModalImg}>
                     <img src={ingredientInModal.image_large} alt={ingredientInModal.name} />
@@ -38,21 +37,6 @@ const IngredientDetails = () => {
                     <div className="text text_type_digits-medium">{ingredientInModal.carbohydrates}</div>
                 </div>
             </div>
-        </>
-
-
-
-
-    )
-}
-
-const IngredientDetailsModal = () => {
-    return (
-        <Modal
-            title={'Детали ингредиента'}
-            isHeader={true}>
-
-            <IngredientDetails />
         </Modal>
     )
 }

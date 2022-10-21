@@ -34,7 +34,7 @@ const ingredientsSlice = createSlice({
                 state.bun = null;
             })
             .addCase(fetchOrder.rejected, state => { state.orderStatus = 'error' })
-            .addDefaultCase(() => { })
+            .addDefaultCase(() => {})
     }
 
 })

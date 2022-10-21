@@ -35,16 +35,10 @@ const BurgerConstructorWpaper = () => {
     useEffect(() => {
         if (bun) {
             const resultIndredients = constructorIngredients ? [bun, ...constructorIngredients, bun] : [bun, bun];
-            // console.log(resultIndredients)
             dispatch(setOrderIngredients(resultIndredients));
         } else {
-            console.log(constructorIngredients)
-
-            // dispatch(setOrderIngredients(constructorIngredients));
+            dispatch(setOrderIngredients(constructorIngredients));
         }
-
-        // console.log(orderIngredients)
-
 
     }, [constructorIngredients, bun, dispatch])
 
