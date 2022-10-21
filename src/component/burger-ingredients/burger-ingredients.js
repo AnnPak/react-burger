@@ -15,12 +15,12 @@ const BurgerIngredients = () => {
     const [tabsValue, setTabsValue] = useState(null)
 
     useEffect(() => {
-        let typesArray = ingredients.map(item => item.type); //создаю массив из типов ингредиентов
+        let typesArray = ingredients ? ingredients.map(item => item.type) : null; //создаю массив из типов ингредиентов
         typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
 
         setTypesOfIngredients(typesArray);
 
-    }, [])
+    }, [ingredients])
 
     return (
 

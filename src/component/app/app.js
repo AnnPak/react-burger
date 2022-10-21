@@ -18,7 +18,7 @@ import styles from './app.module.scss';
 function App() {
 
   const dispatch = useDispatch();
-  const { ingredientsStatus } = useSelector(store => store.ingredients);
+  const { isLoading, isError } = useSelector(store => store.ingredients);
 
   useEffect(() => {
     dispatch(getIngredientsRequest());
@@ -30,36 +30,33 @@ function App() {
   }, [dispatch])
 
   const SetContent = useCallback(() => {
-    switch (ingredientsStatus) {
-      case 'loading':
-        return <Preloader />
-      case 'success':
-        return (
-          <DndProvider backend={HTML5Backend}>
-            <main className={styles.burgerSection}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          </DndProvider>
 
-        )
-      case 'error':
-        return (
+    return (
+      <>
+        {isLoading && <Preloader />}
+
+        {!isLoading && 
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.burgerSection}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>}
+
+        {isError &&
           <p className="text text_type_main-medium">
             <InfoIcon type="error" />
             Ошибка!
-          </p>
-        )
-      default:
-        break;
-    }
-  }, [ingredientsStatus])
+          </p>}
+
+      </>
+    )
+  }, [isLoading, isError])
 
 
   return (
     <div className={styles.App}>
       <AppHeader />
-
       <SetContent />
     </div>
   );

@@ -2,19 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     ingredients: null,
-    ingredientsStatus: 'idle',
+    isLoading: false,
+    isError: false
 }
 
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        getIngredientsRequest: state => { state.ingredientsStatus = 'loading' },
+        getIngredientsRequest: state => { state.isLoading = true; state.isError = false},
         getIngredientsSuccess: (state, action) => {
             state.ingredients = action.payload;
-            state.ingredientsStatus = 'success';
+            state.isLoading = false;
+            state.isError = false
         },
-        getIngredientsFailed: state => { state.ingredientsStatus = 'error' },
+        getIngredientsFailed: state => { state.isLoading = false; state.isError = true},
     }
 
 })
@@ -26,4 +28,5 @@ export const {
     getIngredientsRequest,
     getIngredientsSuccess,
     getIngredientsFailed,
+
 } = actions
