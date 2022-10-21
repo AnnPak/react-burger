@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import request from '../../utils/request';
+import { ingredientsApi } from '../../utils/constants';
 
 const initialState = {
     ingredients: null,
@@ -6,27 +8,34 @@ const initialState = {
     isError: false
 }
 
+export const fetchIngredients = createAsyncThunk(
+    'ingredients/fetchFilters',
+    async () => {
+        return await request(ingredientsApi)
+    }
+);
+
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
-    reducers: {
-        getIngredientsRequest: state => { state.isLoading = true; state.isError = false},
-        getIngredientsSuccess: (state, action) => {
-            state.ingredients = action.payload;
-            state.isLoading = false;
-            state.isError = false
-        },
-        getIngredientsFailed: state => { state.isLoading = false; state.isError = true},
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchIngredients.pending, state => {state.isLoading = true; state.isError = false})
+            .addCase(fetchIngredients.fulfilled, (state, action) => {
+                state.ingredients = action.payload.data;
+                state.isLoading = false;
+                state.isError = false
+            })
+            .addCase(fetchIngredients.rejected, state => {
+                state.isLoading = false; 
+                state.isError = true
+            })
+            .addDefaultCase(() => {})
     }
 
 })
 
-const { actions, reducer } = ingredientsSlice;
+const { reducer } = ingredientsSlice;
 
 export default reducer;
-export const {
-    getIngredientsRequest,
-    getIngredientsSuccess,
-    getIngredientsFailed,
-
-} = actions

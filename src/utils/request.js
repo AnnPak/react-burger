@@ -1,4 +1,4 @@
-const requestData = async (url,body=null, method='GET') => {
+const request = async (url,body=null, method='GET') => {
     const requestOptions = {
         method: method,
         headers: { 'Content-Type': 'application/json' },
@@ -15,4 +15,4 @@ const requestData = async (url,body=null, method='GET') => {
 
 }
 
-export default requestData;
+export default request;

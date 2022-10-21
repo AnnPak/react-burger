@@ -1,10 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
     orderNumber: null,
     orderIngredients: null,
     orderStatus: 'idle',
 }
+
 
 const ingredientsSlice = createSlice({
     name: 'order',

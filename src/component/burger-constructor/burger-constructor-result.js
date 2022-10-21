@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 
-import requestData from '../../utils/request';
+import request from '../../utils/request';
 import { ordersApi } from '../../utils/constants';
 import { addOrderToModal } from '../../store/modal/slice'
 import { getOrderSuccess, getOrderRequest, getOrderFailed } from '../../store/order/slice'
@@ -25,7 +25,7 @@ const BurgerConstructorResult = () => {
 
         dispatch(getOrderRequest())
 
-        requestData(ordersApi, requestBody, 'POST')
+        request(ordersApi, requestBody, 'POST')
             .then(order => dispatch(getOrderSuccess(order.order.number)))
             .catch(() => dispatch(getOrderFailed()))
 
