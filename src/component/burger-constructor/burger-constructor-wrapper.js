@@ -1,15 +1,14 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 import { 
-    addBurgerIngredient, 
-    replaceBurderIngredientBun, 
     setOrderIngredients, 
     updateBurderIngredients, 
-    setIngredientsWithoutBun 
+    setIngredientsWithoutBun,
+    setBun
 } from '../../store/slice'
 
 import BurgerConstructorElement from './burger-constructor-element';
@@ -17,37 +16,31 @@ import styles from './burger-constructor.module.scss';
 
 const BurgerConstructorWpaper = () => {
 
-    const { burgerIngredients, ingredientsWithoutBun } = useSelector(store => store);
+    const { bun, ingredientsWithoutBun } = useSelector(store => store);
     const dispatch = useDispatch();
 
     const [, dropTargerRef] = useDrop({
         accept: "ingredients",
         drop(ingredient) {
-            if (burgerIngredients && burgerIngredients.find(item => item.type === 'bun') && ingredient.type === 'bun') {
-                dispatch(replaceBurderIngredientBun(ingredient));
+            if (ingredient.type === 'bun') {
+                dispatch(setBun(ingredient));
             } else {
-                dispatch(addBurgerIngredient(ingredient));
+                dispatch(setIngredientsWithoutBun(ingredient));
             }
 
         },
     });
 
-    const elementTypeBun = useMemo(() => burgerIngredients ? burgerIngredients.find(item => item.type === 'bun') : null, [burgerIngredients]);
-
     //формирую массив с ингредиетами для заказа
     useEffect(() => {
-        if (elementTypeBun && burgerIngredients) {
-            const resultIndredients = [...burgerIngredients, elementTypeBun]
+        if (bun) {
+            const resultIndredients = ingredientsWithoutBun ? [bun, ...ingredientsWithoutBun, bun] : [bun, bun];
             dispatch(setOrderIngredients(resultIndredients));
         } else {
-            dispatch(setOrderIngredients(burgerIngredients));
+            dispatch(setOrderIngredients(ingredientsWithoutBun));
         }
 
-        const arrayWithoutBun = burgerIngredients ? burgerIngredients.filter(item => item.type !== 'bun') : [];
-
-        dispatch(setIngredientsWithoutBun(arrayWithoutBun))
-        
-    }, [burgerIngredients, elementTypeBun, dispatch])
+    }, [ingredientsWithoutBun, bun, dispatch])
 
     const moveCard = useCallback((dragIndex, hoverIndex, ingredientsWithoutBun) => {
         const dragCard = ingredientsWithoutBun[dragIndex];
@@ -75,19 +68,19 @@ const BurgerConstructorWpaper = () => {
 
         <section className={styles.constructorElements} >
 
-            {elementTypeBun &&
+            {bun &&
                 <BurgerConstructorElement
                     moveCard={moveCard}
                     classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
                     key={uuidv4()}
                     type='top'
                     isLocked={true}
-                    ingredient={elementTypeBun} />
+                    ingredient={bun} />
 
             }
 
             <div className={classnames(styles.constructorElements, 'pr-2')} ref={dropTargerRef}>
-                {ingredientsWithoutBun &&
+                {ingredientsWithoutBun != null &&
 
                     ingredientsWithoutBun
                         .map((item, index) => renderCard(item, index))
@@ -95,13 +88,13 @@ const BurgerConstructorWpaper = () => {
                 }
             </div>
 
-            {elementTypeBun &&
+            {bun &&
                 <BurgerConstructorElement
                     moveCard={moveCard}
                     classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
                     key={uuidv4()}
                     type='bottom'
-                    ingredient={elementTypeBun}
+                    ingredient={bun}
                     isLocked={true} />
 
             }

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import styles from './burger-constructor.module.scss';
 
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { ingredientsWithoutBun, burgerIngredients } = useSelector(store => store);
+    const { ingredientsWithoutBun } = useSelector(store => store);
     const dispatch = useDispatch();
     const { svg, isLocked, type, classname, index, moveCard } = props;
     const { price, image } = ingredient
@@ -30,32 +30,13 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
         default:
     }
 
-    const removeIngredient = function(e) {
-        const indexInConstructor = +e.currentTarget.closest("section").getAttribute('index'); // индекс элемента в массиве без булок
-        const element = ingredientsWithoutBun[indexInConstructor];
+    const deleteIngredient = (e) => {
+        const currentIngredient = e.target.closest('section');
+        const currentIngredientIndex = currentIngredient.getAttribute('index');
 
-        const indexInBurgerIngredientsList = +burgerIngredients.indexOf(element); //индекс элемена в общем массиве ингредиентов
-
-        dispatch(deleteBurderIngredient(indexInBurgerIngredientsList))
+        dispatch(deleteBurderIngredient(currentIngredientIndex))
     }
     
-    useEffect(() => {
-        const deleteBtn = document.querySelectorAll(".constructor-element__action");
-        
-        if(deleteBtn){
-            deleteBtn.forEach(function (item) {
-                item.addEventListener('click', removeIngredient, false); 
-            });
-        }
-        return () => {
-            deleteBtn.forEach(function (item) {
-                item.removeEventListener('click', removeIngredient, false);
-                
-            });
-        }
-    }, [])
-
-
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: 'component',
@@ -114,6 +95,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             <div className={classnames(styles.constructorElementWpapper, isDragComponents && styles.opacity, 'pl-2')}>
                 <ConstructorElement
                     type={type}
+                    handleClose={(e) => deleteIngredient(e)}
                     isLocked={isLocked}
                     text={name}
                     price={price}
