@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { nanoid } from "nanoid";
 
 import {
     updateBurderIngredients,
@@ -45,16 +44,13 @@ const BurgerConstructorWpaper = () => {
         return (
             <BurgerConstructorElement
                 moveCard={moveCard}
-                classname={classnames(styles.constructorElement)}
-                key={nanoid()}
+                classname={styles.constructorElement}
+                key={item._id}
                 ingredient={item}
                 index={index}
-                svg={true}
             />
         );
     }
-
-
 
     return (
         <section className={styles.constructorElements}>
@@ -67,7 +63,6 @@ const BurgerConstructorWpaper = () => {
                         "pr-4"
                     )}
                     position="top"
-                    isLocked={true}
                     ingredient={bun}
                 />
             )}
@@ -87,7 +82,6 @@ const BurgerConstructorWpaper = () => {
                     )}
                     position="bottom"
                     ingredient={bun}
-                    isLocked={true}
                 />
             )}
         </section>

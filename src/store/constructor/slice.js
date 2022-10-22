@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
 
 const initialState = {
     constructorIngredients: null,
@@ -19,14 +20,21 @@ const ingredientsSlice = createSlice({
                 ? action.payload
                 : state.constructorIngredients;
         },
-
         setBun: (state, action) => {
             state.bun = action.payload;
         },
-        setIngredientsWithoutBun: (state, action) => {
-            state.constructorIngredients = state.constructorIngredients
-                ? [...state.constructorIngredients, action.payload]
-                : [action.payload];
+        setIngredientsWithoutBun: {
+            reducer: (state, action) => {
+                state.constructorIngredients = state.constructorIngredients
+                    ? [...state.constructorIngredients, action.payload]
+                    : [action.payload];
+            },
+            prepare: (payload) => ({
+                payload: {
+                    ...payload,
+                    _id: nanoid()
+                }
+            })
         },
     },
 });

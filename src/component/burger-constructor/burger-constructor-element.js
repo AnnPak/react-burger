@@ -110,8 +110,9 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 };
 
 BurgerConstructorElement.propTypes = {
-    class: PropTypes.string.isRequired,
+    classname: PropTypes.string.isRequired,
     ingredient: dataPropTypes.isRequired,
+    moveCard: PropTypes.func.isRequired,
     index: PropTypes.number,
     position: PropTypes.string,
 };
