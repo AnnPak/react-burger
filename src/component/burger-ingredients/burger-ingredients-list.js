@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { InView } from "react-intersection-observer";
 
@@ -27,10 +27,12 @@ const BurgerIngredientsList = (props) => {
                         key={ingredientType}
                         onChange={(inView) => callTabsAction(inView, ingredientType)}
                         threshold="0.25"
-                        rootMargin="50px 0px"
+                        rootMargin="0px 0px -30% 0px"
                         initialInView={ingredientType === "bun" ? true : false}
                     >
-                        <BurgerIngredientsSection ingredients={ingredients} type={ingredientType} />
+
+                        <BurgerIngredientsSection ingredients={ingredients} type={ingredientType}/>
+
                     </InView>
                 ))}
         </section>
