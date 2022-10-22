@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 import PropTypes from "prop-types";
@@ -16,22 +16,19 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store) => store.burgerConstructor);
-    const [bunIndicators] = useState({
-        top: " (верх)",
-        bottom: " (низ)",
-    });
-
-    const elementName = position ? name + bunIndicators[position] : name;
-
     const dispatch = useDispatch();
-    const deleteIngredient = (e) => {
-        const currentIngredient = e.target.closest("section");
-        const currentIngredientIndex = currentIngredient.getAttribute("index");
-
-        dispatch(deleteBurderIngredient(currentIngredientIndex));
-    };
 
     const ref = useRef(null);
+    const bunIndicators = {
+        top: " (верх)",
+        bottom: " (низ)",
+    };
+    const elementName = position ? name + bunIndicators[position] : name;
+    
+    const deleteIngredient = (index) => {
+        dispatch(deleteBurderIngredient(index));
+    };
+
     const [{ handlerId }, drop] = useDrop({
         accept: "component",
         collect(monitor) {
@@ -101,7 +98,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             >
                 <ConstructorElement
                     type={position}
-                    handleClose={(e) => deleteIngredient(e)}
+                    handleClose={() => deleteIngredient(index)}
                     isLocked={!!position}
                     text={elementName}
                     price={price}
