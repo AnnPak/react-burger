@@ -32,9 +32,9 @@ const ingredientsSlice = createSlice({
             prepare: (payload) => ({
                 payload: {
                     ...payload,
-                    _id: nanoid()
-                }
-            })
+                    key: nanoid(),
+                },
+            }),
         },
     },
 });

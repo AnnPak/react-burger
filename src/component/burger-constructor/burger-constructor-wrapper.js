@@ -45,12 +45,12 @@ const BurgerConstructorWpaper = () => {
             <BurgerConstructorElement
                 moveCard={moveCard}
                 classname={styles.constructorElement}
-                key={item._id}
+                key={item.key}
                 ingredient={item}
                 index={index}
             />
         );
-    }
+    };
 
     return (
         <section className={styles.constructorElements}>
