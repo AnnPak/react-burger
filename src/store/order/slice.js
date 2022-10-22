@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import request from "../../utils/request";
-import { ordersApi } from "../../utils/constants";
+import { ORDERS_API } from "../../utils/constants";
 
 const initialState = {
     orderNumber: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const fetchOrder = createAsyncThunk("order/fetchFilters", async (requestBody) => {
-    return await request(ordersApi, requestBody, "POST");
+    return await request(ORDERS_API, requestBody, "POST");
 });
 
 const ingredientsSlice = createSlice({

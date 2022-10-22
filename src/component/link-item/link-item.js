@@ -11,7 +11,7 @@ const LinkItem = (props) => {
 
 LinkItem.propTypes = {
     class: PropTypes.string,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
 };
 
 export default LinkItem;

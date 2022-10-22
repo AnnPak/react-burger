@@ -12,8 +12,8 @@ import { deleteBurderIngredient } from "../../store/constructor/slice";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorElement = ({ ingredient, ...props }) => {
-    const { svg, isLocked, type, classname, index, moveCard } = props;
-    const { price, image, name } = ingredient;
+    const { position, classname, index, moveCard } = props;
+    const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store) => store.burgerConstructor);
     const [bunIndicators] = useState({
@@ -21,7 +21,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
         bottom: " (низ)",
     });
 
-    const elementName = type ? name + bunIndicators[type] : name;
+    const elementName = position ? name + bunIndicators[position] : name;
 
     const dispatch = useDispatch();
     const deleteIngredient = (e) => {
@@ -78,7 +78,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
         }),
     });
 
-    if (ingredient.type !== "bun") drag(drop(ref));
+    if (type !== "bun") drag(drop(ref));
 
     const preventDefault = (e) => e.preventDefault();
 
@@ -88,9 +88,9 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             onDrop={preventDefault}
             ref={ref}
             data-handler-id={handlerId}
-            index={index}
+            {...(index && {index: {index}})} 
         >
-            {svg && <DragIcon className={styles.dragIcon} />}
+            {!position && <DragIcon className={styles.dragIcon} />}
 
             <div
                 className={classnames(
@@ -100,9 +100,9 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
                 )}
             >
                 <ConstructorElement
-                    type={type}
+                    type={position}
                     handleClose={(e) => deleteIngredient(e)}
-                    isLocked={isLocked}
+                    isLocked={!!position}
                     text={elementName}
                     price={price}
                     thumbnail={image}
@@ -113,11 +113,10 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 };
 
 BurgerConstructorElement.propTypes = {
-    class: PropTypes.string,
-    type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    svg: PropTypes.bool,
+    class: PropTypes.string.isRequired,
     ingredient: dataPropTypes.isRequired,
+    index: PropTypes.number,
+    position: PropTypes.string,
 };
 
 export default BurgerConstructorElement;

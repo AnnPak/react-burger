@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import BurgerIngredientsItem from "./burger-ingredients-item";
 
@@ -11,11 +11,11 @@ const BurgerIngredientsSection = ({ ingredients, type }) => {
         () => ingredients.filter((item) => item.type === type),
         [ingredients, type]
     );
-    const [titlesList] = useState({
+    const titlesList = {
         bun: "Булки",
         sauce: "Соусы",
         main: "Начинки",
-    });
+    };
 
     return (
         <>
@@ -33,8 +33,8 @@ const BurgerIngredientsSection = ({ ingredients, type }) => {
 };
 
 BurgerIngredientsSection.propTypes = {
-    type: PropTypes.string,
-    ingredients: PropTypes.arrayOf(dataPropTypes),
+    type: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired,
 };
 
 export default BurgerIngredientsSection;

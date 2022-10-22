@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import classnames from "classnames";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -42,13 +41,11 @@ const OrderDetails = () => {
 const OrderDetailsModal = () => {
     const { orderStatus } = useSelector((store) => store.order);
 
-    const SetContent = useCallback(() => {
-        return (
+    return (
+        <Modal>
             <>
                 {orderStatus === "loading" && <Preloader />}
-
                 {orderStatus === "success" && <OrderDetails />}
-
                 {orderStatus === "error" && (
                     <p className="text text_type_main-medium">
                         <InfoIcon type="error" />
@@ -56,12 +53,6 @@ const OrderDetailsModal = () => {
                     </p>
                 )}
             </>
-        );
-    }, [orderStatus]);
-
-    return (
-        <Modal>
-            <SetContent />
         </Modal>
     );
 };

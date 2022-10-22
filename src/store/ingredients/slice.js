@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import request from "../../utils/request";
-import { ingredientsApi } from "../../utils/constants";
+import { INGREDIENTS_API } from "../../utils/constants";
 
 const initialState = {
     ingredients: null,
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const fetchIngredients = createAsyncThunk("ingredients/fetchFilters", async () => {
-    return await request(ingredientsApi);
+    return await request(INGREDIENTS_API);
 });
 
 const ingredientsSlice = createSlice({

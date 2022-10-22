@@ -41,21 +41,20 @@ const BurgerConstructorWpaper = () => {
         [dispatch]
     );
 
-    const renderCard = useCallback(
-        (item, index) => {
-            return (
-                <BurgerConstructorElement
-                    moveCard={moveCard}
-                    classname={classnames(styles.constructorElement)}
-                    key={nanoid()}
-                    ingredient={item}
-                    index={index}
-                    svg={true}
-                />
-            );
-        },
-        [moveCard]
-    );
+    const renderCard = (item, index) => {
+        return (
+            <BurgerConstructorElement
+                moveCard={moveCard}
+                classname={classnames(styles.constructorElement)}
+                key={nanoid()}
+                ingredient={item}
+                index={index}
+                svg={true}
+            />
+        );
+    }
+
+
 
     return (
         <section className={styles.constructorElements}>
@@ -67,7 +66,7 @@ const BurgerConstructorWpaper = () => {
                         styles.constructorLockElement,
                         "pr-4"
                     )}
-                    type="top"
+                    position="top"
                     isLocked={true}
                     ingredient={bun}
                 />
@@ -86,7 +85,7 @@ const BurgerConstructorWpaper = () => {
                         styles.constructorLockElement,
                         "pr-4"
                     )}
-                    type="bottom"
+                    position="bottom"
                     ingredient={bun}
                     isLocked={true}
                 />

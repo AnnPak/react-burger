@@ -12,5 +12,5 @@ export const dataPropTypes = PropTypes.shape({
     image: PropTypes.string.isRequired
 });
 
-export const ordersApi = 'https://norma.nomoreparties.space/api/orders';
-export const ingredientsApi = 'https://norma.nomoreparties.space/api/ingredients';
+export const ORDERS_API = 'https://norma.nomoreparties.space/api/orders';
+export const INGREDIENTS_API = 'https://norma.nomoreparties.space/api/ingredients';

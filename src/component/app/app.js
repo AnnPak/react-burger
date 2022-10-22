@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
@@ -14,44 +14,37 @@ import { fetchIngredients } from "../../store/ingredients/slice";
 import styles from "./app.module.scss";
 
 function App() {
-  const dispatch = useDispatch();
-  const { isLoading, isError } = useSelector((store) => store.ingredients);
+    const dispatch = useDispatch();
+    const { isLoading, isError } = useSelector((store) => store.ingredients);
 
-  useEffect(() => {
-    dispatch(fetchIngredients());
-    // eslint-disable-next-line
-  }, []);
+    useEffect(() => {
+        dispatch(fetchIngredients());
+        // eslint-disable-next-line
+    }, []);
 
-  const SetContent = useCallback(() => {
     return (
-      <>
-        {isLoading && <Preloader />}
+        <div className={styles.App}>
+            <AppHeader />
 
-        {!isLoading && (
-          <DndProvider backend={HTML5Backend}>
-            <main className={styles.burgerSection}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          </DndProvider>
-        )}
+            {isLoading && <Preloader />}
 
-        {isError && (
-          <p className="text text_type_main-medium">
-            <InfoIcon type="error" />
-            Ошибка!
-          </p>
-        )}
-      </>
+            {!isLoading && (
+                <DndProvider backend={HTML5Backend}>
+                    <main className={styles.burgerSection}>
+                        <BurgerIngredients />
+                        <BurgerConstructor />
+                    </main>
+                </DndProvider>
+            )}
+
+            {isError && (
+                <p className="text text_type_main-medium">
+                    <InfoIcon type="error" />
+                    Ошибка!
+                </p>
+            )}
+        </div>
     );
-  }, [isLoading, isError]);
-
-  return (
-    <div className={styles.App}>
-      <AppHeader />
-      <SetContent />
-    </div>
-  );
 }
 
 export default App;
