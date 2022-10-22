@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import classnames from "classnames";
@@ -9,7 +10,9 @@ import { addIngredientToModal } from "../../store/modal/slice";
 import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem = ({ ingredient }) => {
-    const { orderIngredients } = useSelector((store) => store.order);
+    const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
+    
+    const [resultIndredients, setResultIndredients] = useState(null)
 
     const { name, image, price, _id } = ingredient;
     const dispatch = useDispatch();
@@ -22,9 +25,19 @@ const BurgerIngredientsItem = ({ ingredient }) => {
         }),
     });
 
-    const ingredientsCounter = orderIngredients
-        ? orderIngredients.filter((ingredient) => ingredient._id === _id).length
-        : 0;
+    useEffect(() => {
+        if (bun) {
+            setResultIndredients(constructorIngredients
+                ? [bun, ...constructorIngredients, bun]
+                : [bun, bun]);
+        } else {
+            setResultIndredients(constructorIngredients);
+        }
+    }, [constructorIngredients, bun]);
+
+    const ingredientsCounter = resultIndredients
+    ? resultIndredients.filter((ingredient) => ingredient._id === _id).length
+    : 0;
 
     return (
         <div

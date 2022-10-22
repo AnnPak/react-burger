@@ -5,7 +5,6 @@ import { ordersApi } from "../../utils/constants";
 
 const initialState = {
     orderNumber: null,
-    orderIngredients: null,
     orderStatus: "idle",
 };
 
@@ -16,11 +15,7 @@ export const fetchOrder = createAsyncThunk("order/fetchFilters", async (requestB
 const ingredientsSlice = createSlice({
     name: "order",
     initialState,
-    reducers: {
-        setOrderIngredients: (state, action) => {
-            state.orderIngredients = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchOrder.pending, (state) => {
@@ -35,11 +30,9 @@ const ingredientsSlice = createSlice({
                 state.orderStatus = "error";
                 state.orderNumber = null;
             })
-            .addDefaultCase(() => {});
     },
 });
 
-const { actions, reducer } = ingredientsSlice;
+const { reducer } = ingredientsSlice;
 
 export default reducer;
-export const { setOrderIngredients } = actions;

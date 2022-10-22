@@ -1,10 +1,9 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { nanoid } from "nanoid";
 
-import { setOrderIngredients } from "../../store/order/slice";
 import {
     updateBurderIngredients,
     setIngredientsWithoutBun,
@@ -28,19 +27,6 @@ const BurgerConstructorWpaper = () => {
             }
         },
     });
-
-    //формирую массив с ингредиетами для заказа
-    useEffect(() => {
-        if (bun) {
-            const resultIndredients = constructorIngredients
-                ? [bun, ...constructorIngredients, bun]
-                : [bun, bun];
-            dispatch(setOrderIngredients(resultIndredients));
-        } else {
-            dispatch(setOrderIngredients(constructorIngredients));
-        }
-        // eslint-disable-next-line
-    }, [constructorIngredients, bun]);
 
     const moveCard = useCallback(
         (dragIndex, hoverIndex, constructorIngredients) => {
