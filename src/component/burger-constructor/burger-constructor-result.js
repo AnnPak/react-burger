@@ -16,7 +16,7 @@ const BurgerConstructorResult = () => {
 
         const constructorIngredientsIds = constructorIngredients ? constructorIngredients.map(item => item._id) : []; //список id ингредиентов 
         const bunId = bun ? bun._id : null; // id булки
-        const orderIngredientsIds = constructorIngredientsIds ? [bunId, ...constructorIngredientsIds, bunId] : [bunId, bunId];//список всех id ингредиентов 
+        const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId];//список всех id ингредиентов 
 
         const requestBody = JSON.stringify({ "ingredients": orderIngredientsIds })
 
