@@ -40,18 +40,6 @@ const BurgerConstructorWpaper = () => {
         [dispatch]
     );
 
-    const renderCard = (item, index) => {
-        return (
-            <BurgerConstructorElement
-                moveCard={moveCard}
-                classname={styles.constructorElement}
-                key={item.key}
-                ingredient={item}
-                index={index}
-            />
-        );
-    };
-
     return (
         <section className={styles.constructorElements}>
             {bun && (
@@ -69,7 +57,15 @@ const BurgerConstructorWpaper = () => {
 
             <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargerRef}>
                 {constructorIngredients != null &&
-                    constructorIngredients.map((item, index) => renderCard(item, index))}
+                    constructorIngredients.map((item, index) => (
+                        <BurgerConstructorElement
+                            moveCard={moveCard}
+                            classname={styles.constructorElement}
+                            key={item.key}
+                            ingredient={item}
+                            index={index}
+                        />
+                    ))}
             </div>
 
             {bun && (
