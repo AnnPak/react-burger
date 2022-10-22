@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { InView } from "react-intersection-observer";
+import PropTypes from "prop-types";
 
 import classnames from "classnames";
 
@@ -37,6 +37,11 @@ const BurgerIngredientsList = (props) => {
                 ))}
         </section>
     );
+};
+
+BurgerIngredientsList.propTypes = {
+    typesOfIngredients: PropTypes.array.isRequired,
+    setTabsValue: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientsList;

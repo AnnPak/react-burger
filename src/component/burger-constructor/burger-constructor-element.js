@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
-import { dataPropTypes } from "../../utils/constants";
+import { DATA_PROPS_TYPE } from "../../utils/constants";
 import { deleteBurderIngredient } from "../../store/constructor/slice";
 
 import styles from "./burger-constructor.module.scss";
@@ -111,7 +111,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
 BurgerConstructorElement.propTypes = {
     classname: PropTypes.string.isRequired,
-    ingredient: dataPropTypes.isRequired,
+    ingredient: DATA_PROPS_TYPE.isRequired,
     moveCard: PropTypes.func.isRequired,
     index: PropTypes.number,
     position: PropTypes.string,

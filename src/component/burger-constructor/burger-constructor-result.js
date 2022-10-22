@@ -14,11 +14,11 @@ const BurgerConstructorResult = () => {
 
     const createOrder = () => {
 
-        const constructorIngredientsIds = constructorIngredients ? constructorIngredients.map(item => item._id) : null; //список id ингредиентов 
-        const bunIds = bun ? bun._id : null; // id булки
-        const idsObject = bunIds ? constructorIngredientsIds.concat(bunIds) : constructorIngredientsIds;//список всех id ингредиентов 
+        const constructorIngredientsIds = constructorIngredients ? constructorIngredients.map(item => item._id) : []; //список id ингредиентов 
+        const bunId = bun ? bun._id : null; // id булки
+        const orderIngredientsIds = constructorIngredientsIds ? [bunId, ...constructorIngredientsIds, bunId] : [bunId, bunId];//список всех id ингредиентов 
 
-        const requestBody = JSON.stringify({ "ingredients": idsObject })
+        const requestBody = JSON.stringify({ "ingredients": orderIngredientsIds })
 
         dispatch(fetchOrder(requestBody))
         dispatch(addOrderToModal())

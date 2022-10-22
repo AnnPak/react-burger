@@ -30,12 +30,14 @@ const BurgerIngredients = () => {
                 tabsValue={tabsValue}
             />
 
-            <BurgerIngredientsList
-                typesOfIngredients={typesOfIngredients}
-                setTypesOfIngredients={setTypesOfIngredients}
-                tabsValue={tabsValue}
-                setTabsValue={setTabsValue}
-            />
+            {typesOfIngredients && (
+                <BurgerIngredientsList
+                    typesOfIngredients={typesOfIngredients}
+                    setTypesOfIngredients={setTypesOfIngredients}
+                    tabsValue={tabsValue}
+                    setTabsValue={setTabsValue}
+                />
+            )}
 
             {ingredientInModal && <IngredientDetailsModal />}
         </section>

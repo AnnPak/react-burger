@@ -33,6 +33,7 @@ const ingredientsSlice = createSlice({
                 state.isError = true;
                 state.ingredients = null;
             })
+
     },
 });
 
