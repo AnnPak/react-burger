@@ -1,58 +1,47 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list'
-import TabsWrapper from '../tabs-wrapper/tabs-wrapper'
-import dataPropTypes from '../../utils/constants';
-import IngredientDetailsModal from '../ingredient-details-modal/ingredient-details-modal';
+import BurgerIngredientsList from "./burger-ingredients-list";
+import TabsWrapper from "../tabs-wrapper/tabs-wrapper";
+import IngredientDetailsModal from "../ingredient-details-modal/ingredient-details-modal";
 
-import styles from './burger-ingredients.module.scss'
+import styles from "./burger-ingredients.module.scss";
 
+const BurgerIngredients = () => {
+    const { ingredients } = useSelector((store) => store.ingredients);
+    const { ingredientInModal } = useSelector((store) => store.modal);
+    const [typesOfIngredients, setTypesOfIngredients] = useState(null);
+    const [tabsValue, setTabsValue] = useState(null);
 
-const BurgerIngredients = ({ data }) => {
+    useEffect(() => {
+        let typesArray = ingredients ? ingredients.map((item) => item.type) : null; //создаю массив из типов ингредиентов
+        typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
 
-    const [current, setCurrent] = useState('bun');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState('null');
-
-    const openModal = () => {
-        setIsModalOpen(true)
-    }
-
-    const closeModal = () => {
-        setIsModalOpen(false)
-    }
+        setTypesOfIngredients(typesArray);
+    }, [ingredients]);
 
     return (
-
         <section className={styles.burgerIngredientsSection}>
             <h1 className="mt-10">Соберите бургер</h1>
 
-            <TabsWrapper current={current} setCurrent={setCurrent} />
+            <TabsWrapper
+                typesOfIngredients={typesOfIngredients}
+                setTypesOfIngredients={setTypesOfIngredients}
+                tabsValue={tabsValue}
+            />
 
-            <BurgerIngredientsList 
-                data={data}
-                isModalOpen={isModalOpen}
-                openModal={openModal}
-                closeModal={closeModal}
-                setSelectedId={setSelectedId}
-                selectedId={selectedId} />
+            {typesOfIngredients && (
+                <BurgerIngredientsList
+                    typesOfIngredients={typesOfIngredients}
+                    setTypesOfIngredients={setTypesOfIngredients}
+                    tabsValue={tabsValue}
+                    setTabsValue={setTabsValue}
+                />
+            )}
 
-            {isModalOpen && data.length > 0 &&
-                <IngredientDetailsModal 
-                    data={data}
-                    selectedId={selectedId}
-                    isModalOpen={isModalOpen}
-                    closeModal={closeModal} />
-            }
-
-
+            {ingredientInModal && <IngredientDetailsModal />}
         </section>
-    )
-}
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(dataPropTypes)
+    );
 };
 
 export default BurgerIngredients;

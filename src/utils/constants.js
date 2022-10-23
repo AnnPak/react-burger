@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const dataPropTypes = PropTypes.shape({
+export const DATA_PROPS_TYPE = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -12,4 +12,13 @@ const dataPropTypes = PropTypes.shape({
     image: PropTypes.string.isRequired
 });
 
-export default dataPropTypes
+export const TITLE_LIST = {
+    bun: "Булки",
+    sauce: "Соусы",
+    main: "Начинки",
+};
+
+const BASE_URL = "https://norma.nomoreparties.space/api";
+
+export const ORDERS_API = `${BASE_URL}/orders`;
+export const INGREDIENTS_API = `${BASE_URL}/ingredients`;

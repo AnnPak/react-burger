@@ -1,20 +1,18 @@
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import classnames from "classnames";
+import { useDispatch } from "react-redux";
+import { removeModal } from "../../store/modal/slice";
 
-import styles from './modal-overlay.module.scss';
+import styles from "./modal-overlay.module.scss";
 
-const ModalOverlay = ({isModalOpen, closeModal, ...props}) => {
+const ModalOverlay = () => {
+    const dispatch = useDispatch();
+
     return (
-        <section className={classnames(styles.modalOverlay, isModalOpen ? styles.modalShow : '')}
-                  onClick={closeModal}>
-            {props.children}
-        </section>
-    )
-}
+        <section
+            className={classnames(styles.modalOverlay, styles.modalShow)}
+            onClick={() => dispatch(removeModal())}
+        />
+    );
+};
 
-ModalOverlay.propTypes = {
-    isModalOpen: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-}
-
-export default ModalOverlay
+export default ModalOverlay;

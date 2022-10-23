@@ -1,110 +1,87 @@
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import React, { useCallback } from "react";
+import classnames from "classnames";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
 
-import dataPropTypes from '../../utils/constants';
+import {
+    updateBurderIngredients,
+    setIngredientsWithoutBun,
+    setBun,
+} from "../../store/constructor/slice";
 
-import styles from './burger-constructor.module.scss';
+import BurgerConstructorElement from "./burger-constructor-element";
+import styles from "./burger-constructor.module.scss";
 
+const BurgerConstructorWpaper = () => {
+    const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
+    const dispatch = useDispatch();
 
-const BurgerConstructorElement = ({ text, ...props }) => {
+    const [, dropTargerRef] = useDrop({
+        accept: "ingredients",
+        drop(ingredient) {
+            if (ingredient.type === "bun") {
+                dispatch(setBun(ingredient));
+            } else {
+                dispatch(setIngredientsWithoutBun(ingredient));
+            }
+        },
+    });
 
-    const { svg, isLocked, type, price, thumbnail, classname } = props;
+    const moveCard = useCallback(
+        (dragIndex, hoverIndex, constructorIngredients) => {
+            const dragCard = constructorIngredients[dragIndex];
+            const newCards = [...constructorIngredients];
 
-    switch (type) {
-        case 'top':
-            text = text + ' (верх)';
-            break;
-        case 'bottom':
-            text = text + ' (низ)';
-            break;
-        default:
-    }
+            newCards.splice(dragIndex, 1);
+            newCards.splice(hoverIndex, 0, dragCard);
 
-    return (
-        <section className={classname}>
-            {svg && <DragIcon className={styles.dragIcon} />}
-
-            <div className={classnames(styles.constructorElementWpapper, 'pl-2')}>
-                <ConstructorElement
-                    type={type}
-                    isLocked={isLocked}
-                    text={text}
-                    price={price}
-                    thumbnail={thumbnail} />
-
-            </div>
-
-        </section>
-    )
-}
-
-const BurgerConstructorWpaper = ({resultIngredientsData}) => {
-
-    const elementTypeBun = resultIngredientsData.find(item => item.type === 'bun');
+            dispatch(updateBurderIngredients(newCards));
+        },
+        [dispatch]
+    );
 
     return (
-
         <section className={styles.constructorElements}>
-
-            {
+            {bun && (
                 <BurgerConstructorElement
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={elementTypeBun._id}
-                    type='top'
-                    isLocked={true}
-                    text={elementTypeBun.name}
-                    price={elementTypeBun.price}
-                    thumbnail={elementTypeBun.image} />
+                    moveCard={moveCard}
+                    classname={classnames(
+                        styles.constructorElement,
+                        styles.constructorLockElement,
+                        "pr-4"
+                    )}
+                    position="top"
+                    ingredient={bun}
+                />
+            )}
 
-            }
-
-            <div className={classnames(styles.constructorElements, 'pr-2')}>
-                {
-
-                    resultIngredientsData.filter(item => item.type !== 'bun').map((item) => {
-                        return (
-                            <BurgerConstructorElement
-                                classname={classnames(styles.constructorElement)}
-                                key={item._id}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                svg={true} />
-                        )
-                    })
-                }
+            <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargerRef}>
+                {constructorIngredients != null &&
+                    constructorIngredients.map((item, index) => (
+                        <BurgerConstructorElement
+                            moveCard={moveCard}
+                            classname={styles.constructorElement}
+                            key={item.key}
+                            ingredient={item}
+                            index={index}
+                        />
+                    ))}
             </div>
 
-            {
+            {bun && (
                 <BurgerConstructorElement
-                    classname={classnames(styles.constructorElement, styles.constructorLockElement, 'pr-4')}
-                    key={elementTypeBun._id + 'n2'}
-                    type='bottom'
-                    isLocked={true}
-                    text={elementTypeBun.name}
-                    price={elementTypeBun.price}
-                    thumbnail={elementTypeBun.image} />
-
-            }
-
+                    moveCard={moveCard}
+                    classname={classnames(
+                        styles.constructorElement,
+                        styles.constructorLockElement,
+                        "pr-4"
+                    )}
+                    position="bottom"
+                    ingredient={bun}
+                />
+            )}
         </section>
-
-    )
-}
-
-BurgerConstructorElement.propTypes = {
-    class: PropTypes.string,
-    type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    text: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-    svg: PropTypes.bool
-};
-
-BurgerConstructorWpaper.propTypes = {
-    resultIngredientsData: PropTypes.arrayOf(dataPropTypes).isRequired
+    );
 };
 
 export default BurgerConstructorWpaper;
