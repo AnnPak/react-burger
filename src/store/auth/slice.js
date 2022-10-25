@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import request from "../../utils/request";
+import { request } from "../../utils/request";
+import { setCookie } from "../../utils/cookie";
 import { LOGIN_API, REGISTER_API, LOGOUT_API, TOKEN_API } from "../../utils/constants";
 
 const initialState = {
-    data: null,
+    user: null, //anna anna@gmail.com
+
     accessToken: null,
     refreshToken: null,
+
     registerSending: false,
     registerError: false,
+
     loginSending: false,
-    loginSucces: false,
     loginError: false,
 };
 
@@ -22,9 +25,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setUserData(state, action) {
-            state.data = action.payload;
-        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -35,7 +36,10 @@ const authSlice = createSlice({
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.registerSending = false;
                 state.registerError = false;
-                state.data = action.payload;
+                state.user = action.payload.user;
+                state.accessToken = action.payload.accessToken;
+                state.refreshToken = action.payload.refreshToken;
+                setCookie('token', state.refreshToken);
             })
             .addCase(registerUser.rejected, (state) => {
                 state.registerSending = false;

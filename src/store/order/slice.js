@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import request from "../../utils/request";
+import { request } from "../../utils/request";
 import { ORDERS_API } from "../../utils/constants";
 
 const initialState = {

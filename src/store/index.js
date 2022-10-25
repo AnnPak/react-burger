@@ -4,9 +4,10 @@ import burgerConstructor from "./constructor/slice";
 import ingredients from "./ingredients/slice";
 import modal from "./modal/slice";
 import order from "./order/slice";
+import auth from './auth/slice'
 
 const store = configureStore({
-    reducer: { burgerConstructor, ingredients, modal, order },
+    reducer: { burgerConstructor, ingredients, modal, order, auth },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
     devTools: process.env.NODE_ENV !== "production",
 });

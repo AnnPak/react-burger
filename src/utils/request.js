@@ -1,4 +1,4 @@
-const request = async (url, body = null, method = "GET") => {
+export const request = async (url, body = null, method = "GET") => {
     const requestOptions = {
         method: method,
         headers: { "Content-Type": "application/json" },
@@ -13,4 +13,4 @@ const request = async (url, body = null, method = "GET") => {
     });
 };
 
-export default request;
+
