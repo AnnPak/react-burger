@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { PasswordInputWrap, TextInput, EmailInputWrap } from "../component/inputs/inputs";
 import { registerUser } from "../store/auth/slice";
@@ -13,17 +13,12 @@ const Register = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
-    const {registerError} = useSelector(store => store)
-
     const dispatch = useDispatch();
 
     const userRegister = (e) => {
         e.preventDefault();
-        const requestBody = JSON.stringify({ "email": email, "password": password, "name": name })
+        const requestBody = JSON.stringify({ email: email, password: password, name: name });
         dispatch(registerUser(requestBody));
-
-        registerError == false &&
-        <Navigate to="/user" state={{ from: location }} replace />
     };
 
     return (

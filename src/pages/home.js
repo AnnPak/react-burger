@@ -30,7 +30,6 @@ const Home = () => {
                         <BurgerIngredients />
                         <BurgerConstructor />
                     </main>
-                    ;
                 </DndProvider>
             )}
 
