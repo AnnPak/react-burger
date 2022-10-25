@@ -1,33 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-export const TextInput = ({ type, name}) => {
-    const [value, setValue] = React.useState('value')
+export const TextInput = props => {
+    const { type, name, placeholder, icon, onIconClick} = props
+    const [value, setValue] = useState('')
     const inputRef = React.useRef(null)
-    const onIconClick = () => {
-      setTimeout(() => inputRef.current.focus(), 0)
-      alert('Icon Click Callback')
-    }
+
     return (
       <Input
         type={type}
-        placeholder={'placeholder'}
+        placeholder={placeholder}
+        icon={icon}
         onChange={e => setValue(e.target.value)}
-        icon={'CurrencyIcon'}
         value={value}
+        onIconClick={onIconClick}
         name={name}
         error={false}
         ref={inputRef}
-        onIconClick={onIconClick}
         errorText={'Ошибка'}
         size={'default'}
       />
     )
 }
 
-export const Emailnput = () => {
-    const [value, setValue] = React.useState('bob@example.com')
+export const EmailInputWrap = () => {
+    const [value, setValue] = useState('')
     const onChange = e => {
       setValue(e.target.value)
     }
@@ -35,9 +33,10 @@ export const Emailnput = () => {
 }
 
 export const PasswordInputWrap = () => {
-    const [value, setValue] = React.useState('password')
+    const [value, setValue] = useState('')
     const onChange = e => {
       setValue(e.target.value)
     }
     return <PasswordInput onChange={onChange} value={value} name={'password'} />
 } 
+

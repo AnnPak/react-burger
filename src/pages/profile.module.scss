@@ -1,0 +1,22 @@
+.navbar {
+    text-align: start;
+    margin-right: 60px;
+    width: 320px;
+    transition: all 0.3s ease-in;
+}
+.profilePage {
+    display: flex;
+    max-width: 1240px;
+    margin: 0 auto;
+    margin-top: 120px;
+}
+
+.navbarItem {
+    cursor: pointer;
+    color: #8585ad;
+    transition: all 0.3s ease-in;
+}
+.navbarItemActive,
+.navbarItem:hover {
+    color: #f2f2f3;
+}

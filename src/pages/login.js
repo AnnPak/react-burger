@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Emailnput, PasswordInputWrap } from "../component/inputs/inputs";
+import { EmailInputWrap, PasswordInputWrap } from "../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./login.module.scss";
@@ -10,11 +10,11 @@ const Login = () => {
             <p className="text text_type_main-medium">Вход</p>
             <form>
                 <div className='pt-6'>
-                    <Emailnput />
+                    <EmailInputWrap />
                 </div>
 
                 <div className='pt-6'>
-                    <PasswordInputWrap />
+                    <PasswordInputWrap o/>
                 </div>
 
 
@@ -28,11 +28,11 @@ const Login = () => {
                 <div className='pt-20'>
                     <p className="text text_type_main-default text_color_inactive">
                         Вы — новый пользователь?
-                        <Link className={styles.link}>Зарегистрироваться</Link>
+                        <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
                     </p>
-                    <p className="text text_type_main-default text_color_inactive">
+                    <p className="text text_type_main-default text_color_inactive pt-4">
                         Забыли пароль?
-                        <Link className={styles.link}>Восстановить пароль</Link>
+                        <Link to="/reset-password" className={styles.link}>Восстановить пароль</Link>
                     </p>
                 </div>
             </form>
