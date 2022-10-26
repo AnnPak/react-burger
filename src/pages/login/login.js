@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { EmailInputWrap, PasswordInputWrap } from "../component/inputs/inputs";
+import { EmailInputWrap, PasswordInputWrap } from "../../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { loginUser } from "../store/user/slice";
+import { loginUser } from "../../store/user/login";
 
 import styles from "./login.module.scss";
 

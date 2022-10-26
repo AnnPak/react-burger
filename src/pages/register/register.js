@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 
-import { PasswordInputWrap, TextInput, EmailInputWrap } from "../component/inputs/inputs";
-import { registerUser } from "../store/user/slice";
+import { PasswordInputWrap, TextInput, EmailInputWrap } from "../../component/inputs/inputs";
+import { registerUser } from "../../store/user/register";
 
-import styles from "./login.module.scss";
+import styles from "../login/login.module.scss";
 
 const Register = () => {
     const [email, setEmail] = useState("");

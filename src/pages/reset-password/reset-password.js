@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { EmailInputWrap } from "../component/inputs/inputs";
+import { EmailInputWrap } from "../../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./login.module.scss";
+import styles from "../login/login.module.scss";
 
 const ResetPassword = () => {
     return (
