@@ -4,7 +4,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 
 import { PasswordInputWrap, TextInput, EmailInputWrap } from "../component/inputs/inputs";
-import { registerUser } from "../store/auth/slice";
+import { registerUser } from "../store/user/slice";
 
 import styles from "./login.module.scss";
 
