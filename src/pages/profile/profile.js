@@ -1,17 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
+import { getUser, refreshToken } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
 
 const Profile = () => {
     const [content, setContent] = useState("profile");
+    const { jwtExpired } = useSelector((store) => store.user);
+
+    const dispatch = useDispatch();
 
     const changeActiveItem = (e) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
     };
+
+    useEffect(() => {
+        if (jwtExpired) {
+            dispatch(refreshToken());
+            dispatch(getUser());
+        } else {
+            dispatch(getUser());
+        }
+
+        // eslint-disable-next-line
+    }, [jwtExpired]);
 
     return (
         <section className={styles.profilePage}>
@@ -58,9 +74,18 @@ const Profile = () => {
 };
 
 const ChangeProfileDateForm = () => {
+    const { user } = useSelector((store) => store.user);
+
     const [name, setName] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name);
+            setLogin(user.email);
+        }
+    }, [user]);
 
     const nameRef = useRef(null);
     const loginRef = useRef(null);

@@ -1,15 +1,38 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getCookie, setCookie } from "../../utils/cookie";
 
-import { request } from "../../utils/request";
-import { setCookie } from "../../utils/cookie";
-import { GET_USER } from "../../utils/constants";
+import { requestUser, requestToken } from "../../utils/request";
+import { GET_USER, TOKEN_API } from "../../utils/constants";
 
 const initialState = {
     user: null, //anna1 anna@anna.com anna123
+    userSending: false,
+    userError: false,
+    jwtExpired: false,
+
+    refreshTokenSending: false,
+    refreshTokenError: false,
+    
 };
 
-export const getUser = createAsyncThunk("user/getUser", async (requestBody) => {
-    return await request(GET_USER, requestBody);
+const token = getCookie("accessToken");
+const refreshTokenValue = getCookie("refreshToken");
+
+export const getUser = createAsyncThunk("user/getUser", async () => {
+    return await requestUser(GET_USER, token)
+    .then(data => {
+        return data
+      });
+});
+
+export const refreshToken = createAsyncThunk("user/refreshToken", async () => {
+    return await requestToken(TOKEN_API, refreshTokenValue)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data) 
+
+        return data
+      });
 });
 
 const userSlice = createSlice({
@@ -19,24 +42,39 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getUser.pending, (state) => {
-                state.loginSending = true;
+                state.userSending = true;
                 state.loginError = false;
             })
             .addCase(getUser.fulfilled, (state, action) => {
-                state.loginSending = false;
-                state.loginError = false;
+                const {success, user} = action.payload
 
-                state.user = action.payload.user;
-                state.accessToken = action.payload.accessToken;
-                state.refreshToken = action.payload.refreshToken;
+                state.userSending = false;
+                state.userError = success ? false : true;
+                state.user = success && user;
 
-                setCookie("accessToken", state.accessToken);
-                setCookie("refreshToken", state.refreshToken);
+                state.jwtExpired = !success && action.payload.message === 'jwt expired' ? true : false; //проверка если токен просрочен
             })
-            .addCase(getUser.rejected, (state) => {
-                state.loginSending = false;
-                state.loginError = true;
-            });
+            .addCase(getUser.rejected, (state, action) => {
+                console.log(action.payload)
+                state.userSending = false;
+                state.userError = true;
+            })
+            
+            .addCase(refreshToken.pending, (state) => {
+                state.refreshTokenSending = true;
+            })
+            .addCase(refreshToken.fulfilled, (state, action) => {
+                const {success, accessToken} = action.payload
+
+                state.refreshTokenSending = false;
+                state.jwtExpired = false;
+                success && setCookie("accessToken", accessToken);
+            })
+            .addCase(refreshToken.rejected, (state) => {
+                state.refreshTokenError = true;
+                state.refreshTokenSending = false;
+            })
+
     },
 });
 

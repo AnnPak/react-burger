@@ -5,10 +5,8 @@ import { setCookie } from "../../utils/cookie";
 import { LOGIN_API } from "../../utils/constants";
 
 const initialState = {
-    accessToken: null,
-    refreshToken: null,
-
     loginSending: false,
+    loginSuccess: false,
     loginError: false,
 };
 
@@ -28,15 +26,15 @@ const loginSlice = createSlice({
                 state.loginError = false;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
+                const { user, accessToken, refreshToken, success} = action.payload
+
                 state.loginSending = false;
                 state.loginError = false;
+                state.loginSuccess = success ? true : false;
 
-                state.user = action.payload.user;
-                state.accessToken = action.payload.accessToken;
-                state.refreshToken = action.payload.refreshToken;
-
-                setCookie("accessToken", state.accessToken);
-                setCookie("refreshToken", state.refreshToken);
+                state.user = user;
+                setCookie("accessToken", accessToken);
+                setCookie("refreshToken", refreshToken);
             })
             .addCase(loginUser.rejected, (state) => {
                 state.loginSending = false;

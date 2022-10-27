@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { EmailInputWrap, PasswordInputWrap } from "../../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,13 +12,23 @@ const Login = () => {
     const [email, setEmail] = useState(" ");
     const [password, setPassword] = useState("");
 
+    const { loginSuccess } = useSelector((store) => store.login); 
+
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const userRegister = (e) => {
         e.preventDefault();
         const requestBody = JSON.stringify({ email: email, password: password });
         dispatch(loginUser(requestBody));
+        
+        
     };
+
+    useEffect(() => {
+        console.log(loginSuccess)
+        loginSuccess && navigate("/");
+    }, [loginSuccess])
 
     return (
         <section className={styles.formWrapper}>
