@@ -1,18 +1,36 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { TextInput, PasswordInputWrap } from "../../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "../login/login.module.scss";
+import { resetPassword } from "../../store/user/password";
+
 
 const ResetPassword = () => {
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
+    const { resetSuccess } = useSelector((store) => store.password);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const requestBody = JSON.stringify({ "password": password, "token": code });
+        dispatch(resetPassword(requestBody));
+    }
+
+    useEffect(() => {
+        resetSuccess && navigate("/");
+    }, [resetSuccess]);
 
     return (
         <section className={styles.formWrapper}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div className="pt-6">
                     <PasswordInputWrap value={password} setValue={setPassword} />
                 </div>
