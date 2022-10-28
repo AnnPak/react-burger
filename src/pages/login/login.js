@@ -12,45 +12,36 @@ const Login = () => {
     const [email, setEmail] = useState(" ");
     const [password, setPassword] = useState("");
 
-    const { loginSuccess } = useSelector((store) => store.login); 
+    const { loginSuccess } = useSelector((store) => store.login);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const userRegister = (e) => {
         e.preventDefault();
+
         const requestBody = JSON.stringify({ email: email, password: password });
         dispatch(loginUser(requestBody));
-        
-        
     };
 
     useEffect(() => {
-        console.log(loginSuccess)
         loginSuccess && navigate("/");
-    }, [loginSuccess])
+    }, [loginSuccess]);
 
     return (
         <section className={styles.formWrapper}>
             <p className="text text_type_main-medium">Вход</p>
             <form onSubmit={userRegister}>
                 <div className="pt-6">
-                    <EmailInputWrap 
-                        value={email} 
-                        setValue={setEmail} />
+                    <EmailInputWrap value={email} setValue={setEmail} />
                 </div>
 
                 <div className="pt-6">
-                    <PasswordInputWrap 
-                        value={password} 
-                        setValue={setPassword} />
+                    <PasswordInputWrap value={password} setValue={setPassword} />
                 </div>
 
                 <div className="pt-6">
-                    <Button 
-                        type="primary" 
-                        size="large" 
-                        htmlType="submit">
+                    <Button type="primary" size="large" htmlType="submit">
                         Войти
                     </Button>
                 </div>
@@ -64,7 +55,7 @@ const Login = () => {
                     </p>
                     <p className="text text_type_main-default text_color_inactive pt-4">
                         Забыли пароль?
-                        <Link to="/reset-password" className={styles.link}>
+                        <Link to="/forgot-password" className={styles.link}>
                             Восстановить пароль
                         </Link>
                     </p>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { PasswordInputWrap, TextInput, EmailInputWrap } from "../../component/inputs/inputs";
 import { registerUser } from "../../store/user/register";
@@ -12,14 +12,21 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const { registerSuccess } = useSelector((store) => store.register);
+
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const userRegister = (e) => {
         e.preventDefault();
         const requestBody = JSON.stringify({ email: email, password: password, name: name });
         dispatch(registerUser(requestBody));
     };
+
+    useEffect(() => {
+        registerSuccess && navigate("/");
+    }, [registerSuccess]);
 
     return (
         <section className={styles.formWrapper}>

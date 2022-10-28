@@ -7,6 +7,7 @@ import { REGISTER_API } from "../../utils/constants";
 const initialState = {
     registerSending: false,
     registerError: false,
+    registerSuccess: false,
 };
 
 export const registerUser = createAsyncThunk("user/registerUser", async (requestBody) => {
@@ -24,10 +25,11 @@ const redisterSlice = createSlice({
                 state.registerError = false;
             })
             .addCase(registerUser.fulfilled, (state, action) => {
-                const { accessToken, refreshToken} = action.payload
+                const { accessToken, refreshToken, success} = action.payload
 
                 state.registerSending = false;
                 state.registerError = false;
+                state.registerSuccess = success ? true : false;
 
                 setCookie("accessToken", accessToken);
                 setCookie("refreshToken", refreshToken);

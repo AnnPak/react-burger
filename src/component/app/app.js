@@ -2,13 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 import { Home, Login, Register, ResetPassword, ForgotPassword, Profile } from "../../pages";
-import { ProtectedRoute } from "../protected-route";
+import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
 import { deleteCookie, getCookie } from "../../utils/cookie";
 import AppHeader from "../app-header/app-header";
 
 import styles from "./app.module.scss";
 
 function App() {
+    // deleteCookie('accessToken')
     return (
         <Router>
             <div className={styles.App}>
@@ -16,16 +17,50 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={getCookie('accessToken') ? <Navigate to="/" /> : <Login />}/>
-                    <Route path="/register" element={getCookie('accessToken') ? <Navigate to="/" /> : <Register />} />
-                    <Route path="/reset-password" element={getCookie('accessToken') ? <Navigate to="/" /> : <ResetPassword />}/>
-                    <Route path="/forgot-password" element={getCookie('accessToken') ? <Navigate to="/" /> : <ForgotPassword />}/>
+
+                    <Route
+                        path="/login"
+                        element={
+                            <ProtectedGuestRoute>
+                                <Login />
+                            </ProtectedGuestRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/register"
+                        element={
+                            <ProtectedGuestRoute>
+                                <Register />
+                            </ProtectedGuestRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/reset-password"
+                        element={
+                            <ProtectedGuestRoute>
+                                <ResetPassword />
+                            </ProtectedGuestRoute>
+                        }
+                    />
+                    <Route
+                        path="/forgot-password"
+                        element={
+                            <ProtectedGuestRoute>
+                                <ForgotPassword />
+                            </ProtectedGuestRoute>
+                        }
+                    />
+
+                    {/* Страницы только для юзеров */}
+
                     <Route
                         path="/profile"
                         element={
-                            <ProtectedRoute>
+                            <ProtectedUserRoute>
                                 <Profile />
-                            </ProtectedRoute>
+                            </ProtectedUserRoute>
                         }
                     />
                 </Routes>

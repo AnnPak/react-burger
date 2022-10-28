@@ -27,7 +27,7 @@ const Profile = () => {
         }
 
         // eslint-disable-next-line
-    }, [jwtExpired]);
+    }, []);
 
     return (
         <section className={styles.profilePage}>
