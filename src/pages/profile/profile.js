@@ -1,17 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../utils/cookie";
 
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 import { getUser, refreshToken } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
+import { logoutUser } from "../../store/user/logout";
 
 const Profile = () => {
     const [content, setContent] = useState("profile");
-    const { jwtExpired } = useSelector((store) => store.user);
+    const { jwtExpired, user } = useSelector((store) => store.user);
+    const logoutSuccess = useSelector((store) => store.logout);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const changeActiveItem = (e) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
@@ -25,9 +30,21 @@ const Profile = () => {
         } else {
             dispatch(getUser());
         }
-
         // eslint-disable-next-line
     }, []);
+
+
+    const userLogout = () => {
+        const refreshToken = getCookie("refreshToken");
+
+        if (user) {
+            const requestBody = JSON.stringify({ token: refreshToken });
+
+            dispatch(logoutUser(requestBody));
+            navigate("/");
+        }
+
+    };
 
     return (
         <section className={styles.profilePage}>
@@ -61,14 +78,13 @@ const Profile = () => {
                         "text text_type_main-medium pt-4 pb-4"
                     )}
                     data-value="logout"
-                    onClick={(e) => changeActiveItem(e)}
+                    onClick={userLogout}
                 >
                     Выход
                 </div>
             </div>
             {content === "profile" && <ChangeProfileDateForm />}
             {content === "history" && "История заказов"}
-            {content === "logout" && "Выход"}
         </section>
     );
 };

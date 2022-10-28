@@ -11,8 +11,8 @@ import { resetPassword } from "../../store/user/password";
 const ResetPassword = () => {
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
-    const { resetSuccess } = useSelector((store) => store.password);
 
+    const { resetSuccess } = useSelector((store) => store.password);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
