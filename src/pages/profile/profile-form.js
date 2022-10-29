@@ -1,97 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
-import { logoutUser } from "../../store/user/logout";
 import { userRequest, refreshToken } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
 
-const Profile = () => {
-    const [content, setContent] = useState("profile");
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const changeActiveItem = (e) => {
-        const navbarValue = e.currentTarget.getAttribute("data-value");
-        setContent(navbarValue);
-    };
-
-    useEffect(() => {
-        const requestHeaders = {
-            "Content-Type": "application/json",
-            Authorization: `${getCookie("accessToken")}`,
-        };
-        const requestBody = JSON.stringify({ token: getCookie("refreshToken") });
-
-        dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-            if (data.payload.message === "jwt expired") {
-                dispatch(refreshToken({ body: requestBody, method: "POST" })).then(() =>
-                    dispatch(userRequest({ headers: requestHeaders, method: "GET" }))
-                );
-            }
-        });
-        // eslint-disable-next-line
-    }, []);
-
-    const userLogout = () => {
-        const refreshToken = getCookie("refreshToken");
-        const requestBody = JSON.stringify({ token: refreshToken });
-
-        dispatch(logoutUser(requestBody));
-        navigate("/");
-    };
-
-    return (
-        <section className={styles.profilePage}>
-            <div className={styles.navbar}>
-                <div
-                    className={classnames(
-                        styles.navbarItem,
-                        content === "profile" ? styles.navbarItemActive : "",
-                        "text text_type_main-medium pt-4 pb-4"
-                    )}
-                    data-value="profile"
-                    onClick={(e) => changeActiveItem(e)}
-                >
-                    Профиль
-                </div>
-                <div
-                    className={classnames(
-                        styles.navbarItem,
-                        content === "history" ? styles.navbarItemActive : "",
-                        "text text_type_main-medium pt-4 pb-4"
-                    )}
-                    data-value="history"
-                    onClick={(e) => changeActiveItem(e)}
-                >
-                    История заказов
-                </div>
-                <div
-                    className={classnames(
-                        styles.navbarItem,
-                        content === "logout" ? styles.navbarItemActive : "",
-                        "text text_type_main-medium pt-4 pb-4"
-                    )}
-                    data-value="logout"
-                    onClick={userLogout}
-                >
-                    Выход
-                </div>
-            </div>
-            {content === "profile" && <ChangeProfileDateForm />}
-            {content === "history" && "История заказов"}
-        </section>
-    );
-};
-
-const ChangeProfileDateForm = () => {
+const UserDataForm = () => {
     const { user } = useSelector((store) => store.user);
-
     const [isBtnsHidden, setBtnsHidden] = useState(true);
     const [nameInput, setInputName] = useState({
         value: "",
@@ -101,26 +20,56 @@ const ChangeProfileDateForm = () => {
         value: "",
         isDisabled: true,
     });
-    const [password, setPassword] = useState(" ");
-
-    const dispatch = useDispatch();
+    const [passwordInput, setPasswordInput] = useState({
+        value: " ",
+        isDisabled: true,
+    });
 
     const nameRef = useRef(null);
     const loginRef = useRef(null);
     const passwordRef = useRef(null);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        const requestHeaders = {
+            "Content-Type": "application/json",
+            Authorization: `${getCookie("accessToken")}`,
+        };
+        // const requestBody = JSON.stringify({ token: getCookie("refreshToken") });
+        const token = getCookie("refreshToken")
+        // dispatch(userRequest({ headers: requestHeaders, method: "GET" }))
+        // dispatch(refreshToken(token))
+
+        // dispatch(refreshToken(token)).then(
+        //     () => {
+
+        //         dispatch(userRequest({ headers: requestHeaders, method: "GET" })) 
+        //     } //запрос данных пользователя с новым токеном
+        // );
+
+        dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
+            // Запрос данных пользователя
+            if (data.payload.message === "jwt expired") {
+                dispatch(refreshToken(token)).then(//если срок действия токена истек
+                    () => dispatch(userRequest({ headers: requestHeaders, method: "GET" })) //запрос данных пользователя с новым токеном
+                );
+            }
+        });
+        // eslint-disable-next-line
+    }, []);
+
+    const changeUserData = (e) => {
+        e.preventDefault();
         const accessToken = getCookie("accessToken");
         const requestHeaders = {
             "Content-Type": "application/json",
             Authorization: `${accessToken}`,
         };
         const method = "PATCH";
-
         const requestBody = JSON.stringify({ name: nameInput.value, email: loginInput.value });
-        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody }));
+        
+        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody }));//изменение данных пользователя
     };
 
     useEffect(() => {
@@ -137,7 +86,7 @@ const ChangeProfileDateForm = () => {
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: !loginInput.isDisabled }));
         isBtnsHidden && setBtnsHidden(false);
     };
-    const passwordChange = () => {
+    const passwordInputActive = () => {
         passwordRef.current.disabled = false;
     };
 
@@ -147,7 +96,7 @@ const ChangeProfileDateForm = () => {
     };
 
     return (
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={changeUserData}>
             <Input
                 type={"text"}
                 placeholder={"Имя"}
@@ -186,14 +135,14 @@ const ChangeProfileDateForm = () => {
                 <Input
                     type={"text"}
                     placeholder={"Пароль"}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPasswordInput(e.target.value)}
                     icon={"EditIcon"}
-                    value={password}
+                    value={passwordInput.value}
                     disabled={true}
                     name={"password"}
                     error={false}
                     ref={passwordRef}
-                    onIconClick={passwordChange}
+                    onIconClick={passwordInputActive}
                     errorText={"Ошибка"}
                     size={"default"}
                 />
@@ -210,4 +159,4 @@ const ChangeProfileDateForm = () => {
         </form>
     );
 };
-export default Profile;
+export default UserDataForm;

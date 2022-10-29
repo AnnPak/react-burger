@@ -20,21 +20,22 @@ export const requestForUser = async ({url, headers = {"Content-Type": "applicati
         headers: headers,
         body: body
     };
-
     return fetch(url, requestOptions).then((response) => {
         return response.json();
     });
 };
 
-// export const requestToken = async (url, token) => {
-//     const requestOptions = {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ token: token }),
-//     };
-//     return fetch(url, requestOptions).then((response) => {
-//         return response.json();
-//     });
-// };
+export const requestToken = async ({url, token}) => {
+    const requestOptions = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "token": token }),
+    };
+    console.log(requestOptions)
+    return fetch(url, requestOptions).then((response) => {
+        return response.json();
+    });
+};

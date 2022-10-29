@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCookie, setCookie } from "../../utils/cookie";
+import { setCookie } from "../../utils/cookie";
 
 import { requestForUser, requestToken } from "../../utils/request";
 import { GET_USER, TOKEN_API } from "../../utils/constants";
@@ -14,9 +14,6 @@ const initialState = {
     
 };
 
-// const token = getCookie("accessToken");
-const refreshTokenValue = getCookie("refreshToken");
-
 export const userRequest = createAsyncThunk("user/userRequest", async ({headers, method, body}) => {
     return await requestForUser({url: GET_USER, headers, method, body})
     .then(data => {
@@ -25,8 +22,8 @@ export const userRequest = createAsyncThunk("user/userRequest", async ({headers,
 });
 
 
-export const refreshToken = createAsyncThunk("user/refreshToken", async ({ method, body}) => {
-    return await requestForUser({url: TOKEN_API, body, method})
+export const refreshToken = createAsyncThunk("user/refreshToken", async (token) => {
+    return await requestToken({url: TOKEN_API, token})
     .then(data => {
         return data
       });

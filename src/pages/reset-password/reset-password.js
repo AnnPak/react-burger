@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { TextInput, PasswordInputWrap } from "../../component/inputs/inputs";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,24 +7,29 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
 
-
 const ResetPassword = () => {
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
-
     const { resetSuccess } = useSelector((store) => store.password);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        location?.state?.prevPath !== "/forgot-password" && navigate("/"); //редирект со страницы, если перешли не с /forgot-password
+        // eslint-disable-next-line
+    }, []);
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        const requestBody = JSON.stringify({ "password": password, "token": code });
+        const requestBody = JSON.stringify({ password: password, token: code });
         dispatch(resetPassword(requestBody));
-    }
+    };
 
     useEffect(() => {
-        resetSuccess && navigate("/");
+        resetSuccess && navigate("/"); //редирект на главную после успешного сброса
+        // eslint-disable-next-line
     }, [resetSuccess]);
 
     return (

@@ -1,15 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { Home, Login, Register, ResetPassword, ForgotPassword, Profile } from "../../pages";
+import {
+    Home,
+    Login,
+    Register,
+    ResetPassword,
+    ForgotPassword,
+    UserDataForm,
+    Orders,
+} from "../../pages";
 import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
 import { deleteCookie, getCookie } from "../../utils/cookie";
 import AppHeader from "../app-header/app-header";
-
+import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
 
 function App() {
-    // console.log(getCookie('refreshToken'), getCookie('accessToken'))
+    console.log(getCookie("refreshToken"));
     // deleteCookie('accessToken')
     return (
         <Router>
@@ -57,10 +65,17 @@ function App() {
                     {/* Страницы только для юзеров */}
 
                     <Route
-                        path="/profile"
+                        path="/profile/*"
                         element={
                             <ProtectedUserRoute>
-                                <Profile />
+                                <section className={styles.profilePage}>
+                                    <ProfileNav />
+
+                                    <Routes>
+                                        <Route index element={<UserDataForm />} />
+                                        <Route path="/orders" element={<Orders />} />
+                                    </Routes>
+                                </section>
                             </ProtectedUserRoute>
                         }
                     />

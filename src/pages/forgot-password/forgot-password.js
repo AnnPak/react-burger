@@ -10,6 +10,7 @@ import { forgotPassword } from "../../store/user/password";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const { forgotSuccess } = useSelector((store) => store.password);
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,7 +22,8 @@ const ForgotPassword = () => {
     };
 
     useEffect(() => {
-        forgotSuccess && navigate("/reset-password");
+        forgotSuccess && navigate("/reset-password", { state: { prevPath: window.location.pathname } } );
+        // eslint-disable-next-line
     }, [forgotSuccess]);
 
     return (
