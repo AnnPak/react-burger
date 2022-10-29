@@ -13,14 +13,12 @@ export const request = async (url, body = null, method = "GET") => {
     });
 };
 
-export const requestUser = async (url, token) => {
+export const requestForUser = async ({url, headers = {"Content-Type": "application/json"}, method = "GET", body=null}) => {
     const requestOptions = {
-        method: "GET",
+        method: method,
         mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-        },
+        headers: headers,
+        body: body
     };
 
     return fetch(url, requestOptions).then((response) => {
@@ -28,13 +26,15 @@ export const requestUser = async (url, token) => {
     });
 };
 
-export const requestToken = async (url, token) => {
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: token }),
-    };
-    return fetch(url, requestOptions);
-};
+// export const requestToken = async (url, token) => {
+//     const requestOptions = {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ token: token }),
+//     };
+//     return fetch(url, requestOptions).then((response) => {
+//         return response.json();
+//     });
+// };

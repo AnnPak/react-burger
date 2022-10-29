@@ -9,7 +9,7 @@ import AppHeader from "../app-header/app-header";
 import styles from "./app.module.scss";
 
 function App() {
-    console.log(getCookie('refreshToken'), getCookie('accessToken'))
+    // console.log(getCookie('refreshToken'), getCookie('accessToken'))
     // deleteCookie('accessToken')
     return (
         <Router>

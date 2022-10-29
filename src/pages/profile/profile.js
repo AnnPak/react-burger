@@ -1,19 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../utils/cookie";
-
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
-import { getUser, refreshToken } from "../../store/user/user";
+
+import { getCookie } from "../../utils/cookie";
+import { logoutUser } from "../../store/user/logout";
+import { userRequest, refreshToken } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
-import { logoutUser } from "../../store/user/logout";
 
 const Profile = () => {
     const [content, setContent] = useState("profile");
-    const { jwtExpired, user } = useSelector((store) => store.user);
-    const logoutSuccess = useSelector((store) => store.logout);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,26 +22,28 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if (jwtExpired) {
-            dispatch(refreshToken());
-            dispatch(getUser());
-        } else {
-            dispatch(getUser());
-        }
+        const requestHeaders = {
+            "Content-Type": "application/json",
+            Authorization: `${getCookie("accessToken")}`,
+        };
+        const requestBody = JSON.stringify({ token: getCookie("refreshToken") });
+
+        dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
+            if (data.payload.message === "jwt expired") {
+                dispatch(refreshToken({ body: requestBody, method: "POST" })).then(() =>
+                    dispatch(userRequest({ headers: requestHeaders, method: "GET" }))
+                );
+            }
+        });
         // eslint-disable-next-line
     }, []);
 
-
     const userLogout = () => {
         const refreshToken = getCookie("refreshToken");
+        const requestBody = JSON.stringify({ token: refreshToken });
 
-        if (user) {
-            const requestBody = JSON.stringify({ token: refreshToken });
-
-            dispatch(logoutUser(requestBody));
-            navigate("/");
-        }
-
+        dispatch(logoutUser(requestBody));
+        navigate("/");
     };
 
     return (
@@ -92,45 +92,75 @@ const Profile = () => {
 const ChangeProfileDateForm = () => {
     const { user } = useSelector((store) => store.user);
 
-    const [name, setName] = useState("");
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const [isBtnsHidden, setBtnsHidden] = useState(true);
+    const [nameInput, setInputName] = useState({
+        value: "",
+        isDisabled: true,
+    });
+    const [loginInput, setInputLogin] = useState({
+        value: "",
+        isDisabled: true,
+    });
+    const [password, setPassword] = useState(" ");
 
-    useEffect(() => {
-        if (user) {
-            setName(user.name);
-            setLogin(user.email);
-        }
-    }, [user]);
+    const dispatch = useDispatch();
 
     const nameRef = useRef(null);
     const loginRef = useRef(null);
     const passwordRef = useRef(null);
 
-    const nameChange = () => {
-        alert(nameRef.current.value);
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const accessToken = getCookie("accessToken");
+        const requestHeaders = {
+            "Content-Type": "application/json",
+            Authorization: `${accessToken}`,
+        };
+        const method = "PATCH";
+
+        const requestBody = JSON.stringify({ name: nameInput.value, email: loginInput.value });
+        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody }));
     };
 
-    const loginChange = () => {
-        alert(loginRef.current.value);
+    useEffect(() => {
+        user && setInputName((nameInput) => ({ ...nameInput, value: user.name }));
+        user && setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
+    }, [user]);
+
+    const nameInputActive = () => {
+        setInputName((nameInput) => ({ ...nameInput, isDisabled: !nameInput.isDisabled }));
+        isBtnsHidden && setBtnsHidden(false);
     };
 
+    const loginInputActive = () => {
+        setInputLogin((loginInput) => ({ ...loginInput, isDisabled: !loginInput.isDisabled }));
+        isBtnsHidden && setBtnsHidden(false);
+    };
     const passwordChange = () => {
-        alert(passwordRef.current.value);
+        passwordRef.current.disabled = false;
+    };
+
+    const cancel = () => {
+        setInputName((nameInput) => ({ ...nameInput, value: user.name }));
+        setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
     };
 
     return (
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={onSubmit}>
             <Input
                 type={"text"}
                 placeholder={"Имя"}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) =>
+                    setInputName((nameInput) => ({ ...nameInput, value: e.target.value }))
+                }
                 icon={"EditIcon"}
-                value={name}
+                value={nameInput.value}
+                disabled={nameInput.isDisabled}
                 name={"name"}
                 error={false}
                 ref={nameRef}
-                onIconClick={nameChange}
+                onIconClick={nameInputActive}
                 errorText={"Ошибка"}
                 size={"default"}
             />
@@ -138,13 +168,16 @@ const ChangeProfileDateForm = () => {
                 <Input
                     type={"text"}
                     placeholder={"Логин"}
-                    onChange={(e) => setLogin(e.target.value)}
+                    onChange={(e) =>
+                        setInputLogin((loginInput) => ({ ...loginInput, value: e.target.value }))
+                    }
                     icon={"EditIcon"}
-                    value={login}
+                    value={loginInput.value}
                     name={"login"}
+                    disabled={loginInput.isDisabled}
                     error={false}
                     ref={loginRef}
-                    onIconClick={loginChange}
+                    onIconClick={loginInputActive}
                     errorText={"Ошибка"}
                     size={"default"}
                 />
@@ -156,6 +189,7 @@ const ChangeProfileDateForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     icon={"EditIcon"}
                     value={password}
+                    disabled={true}
                     name={"password"}
                     error={false}
                     ref={passwordRef}
@@ -164,7 +198,16 @@ const ChangeProfileDateForm = () => {
                     size={"default"}
                 />
             </div>
-        </div>
+
+            <div className={classnames(isBtnsHidden && styles.hidden, styles.btnsWrapper, "pt-5")}>
+                <Button type="primary" size="small" htmlType="submit">
+                    Сохранить
+                </Button>
+                <Button type="primary" size="small" htmlType="button" onClick={cancel}>
+                    Отменить
+                </Button>
+            </div>
+        </form>
     );
 };
 export default Profile;
