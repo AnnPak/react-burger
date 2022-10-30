@@ -1,48 +1,58 @@
 import classnames from "classnames";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchIngredients } from "../../store/ingredients/slice";
 
 import styles from "./ingredient-details-modal.module.scss";
 
 const IngredientDetailsModal = () => {
-    const { ingredientInModal } = useSelector((store) => store.modal);
+    const { ingredientId } = useParams();
+    const { ingredients } = useSelector((store) => store.ingredients);
+
+    const dispatch = useDispatch();
+    !ingredients && dispatch(fetchIngredients());
+
+    const ingredient = ingredients.find((item) => item._id === ingredientId);
 
     return (
-        ingredientInModal && <>
-            <div className={styles.ingredientModalContent}>
-                <div className={styles.ingredientModalImg}>
-                    <img src={ingredientInModal.image_large} alt={ingredientInModal.name} />
-                </div>
-                <div
-                    className={classnames(
-                        styles.ingredientModalTitle,
-                        "text text_type_main-medium"
-                    )}
-                >
-                    {ingredientInModal.name}
-                </div>
-            </div>
-
-            <div className={styles.ingredientComposition}>
-                <div className={styles.ingredientCompositionItem}>
-                    <div className="text text_type_main-small">Калории,ккал</div>
-                    <div className="text text_type_digits-medium">{ingredientInModal.calories}</div>
-                </div>
-                <div className={styles.ingredientCompositionItem}>
-                    <div className="text text_type_main-small">Белки, г</div>
-                    <div className="text text_type_digits-medium">{ingredientInModal.proteins}</div>
-                </div>
-                <div className={styles.ingredientCompositionItem}>
-                    <div className="text text_type_main-small">Жиры, г</div>
-                    <div className="text text_type_digits-medium">{ingredientInModal.fat}</div>
-                </div>
-                <div className={styles.ingredientCompositionItem}>
-                    <div className="text text_type_main-small">Углеводы, г</div>
-                    <div className="text text_type_digits-medium">
-                        {ingredientInModal.carbohydrates}
+        ingredient && (
+            <>
+                <div className={styles.ingredientModalContent}>
+                    <div className={styles.ingredientModalImg}>
+                        <img src={ingredient.image_large} alt={ingredient.name} />
+                    </div>
+                    <div
+                        className={classnames(
+                            styles.ingredientModalTitle,
+                            "text text_type_main-medium"
+                        )}
+                    >
+                        {ingredient.name}
                     </div>
                 </div>
-            </div>
-        </>
+
+                <div className={styles.ingredientComposition}>
+                    <div className={styles.ingredientCompositionItem}>
+                        <div className="text text_type_main-small">Калории,ккал</div>
+                        <div className="text text_type_digits-medium">{ingredient.calories}</div>
+                    </div>
+                    <div className={styles.ingredientCompositionItem}>
+                        <div className="text text_type_main-small">Белки, г</div>
+                        <div className="text text_type_digits-medium">{ingredient.proteins}</div>
+                    </div>
+                    <div className={styles.ingredientCompositionItem}>
+                        <div className="text text_type_main-small">Жиры, г</div>
+                        <div className="text text_type_digits-medium">{ingredient.fat}</div>
+                    </div>
+                    <div className={styles.ingredientCompositionItem}>
+                        <div className="text text_type_main-small">Углеводы, г</div>
+                        <div className="text text_type_digits-medium">
+                            {ingredient.carbohydrates}
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
     );
 };
 
