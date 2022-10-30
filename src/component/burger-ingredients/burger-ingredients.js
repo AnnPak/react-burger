@@ -39,7 +39,7 @@ const BurgerIngredients = () => {
                 />
             )}
 
-            {ingredientInModal && <IngredientDetailsModal />}
+            {/* {ingredientInModal && <IngredientDetailsModal />} */}
         </section>
     );
 };

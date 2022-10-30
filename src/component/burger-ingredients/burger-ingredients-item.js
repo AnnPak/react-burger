@@ -3,6 +3,7 @@ import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import classnames from "classnames";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation } from "react-router-dom";
 
 import { DATA_PROPS_TYPE } from "../../utils/constants";
 import { addIngredientToModal } from "../../store/modal/slice";
@@ -11,10 +12,12 @@ import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem = ({ ingredient }) => {
     const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
-    
-    const [resultIndredients, setResultIndredients] = useState(null)
+
+    const [resultIndredients, setResultIndredients] = useState(null);
 
     const { name, image, price, _id } = ingredient;
+
+    const location = useLocation();
     const dispatch = useDispatch();
 
     const [{ opacity }, dragRef] = useDrag({
@@ -27,24 +30,26 @@ const BurgerIngredientsItem = ({ ingredient }) => {
 
     useEffect(() => {
         if (bun) {
-            setResultIndredients(constructorIngredients
-                ? [bun, ...constructorIngredients, bun]
-                : [bun, bun]);
+            setResultIndredients(
+                constructorIngredients ? [bun, ...constructorIngredients, bun] : [bun, bun]
+            );
         } else {
             setResultIndredients(constructorIngredients);
         }
     }, [constructorIngredients, bun]);
 
     const ingredientsCounter = resultIndredients
-    ? resultIndredients.filter((ingredient) => ingredient._id === _id).length
-    : 0;
+        ? resultIndredients.filter((ingredient) => ingredient._id === _id).length
+        : 0;
 
     return (
-        <div
+        <Link
             className={classnames(styles.ingredientsItem, "mt-6 ml-4 mb-10")}
             onClick={() => {
                 dispatch(addIngredientToModal(ingredient));
             }}
+            to={`/ingredients/${_id}`}
+            state={{ background: location }}
             style={{ opacity }}
         >
             {ingredientsCounter > 0 && <Counter count={ingredientsCounter} size="small" />}
@@ -57,7 +62,7 @@ const BurgerIngredientsItem = ({ ingredient }) => {
             </div>
 
             <p>{name}</p>
-        </div>
+        </Link>
     );
 };
 

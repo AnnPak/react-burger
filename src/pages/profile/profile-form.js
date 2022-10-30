@@ -4,7 +4,7 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
-import { userRequest, refreshToken } from "../../store/user/user";
+import { userRequest } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
 
@@ -29,31 +29,6 @@ const UserDataForm = () => {
     const passwordRef = useRef(null);
 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        const requestHeaders = {
-            "Content-Type": "application/json",
-            Authorization: getCookie("accessToken"),
-        };
-        const token = getCookie("refreshToken");
-        
-        // Запрос данных пользователя
-        dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-            //если срок действия токена истек
-            if (data.payload.message === "jwt expired") {
-                dispatch(refreshToken(token)).then((data) => {
-                    console.log(data.payload.accessToken);
-                    const requestHeaders = {
-                        "Content-Type": "application/json",
-                        Authorization: data.payload.accessToken,
-                    };
-                    //запрос данных пользователя с новым токеном
-                    dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
-                });
-            }
-        });
-        // eslint-disable-next-line
-    }, []);
 
     const changeUserData = (e) => {
         e.preventDefault();

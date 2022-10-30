@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
     Home,
@@ -15,18 +16,62 @@ import { deleteCookie, getCookie } from "../../utils/cookie";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
+import { userRequest, refreshToken } from "../../store/user/user";
+import IngredientDetailsModal from "../ingredient-details-modal/ingredient-details-modal";
+import Modal from "../modal/modal";
+import { removeModal } from "../../store/modal/slice";
 
 function App() {
-    console.log(getCookie("refreshToken"));
-    // setCookie("isUserLogged", false);
-    // deleteCookie('accessToken')
-    return (
-        <Router>
+    const ModalSwitch = () => {
+        // setCookie("isUserLogged", false);
+        // deleteCookie('accessToken')
+        // console.log(getCookie("refreshToken"));
+        const dispatch = useDispatch();
+        const location = useLocation();
+        const navigate = useNavigate();
+        let background = location.state && location.state.background;
+
+        useEffect(() => {
+            const requestHeaders = {
+                "Content-Type": "application/json",
+                Authorization: getCookie("accessToken"),
+            };
+            const token = getCookie("refreshToken");
+
+            // Запрос данных пользователя
+            dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
+                //если срок действия токена истек
+                if (data.payload.message === "jwt expired") {
+                    dispatch(refreshToken(token)).then((data) => {
+                        const requestHeaders = {
+                            "Content-Type": "application/json",
+                            Authorization: data.payload.accessToken,
+                        };
+                        //запрос данных пользователя с новым токеном
+                        dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
+                    });
+                }
+            });
+            // eslint-disable-next-line
+        }, []);
+
+        const handleModalClose = () => {
+            navigate(-1);
+            dispatch(removeModal());
+        };
+
+        return (
             <div className={styles.App}>
                 <AppHeader />
 
-                <Routes>
+                <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
+
+                    <Route
+                        path="/ingredients/:ingredientId"
+                        exact
+                        element={<IngredientDetailsModal />}
+                    />
 
                     <Route
                         path="/login"
@@ -63,7 +108,7 @@ function App() {
                         }
                     />
 
-                    {/* Страницы только для юзеров */}
+                    {/* Страница только для юзеров */}
 
                     <Route
                         path="/profile/*"
@@ -80,8 +125,28 @@ function App() {
                             </ProtectedUserRoute>
                         }
                     />
+
                 </Routes>
+
+                {background && (
+                    <Routes>
+                        <Route
+                            path="/ingredients/:ingredientId"
+                            element={
+                                <Modal title={"Детали ингредиента"} onClose={handleModalClose}>
+                                    <IngredientDetailsModal />
+                                </Modal>
+                            }
+                        />
+                    </Routes>
+                )}
             </div>
+        );
+    };
+
+    return (
+        <Router>
+            <ModalSwitch />
         </Router>
     );
 }

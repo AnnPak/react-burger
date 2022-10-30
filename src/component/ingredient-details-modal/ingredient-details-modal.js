@@ -1,6 +1,4 @@
 import classnames from "classnames";
-
-import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
 
 import styles from "./ingredient-details-modal.module.scss";
@@ -9,7 +7,7 @@ const IngredientDetailsModal = () => {
     const { ingredientInModal } = useSelector((store) => store.modal);
 
     return (
-        <Modal title={"Детали ингредиента"}>
+        ingredientInModal && <>
             <div className={styles.ingredientModalContent}>
                 <div className={styles.ingredientModalImg}>
                     <img src={ingredientInModal.image_large} alt={ingredientInModal.name} />
@@ -44,7 +42,7 @@ const IngredientDetailsModal = () => {
                     </div>
                 </div>
             </div>
-        </Modal>
+        </>
     );
 };
 
