@@ -2,13 +2,13 @@ import { Navigate } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 
 export function ProtectedUserRoute ({ children }) {
-    const accessToken = getCookie('refreshToken');
+    const isUserLogged = getCookie('isUserLogged');
 
-    return accessToken ? children : <Navigate to='/login' />;
+    return isUserLogged === 'true' ? children : <Navigate to='/login' />;
 }
 
 export function ProtectedGuestRoute({ children }) {
-    const accessToken = getCookie('refreshToken');
+    const isUserLogged = getCookie('isUserLogged');
 
-    return accessToken ? <Navigate to='/' /> : children;
+    return isUserLogged === 'true' ? <Navigate to='/' /> : children;
 }

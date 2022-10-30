@@ -18,6 +18,7 @@ import styles from "./app.module.scss";
 
 function App() {
     console.log(getCookie("refreshToken"));
+    // setCookie("isUserLogged", false);
     // deleteCookie('accessToken')
     return (
         <Router>

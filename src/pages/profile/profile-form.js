@@ -8,7 +8,6 @@ import { userRequest, refreshToken } from "../../store/user/user";
 
 import styles from "./profile.module.scss";
 
-
 const UserDataForm = () => {
     const { user } = useSelector((store) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState(true);
@@ -34,26 +33,23 @@ const UserDataForm = () => {
     useEffect(() => {
         const requestHeaders = {
             "Content-Type": "application/json",
-            Authorization: `${getCookie("accessToken")}`,
+            Authorization: getCookie("accessToken"),
         };
-        // const requestBody = JSON.stringify({ token: getCookie("refreshToken") });
-        const token = getCookie("refreshToken")
-        // dispatch(userRequest({ headers: requestHeaders, method: "GET" }))
-        // dispatch(refreshToken(token))
-
-        // dispatch(refreshToken(token)).then(
-        //     () => {
-
-        //         dispatch(userRequest({ headers: requestHeaders, method: "GET" })) 
-        //     } //запрос данных пользователя с новым токеном
-        // );
-
+        const token = getCookie("refreshToken");
+        
+        // Запрос данных пользователя
         dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-            // Запрос данных пользователя
+            //если срок действия токена истек
             if (data.payload.message === "jwt expired") {
-                dispatch(refreshToken(token)).then(//если срок действия токена истек
-                    () => dispatch(userRequest({ headers: requestHeaders, method: "GET" })) //запрос данных пользователя с новым токеном
-                );
+                dispatch(refreshToken(token)).then((data) => {
+                    console.log(data.payload.accessToken);
+                    const requestHeaders = {
+                        "Content-Type": "application/json",
+                        Authorization: data.payload.accessToken,
+                    };
+                    //запрос данных пользователя с новым токеном
+                    dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
+                });
             }
         });
         // eslint-disable-next-line
@@ -68,8 +64,8 @@ const UserDataForm = () => {
         };
         const method = "PATCH";
         const requestBody = JSON.stringify({ name: nameInput.value, email: loginInput.value });
-        
-        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody }));//изменение данных пользователя
+
+        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody })); //изменение данных пользователя
     };
 
     useEffect(() => {

@@ -33,6 +33,8 @@ const redisterSlice = createSlice({
 
                 setCookie("accessToken", accessToken);
                 setCookie("refreshToken", refreshToken);
+                success ? setCookie("isUserLogged", true) : setCookie("isUserLogged", false)
+
             })
             .addCase(registerUser.rejected, (state) => {
                 state.registerSending = false;

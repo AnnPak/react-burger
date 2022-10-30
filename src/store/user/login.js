@@ -35,10 +35,12 @@ const loginSlice = createSlice({
                 state.user = user;
                 setCookie("accessToken", accessToken);
                 setCookie("refreshToken", refreshToken);
+                success && setCookie("isUserLogged", true);
             })
             .addCase(loginUser.rejected, (state) => {
                 state.loginSending = false;
                 state.loginError = true;
+                setCookie("isUserLogged", 'true');
             })
     },
 });
