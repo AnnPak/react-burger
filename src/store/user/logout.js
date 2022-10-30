@@ -30,6 +30,8 @@ const logoutSlice = createSlice({
                 state.logoutError = false;
                 success && deleteCookie("refreshToken");
                 success && deleteCookie("accessToken");
+                success && localStorage.removeItem("bun");
+                success && localStorage.removeItem("constructorIngredients");
                 
                 success && setCookie("isUserLogged", false)
             })

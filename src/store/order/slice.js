@@ -8,7 +8,7 @@ const initialState = {
     orderStatus: "idle",
 };
 
-export const fetchOrder = createAsyncThunk("order/fetchFilters", async (requestBody) => {
+export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody) => {
     return await request(ORDERS_API, requestBody, "POST");
 });
 
@@ -25,11 +25,14 @@ const ingredientsSlice = createSlice({
                 state.orderNumber = action.payload.order.number;
                 state.orderStatus = "success";
                 state.bun = null;
+                
+                localStorage.removeItem("bun");
+                localStorage.removeItem("constructorIngredients");
             })
             .addCase(fetchOrder.rejected, (state) => {
                 state.orderStatus = "error";
                 state.orderNumber = null;
-            })
+            });
     },
 });
 
