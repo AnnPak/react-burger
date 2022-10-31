@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -15,7 +15,7 @@ const Modal = ({ title, isRedirect, ...props }) => {
     const modalRoot = document.getElementById("react-modals");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         const closeModalByEsc = (evt) => {
             if (evt.key === "Escape") {
@@ -27,6 +27,7 @@ const Modal = ({ title, isRedirect, ...props }) => {
         window.addEventListener("keydown", closeModalByEsc);
 
         return () => window.removeEventListener("keydown", closeModalByEsc);
+        // eslint-disable-next-line
     }, []);
 
     return ReactDOM.createPortal(

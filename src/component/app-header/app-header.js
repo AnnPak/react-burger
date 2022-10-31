@@ -18,7 +18,8 @@ const Navbar = () => {
                 <LinkItem
                     className={classnames(
                         styles.navbarItemLink,
-                        styles.navbarItemLinkActive,
+                        window.location.pathname.indexOf("/profile") === -1 &&
+                            styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0"
                     )}
                     to="/"
@@ -26,7 +27,7 @@ const Navbar = () => {
                     <BurgerIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Конструктор</p>
                 </LinkItem>
-                
+
                 <LinkItem
                     className={classnames(styles.navbarItemLink, "mr-2 p-4 pl-0 active")}
                     to="/"
@@ -38,7 +39,12 @@ const Navbar = () => {
 
             <div className={styles.navbarItem}>
                 <LinkItem
-                    className={classnames(styles.navbarItemLink, "mr-2 p-4 pl-0 active")}
+                    className={classnames(
+                        styles.navbarItemLink,
+                        window.location.pathname.indexOf("/profile") > -1 &&
+                            styles.navbarItemLinkActive,
+                        "mr-2 p-4 pl-0 active"
+                    )}
                     to="/profile"
                 >
                     <ProfileIcon type="primary" />

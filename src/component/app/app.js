@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 
 import {
     Home,
@@ -12,53 +11,21 @@ import {
     Orders,
 } from "../../pages";
 import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
-import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
-import { userRequest, refreshToken } from "../../store/user/user";
+import { setCookie } from "../../utils/cookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { removeModal } from "../../store/modal/slice";
+
 
 function App() {
     const ModalSwitch = () => {
         // setCookie("isUserLogged", false);
         // deleteCookie('accessToken')
         // console.log(getCookie("isUserLogged"));
-        const dispatch = useDispatch();
         const location = useLocation();
-        const navigate = useNavigate();
         let background = location.state && location.state.background;
-
-        useEffect(() => {
-            const requestHeaders = {
-                "Content-Type": "application/json",
-                Authorization: getCookie("accessToken"),
-            };
-            const token = getCookie("refreshToken");
-
-            // Запрос данных пользователя
-            dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-                //если срок действия токена истек
-                if (data.payload.message === "jwt expired") {
-                    dispatch(refreshToken(token)).then((data) => {
-                        const requestHeaders = {
-                            "Content-Type": "application/json",
-                            Authorization: data.payload.accessToken,
-                        };
-                        //запрос данных пользователя с новым токеном
-                        dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
-                    });
-                }
-            });
-            // eslint-disable-next-line
-        }, []);
-
-        const handleModalClose = () => {
-            navigate(-1);
-            dispatch(removeModal());
-        };
 
         return (
             <div className={styles.App}>

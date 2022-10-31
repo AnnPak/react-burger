@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import classnames from "classnames";
 
+import { userRequest, refreshToken } from "../../store/user/user";
 import { getCookie } from "../../utils/cookie";
 import { logoutUser } from "../../store/user/logout";
 
@@ -13,6 +14,33 @@ const ProfileNav = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isUserLogged = getCookie("isUserLogged");
+
+    useEffect(() => {
+        if (isUserLogged === 'true') {
+            const requestHeaders = {
+                "Content-Type": "application/json",
+                Authorization: getCookie("accessToken"),
+            };
+            const token = getCookie("refreshToken");
+    
+            // Запрос данных пользователя
+            dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
+                //если срок действия токена истек
+                if (data.payload.message === "jwt expired") {
+                    dispatch(refreshToken(token)).then((data) => {
+                        const requestHeaders = {
+                            "Content-Type": "application/json",
+                            Authorization: data.payload.accessToken,
+                        };
+                        //запрос данных пользователя с новым токеном
+                        dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
+                    });
+                }
+            });
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const changeActiveItem = (e) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");

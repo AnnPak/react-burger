@@ -26,7 +26,7 @@ const BurgerConstructorResult = () => {
 
             const requestBody = JSON.stringify({ ingredients: orderIngredientsIds, Authorization: getCookie("accessToken") });
 
-            // dispatch(fetchOrder(requestBody));
+            dispatch(fetchOrder(requestBody));
             
         } else {
             navigate("/login");

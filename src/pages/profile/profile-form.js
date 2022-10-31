@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
@@ -71,6 +71,7 @@ const UserDataForm = () => {
     const cancel = () => {
         setInputName((nameInput) => ({ ...nameInput, value: user.name }));
         setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
+        setPasswordInput((loginInput) => ({ ...loginInput, value: '' }));
     };
 
     const isBtnsVisible = !isBtnsHidden && nameInput.isDisabled && loginInput.isDisabled && passwordInput.isDisabled;
