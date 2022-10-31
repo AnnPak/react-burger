@@ -39,7 +39,11 @@ const UserDataForm = () => {
         };
         const method = "PATCH";
 
-        const requestArray = { name: nameInput.value, email: loginInput.value, ...(passwordInput.value ? {password: passwordInput.value} : {})}
+        const requestArray = {
+            name: nameInput.value,
+            email: loginInput.value,
+            ...(passwordInput.value ? { password: passwordInput.value } : {}),
+        };
         const requestBody = JSON.stringify(requestArray);
 
         dispatch(userRequest({ headers: requestHeaders, method, body: requestBody })); //изменение данных пользователя
@@ -71,10 +75,11 @@ const UserDataForm = () => {
     const cancel = () => {
         setInputName((nameInput) => ({ ...nameInput, value: user.name }));
         setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
-        setPasswordInput((loginInput) => ({ ...loginInput, value: '' }));
+        setPasswordInput((loginInput) => ({ ...loginInput, value: "" }));
     };
 
-    const isBtnsVisible = !isBtnsHidden && nameInput.isDisabled && loginInput.isDisabled && passwordInput.isDisabled;
+    const isBtnsVisible =
+        !isBtnsHidden && nameInput.isDisabled && loginInput.isDisabled && passwordInput.isDisabled;
 
     return (
         <form className={styles.form} onSubmit={changeUserData}>
@@ -116,7 +121,12 @@ const UserDataForm = () => {
                 <Input
                     type="password"
                     placeholder="Пароль"
-                    onChange={(e) => setPasswordInput((passwordInput) => ({ ...passwordInput, value: e.target.value }))}
+                    onChange={(e) =>
+                        setPasswordInput((passwordInput) => ({
+                            ...passwordInput,
+                            value: e.target.value,
+                        }))
+                    }
                     icon={passwordInput.isDisabled ? "EditIcon" : "CloseIcon"}
                     value={passwordInput.value}
                     disabled={passwordInput.isDisabled}
@@ -128,7 +138,6 @@ const UserDataForm = () => {
                     size="default"
                 />
             </div>
-
 
             <div className={classnames(isBtnsVisible && styles.hidden, styles.btnsWrapper, "pt-5")}>
                 <Button type="secondary" size="medium" htmlType="button" onClick={cancel}>

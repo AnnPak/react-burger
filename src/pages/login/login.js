@@ -27,13 +27,13 @@ const Login = () => {
 
     useEffect(() => {
         loginSuccess && navigate("/");
-        loginSuccess === false && setIsError(true)
-         
-        const setErrorTimeout =  setTimeout(() => setIsError(false), 5000)
+        loginSuccess === false && setIsError(true);
+
+        const setErrorTimeout = setTimeout(() => setIsError(false), 5000);
         return () => {
             clearTimeout(setErrorTimeout);
         };
-       
+
         // eslint-disable-next-line
     }, [loginSuccess]);
 

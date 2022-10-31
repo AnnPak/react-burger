@@ -18,7 +18,6 @@ import { setCookie } from "../../utils/cookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
-
 function App() {
     const ModalSwitch = () => {
         // setCookie("isUserLogged", false);
@@ -92,7 +91,6 @@ function App() {
                             </ProtectedUserRoute>
                         }
                     />
-
                 </Routes>
 
                 {background && (

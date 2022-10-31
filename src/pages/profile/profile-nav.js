@@ -17,13 +17,13 @@ const ProfileNav = () => {
     const isUserLogged = getCookie("isUserLogged");
 
     useEffect(() => {
-        if (isUserLogged === 'true') {
+        if (isUserLogged === "true") {
             const requestHeaders = {
                 "Content-Type": "application/json",
                 Authorization: getCookie("accessToken"),
             };
             const token = getCookie("refreshToken");
-    
+
             // Запрос данных пользователя
             dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
                 //если срок действия токена истек
@@ -40,7 +40,7 @@ const ProfileNav = () => {
             });
         }
         // eslint-disable-next-line
-    }, [])
+    }, []);
 
     const changeActiveItem = (e) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
@@ -69,7 +69,7 @@ const ProfileNav = () => {
                 Профиль
             </Link>
             <Link
-                to="/profile/orders"   
+                to="/profile/orders"
                 className={classnames(
                     styles.navbarItem,
                     content === "history" ? styles.navbarItemActive : "",

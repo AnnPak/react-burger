@@ -20,15 +20,14 @@ const Home = () => {
 
     const isUserLogged = getCookie("isUserLogged");
     useEffect(() => {
-
         dispatch(fetchIngredients());
-        if (isUserLogged === 'true') {
+        if (isUserLogged === "true") {
             const requestHeaders = {
                 "Content-Type": "application/json",
                 Authorization: getCookie("accessToken"),
             };
             const token = getCookie("refreshToken");
-    
+
             // Запрос данных пользователя
             dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
                 //если срок действия токена истек
@@ -44,7 +43,7 @@ const Home = () => {
                 }
             });
         }
-        
+
         // eslint-disable-next-line
     }, []);
 

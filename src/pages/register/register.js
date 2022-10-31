@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { PasswordInputWrap, TextInput, EmailInputWrap } from "../../component/inputs/inputs";
@@ -12,12 +12,12 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const { registerSuccess } = useSelector((store) => store.register);
+    const [isError, setIsError] = useState(false);
 
+    const { registerSuccess } = useSelector((store) => store.register);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const userRegister = (e) => {
         e.preventDefault();
         const requestBody = JSON.stringify({ email: email, password: password, name: name });
@@ -26,10 +26,23 @@ const Register = () => {
 
     useEffect(() => {
         registerSuccess && navigate("/");
+        registerSuccess === false && setIsError(true);
+        
+        const setErrorTimeout = setTimeout(() => setIsError(false), 5000);
+        return () => {
+            clearTimeout(setErrorTimeout);
+        };
+        // eslint-disable-next-line
     }, [registerSuccess]);
 
     return (
         <section className={styles.formWrapper}>
+            {isError && (
+                <div className={styles.errorMessage}>
+                    <InfoIcon type="error" />
+                    Ошибка!
+                </div>
+            )}
             <p className="text text_type_main-medium">Регистрация</p>
             <form onSubmit={userRegister}>
                 <div className="pt-6">

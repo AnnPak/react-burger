@@ -24,10 +24,12 @@ const BurgerConstructorResult = () => {
             const bunId = bun ? bun._id : null; // id булки
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
 
-            const requestBody = JSON.stringify({ ingredients: orderIngredientsIds, Authorization: getCookie("accessToken") });
+            const requestBody = JSON.stringify({
+                ingredients: orderIngredientsIds,
+                Authorization: getCookie("accessToken"),
+            });
 
             dispatch(fetchOrder(requestBody));
-            
         } else {
             navigate("/login");
         }

@@ -14,7 +14,6 @@ export const loginUser = createAsyncThunk("user/loginUser", async (requestBody) 
     return await request(LOGIN_API, requestBody, "POST");
 });
 
-
 const loginSlice = createSlice({
     name: "login",
     initialState,
@@ -26,7 +25,7 @@ const loginSlice = createSlice({
                 state.loginError = false;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                const { user, accessToken, refreshToken, success} = action.payload
+                const { user, accessToken, refreshToken, success } = action.payload;
 
                 state.loginSending = false;
                 state.loginError = false;
@@ -34,7 +33,7 @@ const loginSlice = createSlice({
 
                 state.user = user;
                 success && setCookie("accessToken", accessToken);
-                success &&  setCookie("refreshToken", refreshToken);
+                success && setCookie("refreshToken", refreshToken);
                 success && setCookie("isUserLogged", true);
             })
             .addCase(loginUser.rejected, (state) => {
@@ -42,7 +41,7 @@ const loginSlice = createSlice({
                 state.loginError = true;
                 state.loginSuccess = false;
                 setCookie("isUserLogged", false);
-            })
+            });
     },
 });
 
