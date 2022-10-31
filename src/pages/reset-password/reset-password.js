@@ -28,7 +28,7 @@ const ResetPassword = () => {
     };
 
     useEffect(() => {
-        resetSuccess && navigate("/"); //редирект на главную после успешного сброса
+        resetSuccess && navigate("/login"); //редирект на главную после успешного сброса
         // eslint-disable-next-line
     }, [resetSuccess]);
 

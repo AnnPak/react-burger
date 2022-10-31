@@ -6,7 +6,7 @@ import { LOGIN_API } from "../../utils/constants";
 
 const initialState = {
     loginSending: false,
-    loginSuccess: false,
+    loginSuccess: null,
     loginError: false,
 };
 
