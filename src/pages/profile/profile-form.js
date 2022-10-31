@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
@@ -20,7 +20,7 @@ const UserDataForm = () => {
         isDisabled: true,
     });
     const [passwordInput, setPasswordInput] = useState({
-        value: " ",
+        value: "",
         isDisabled: true,
     });
 
@@ -38,7 +38,9 @@ const UserDataForm = () => {
             Authorization: `${accessToken}`,
         };
         const method = "PATCH";
-        const requestBody = JSON.stringify({ name: nameInput.value, email: loginInput.value });
+
+        const requestArray = { name: nameInput.value, email: loginInput.value, ...(passwordInput.value ? {password: passwordInput.value} : {})}
+        const requestBody = JSON.stringify(requestArray);
 
         dispatch(userRequest({ headers: requestHeaders, method, body: requestBody })); //изменение данных пользователя
     };
@@ -55,16 +57,23 @@ const UserDataForm = () => {
 
     const loginInputActive = () => {
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: !loginInput.isDisabled }));
+
         isBtnsHidden && setBtnsHidden(false);
     };
     const passwordInputActive = () => {
-        passwordRef.current.disabled = false;
+        setPasswordInput((passwordInput) => ({
+            ...passwordInput,
+            isDisabled: !passwordInput.isDisabled,
+        }));
+        isBtnsHidden && setBtnsHidden(false);
     };
 
     const cancel = () => {
         setInputName((nameInput) => ({ ...nameInput, value: user.name }));
         setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
     };
+
+    const isBtnsVisible = !isBtnsHidden && nameInput.isDisabled && loginInput.isDisabled && passwordInput.isDisabled;
 
     return (
         <form className={styles.form} onSubmit={changeUserData}>
@@ -74,7 +83,7 @@ const UserDataForm = () => {
                 onChange={(e) =>
                     setInputName((nameInput) => ({ ...nameInput, value: e.target.value }))
                 }
-                icon={"EditIcon"}
+                icon={nameInput.isDisabled ? "EditIcon" : "CloseIcon"}
                 value={nameInput.value}
                 disabled={nameInput.isDisabled}
                 name={"name"}
@@ -91,7 +100,7 @@ const UserDataForm = () => {
                     onChange={(e) =>
                         setInputLogin((loginInput) => ({ ...loginInput, value: e.target.value }))
                     }
-                    icon={"EditIcon"}
+                    icon={loginInput.isDisabled ? "EditIcon" : "CloseIcon"}
                     value={loginInput.value}
                     name={"login"}
                     disabled={loginInput.isDisabled}
@@ -104,27 +113,28 @@ const UserDataForm = () => {
             </div>
             <div className="pt-6">
                 <Input
-                    type={"text"}
-                    placeholder={"Пароль"}
-                    onChange={(e) => setPasswordInput(e.target.value)}
-                    icon={"EditIcon"}
+                    type="password"
+                    placeholder="Пароль"
+                    onChange={(e) => setPasswordInput((passwordInput) => ({ ...passwordInput, value: e.target.value }))}
+                    icon={passwordInput.isDisabled ? "EditIcon" : "CloseIcon"}
                     value={passwordInput.value}
-                    disabled={true}
-                    name={"password"}
+                    disabled={passwordInput.isDisabled}
+                    name="password"
                     error={false}
                     ref={passwordRef}
                     onIconClick={passwordInputActive}
-                    errorText={"Ошибка"}
-                    size={"default"}
+                    errorText="Ошибка"
+                    size="default"
                 />
             </div>
 
-            <div className={classnames(isBtnsHidden && styles.hidden, styles.btnsWrapper, "pt-5")}>
-                <Button type="primary" size="small" htmlType="submit">
-                    Сохранить
-                </Button>
-                <Button type="primary" size="small" htmlType="button" onClick={cancel}>
+
+            <div className={classnames(isBtnsVisible && styles.hidden, styles.btnsWrapper, "pt-5")}>
+                <Button type="secondary" size="medium" htmlType="button" onClick={cancel}>
                     Отменить
+                </Button>
+                <Button type="primary" size="medium" htmlType="submit">
+                    Сохранить
                 </Button>
             </div>
         </form>
