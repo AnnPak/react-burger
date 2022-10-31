@@ -15,6 +15,7 @@ const ProfileNav = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isUserLogged = getCookie("isUserLogged");
+    const pathname = window.location.pathname;
 
     useEffect(() => {
         if (isUserLogged === "true") {
@@ -60,7 +61,7 @@ const ProfileNav = () => {
                 to="/profile"
                 className={classnames(
                     styles.navbarItem,
-                    content === "profile" ? styles.navbarItemActive : "",
+                    pathname.indexOf("/profile/") === -1 && styles.navbarItemActive,
                     "text text_type_main-medium pt-4 pb-4"
                 )}
                 data-value="profile"
@@ -72,7 +73,7 @@ const ProfileNav = () => {
                 to="/profile/orders"
                 className={classnames(
                     styles.navbarItem,
-                    content === "history" ? styles.navbarItemActive : "",
+                    pathname.indexOf("/profile/orders") > -1 && styles.navbarItemActive ,
                     "text text_type_main-medium pt-4 pb-4"
                 )}
                 data-value="history"

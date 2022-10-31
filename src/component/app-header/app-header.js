@@ -12,14 +12,14 @@ import LinkItem from "../link-item/link-item";
 import styles from "./app-header.module.scss";
 
 const Navbar = () => {
+    const pathname = window.location.pathname;
     return (
         <nav className="mt-4">
             <div className={styles.navbarItem}>
                 <LinkItem
                     className={classnames(
                         styles.navbarItemLink,
-                        window.location.pathname.indexOf("/profile") === -1 &&
-                            styles.navbarItemLinkActive,
+                        pathname.indexOf("/profile") === -1 && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0"
                     )}
                     to="/"
@@ -29,8 +29,12 @@ const Navbar = () => {
                 </LinkItem>
 
                 <LinkItem
-                    className={classnames(styles.navbarItemLink, "mr-2 p-4 pl-0 active")}
-                    to="/"
+                    className={classnames(
+                        styles.navbarItemLink,
+                        pathname.indexOf("/profile/orders") > -1 && styles.navbarItemLinkActive,
+                        "mr-2 p-4 pl-0 active"
+                    )}
+                    to="/profile/orders"
                 >
                     <ListIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Лента заказов</p>
@@ -41,7 +45,8 @@ const Navbar = () => {
                 <LinkItem
                     className={classnames(
                         styles.navbarItemLink,
-                        window.location.pathname.indexOf("/profile") > -1 &&
+                        pathname.indexOf("/profile") > -1 &&
+                            pathname.indexOf("/profile/") === -1 &&
                             styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
