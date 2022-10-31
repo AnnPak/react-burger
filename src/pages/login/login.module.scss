@@ -15,3 +15,13 @@
         color: #4C4CFF;
     }
 }
+
+.errorMessage {
+    position: absolute;
+    left: 0;
+    top: 118px;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

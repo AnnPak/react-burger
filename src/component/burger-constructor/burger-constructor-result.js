@@ -17,6 +17,7 @@ const BurgerConstructorResult = () => {
 
     const createOrder = () => {
         if (getCookie("isUserLogged") === "true") {
+            dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
                 ? constructorIngredients.map((item) => item._id)
                 : []; //список id ингредиентов
@@ -25,8 +26,8 @@ const BurgerConstructorResult = () => {
 
             const requestBody = JSON.stringify({ ingredients: orderIngredientsIds, Authorization: getCookie("accessToken") });
 
-            dispatch(fetchOrder(requestBody));
-            dispatch(addOrderToModal());
+            // dispatch(fetchOrder(requestBody));
+            
         } else {
             navigate("/login");
         }

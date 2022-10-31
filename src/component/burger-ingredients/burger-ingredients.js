@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import BurgerIngredientsList from "./burger-ingredients-list";
 import TabsWrapper from "../tabs-wrapper/tabs-wrapper";
-import IngredientDetailsModal from "../ingredient-details-modal/ingredient-details-modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 import styles from "./burger-ingredients.module.scss";
 
@@ -39,7 +39,7 @@ const BurgerIngredients = () => {
                 />
             )}
 
-            {/* {ingredientInModal && <IngredientDetailsModal />} */}
+            {/* {ingredientInModal && <IngredientDetails />} */}
         </section>
     );
 };

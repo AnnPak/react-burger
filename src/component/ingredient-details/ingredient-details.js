@@ -5,7 +5,7 @@ import { fetchIngredients } from "../../store/ingredients/slice";
 
 import styles from "./ingredient-details-modal.module.scss";
 
-const IngredientDetailsModal = () => {
+const IngredientDetails = () => {
     const { ingredientId } = useParams();
     const { ingredients } = useSelector((store) => store.ingredients);
 
@@ -56,4 +56,4 @@ const IngredientDetailsModal = () => {
     );
 };
 
-export default IngredientDetailsModal;
+export default IngredientDetails;

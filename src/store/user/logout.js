@@ -32,7 +32,7 @@ const logoutSlice = createSlice({
                 success && deleteCookie("accessToken");
                 success && localStorage.removeItem("bun");
                 success && localStorage.removeItem("constructorIngredients");
-                
+                console.log(success)
                 success && setCookie("isUserLogged", false)
             })
             .addCase(logoutUser.rejected, (state) => {

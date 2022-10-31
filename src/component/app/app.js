@@ -12,12 +12,12 @@ import {
     Orders,
 } from "../../pages";
 import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
-import { deleteCookie, getCookie } from "../../utils/cookie";
+import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
 import { userRequest, refreshToken } from "../../store/user/user";
-import IngredientDetailsModal from "../ingredient-details-modal/ingredient-details-modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { removeModal } from "../../store/modal/slice";
 
@@ -25,7 +25,7 @@ function App() {
     const ModalSwitch = () => {
         // setCookie("isUserLogged", false);
         // deleteCookie('accessToken')
-        // console.log(getCookie("refreshToken"));
+        // console.log(getCookie("isUserLogged"));
         const dispatch = useDispatch();
         const location = useLocation();
         const navigate = useNavigate();
@@ -70,7 +70,7 @@ function App() {
                     <Route
                         path="/ingredients/:ingredientId"
                         exact
-                        element={<IngredientDetailsModal />}
+                        element={<IngredientDetails />}
                     />
 
                     <Route
@@ -133,8 +133,8 @@ function App() {
                         <Route
                             path="/ingredients/:ingredientId"
                             element={
-                                <Modal title={"Детали ингредиента"} onClose={handleModalClose}>
-                                    <IngredientDetailsModal />
+                                <Modal title={"Детали ингредиента"} isRedirect={true}>
+                                    <IngredientDetails />
                                 </Modal>
                             }
                         />
