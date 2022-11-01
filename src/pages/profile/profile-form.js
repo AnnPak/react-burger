@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
@@ -24,14 +24,12 @@ const UserDataForm = () => {
         isDisabled: true,
     });
 
-    const nameRef = useRef(null);
-    const loginRef = useRef(null);
-    const passwordRef = useRef(null);
-
     const dispatch = useDispatch();
 
     const changeUserData = (e) => {
         e.preventDefault();
+        setBtnsHidden(true);
+
         const accessToken = getCookie("accessToken");
         const requestHeaders = {
             "Content-Type": "application/json",
@@ -56,19 +54,19 @@ const UserDataForm = () => {
 
     const nameInputActive = () => {
         setInputName((nameInput) => ({ ...nameInput, isDisabled: !nameInput.isDisabled }));
-        isBtnsHidden && setBtnsHidden(false);
     };
 
     const loginInputActive = () => {
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: !loginInput.isDisabled }));
-
-        isBtnsHidden && setBtnsHidden(false);
     };
     const passwordInputActive = () => {
         setPasswordInput((passwordInput) => ({
             ...passwordInput,
             isDisabled: !passwordInput.isDisabled,
         }));
+    };
+
+    const activateBtns = () => {
         isBtnsHidden && setBtnsHidden(false);
     };
 
@@ -76,25 +74,24 @@ const UserDataForm = () => {
         setInputName((nameInput) => ({ ...nameInput, value: user.name }));
         setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
         setPasswordInput((loginInput) => ({ ...loginInput, value: "" }));
+        setBtnsHidden(true);
     };
 
-    const isBtnsVisible =
-        !isBtnsHidden && nameInput.isDisabled && loginInput.isDisabled && passwordInput.isDisabled;
 
     return (
         <form className={styles.form} onSubmit={changeUserData}>
             <Input
                 type={"text"}
                 placeholder={"Имя"}
-                onChange={(e) =>
-                    setInputName((nameInput) => ({ ...nameInput, value: e.target.value }))
-                }
+                onChange={(e) => {
+                    setInputName((nameInput) => ({ ...nameInput, value: e.target.value }));
+                    activateBtns();
+                }}
                 icon={nameInput.isDisabled ? "EditIcon" : "CloseIcon"}
                 value={nameInput.value}
                 disabled={nameInput.isDisabled}
                 name={"name"}
                 error={false}
-                ref={nameRef}
                 onIconClick={nameInputActive}
                 errorText={"Ошибка"}
                 size={"default"}
@@ -103,15 +100,15 @@ const UserDataForm = () => {
                 <Input
                     type={"text"}
                     placeholder={"Логин"}
-                    onChange={(e) =>
-                        setInputLogin((loginInput) => ({ ...loginInput, value: e.target.value }))
-                    }
+                    onChange={(e) => {
+                        setInputLogin((loginInput) => ({ ...loginInput, value: e.target.value }));
+                        activateBtns();
+                    }}
                     icon={loginInput.isDisabled ? "EditIcon" : "CloseIcon"}
                     value={loginInput.value}
                     name={"login"}
                     disabled={loginInput.isDisabled}
                     error={false}
-                    ref={loginRef}
                     onIconClick={loginInputActive}
                     errorText={"Ошибка"}
                     size={"default"}
@@ -121,25 +118,25 @@ const UserDataForm = () => {
                 <Input
                     type="password"
                     placeholder="Пароль"
-                    onChange={(e) =>
+                    onChange={(e) => {
                         setPasswordInput((passwordInput) => ({
                             ...passwordInput,
                             value: e.target.value,
-                        }))
-                    }
+                        }));
+                        activateBtns();
+                    }}
                     icon={passwordInput.isDisabled ? "EditIcon" : "CloseIcon"}
                     value={passwordInput.value}
                     disabled={passwordInput.isDisabled}
                     name="password"
                     error={false}
-                    ref={passwordRef}
                     onIconClick={passwordInputActive}
                     errorText="Ошибка"
                     size="default"
                 />
             </div>
 
-            <div className={classnames(isBtnsVisible && styles.hidden, styles.btnsWrapper, "pt-5")}>
+            <div className={classnames(isBtnsHidden && styles.hidden, styles.btnsWrapper, "pt-5")}>
                 <Button type="secondary" size="medium" htmlType="button" onClick={cancel}>
                     Отменить
                 </Button>
