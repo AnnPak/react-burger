@@ -34,7 +34,7 @@ export const requestToken = async ({url, token}) => {
         },
         body: JSON.stringify({ "token": token }),
     };
-    console.log(requestOptions)
+
     return fetch(url, requestOptions).then((response) => {
         return response.json();
     });

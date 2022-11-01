@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, InfoIcon, Input, PasswordInput, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { PasswordInputWrap, TextInput, EmailInputWrap } from "../../component/inputs/inputs";
 import { registerUser } from "../../store/user/register";
 
 import styles from "../login/login.module.scss";
@@ -46,20 +45,23 @@ const Register = () => {
             <p className="text text_type_main-medium">Регистрация</p>
             <form onSubmit={userRegister}>
                 <div className="pt-6">
-                    <TextInput
+                    <Input
                         value={name}
-                        setValue={setName}
                         type="text"
                         name="name"
                         placeholder="Имя"
+                        onChange={(e) => setName(e.target.value)}
+                        errorText={"Ошибка"}
+                        size={"default"}
                     />
                 </div>
                 <div className="pt-6">
-                    <EmailInputWrap value={email} setValue={setEmail} />
+                    <EmailInput onChange={(e) => setEmail(e.target.value)} value={email} name={"email"} />
+
                 </div>
 
                 <div className="pt-6">
-                    <PasswordInputWrap value={password} setValue={setPassword} />
+                    <PasswordInput onChange={(e) => setPassword(e.target.value)} value={password} name={"password"} />
                 </div>
 
                 <div className="pt-6">

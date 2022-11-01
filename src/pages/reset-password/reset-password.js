@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { TextInput, PasswordInputWrap } from "../../component/inputs/inputs";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
@@ -37,15 +36,17 @@ const ResetPassword = () => {
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <form onSubmit={onSubmit}>
                 <div className="pt-6">
-                    <PasswordInputWrap value={password} setValue={setPassword} />
+                    <PasswordInput onChange={(e) => setPassword(e.target.value)} value={password} name={"password"} />
                 </div>
                 <div className="pt-6">
-                    <TextInput
+                    <Input
                         type="text"
                         name="code"
                         placeholder="Введите код из письма"
                         value={code}
-                        setValue={setCode}
+                        onChange={(e) => setCode(e.target.value)}
+                        errorText={"Ошибка"}
+                        size={"default"}
                     />
                 </div>
 

@@ -14,15 +14,11 @@ import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
-import { setCookie } from "../../utils/cookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
 function App() {
     const ModalSwitch = () => {
-        // setCookie("isUserLogged", false);
-        // deleteCookie('accessToken')
-        // console.log(getCookie("isUserLogged"));
         const location = useLocation();
         let background = location.state && location.state.background;
 

@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { EmailInputWrap, PasswordInputWrap } from "../../component/inputs/inputs";
-import { Button, InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, InfoIcon, PasswordInput, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../../store/user/login";
 
 import styles from "./login.module.scss";
@@ -48,11 +47,11 @@ const Login = () => {
             <p className="text text_type_main-medium">Вход</p>
             <form onSubmit={userRegister}>
                 <div className="pt-6">
-                    <EmailInputWrap value={email} setValue={setEmail} />
+                    <EmailInput onChange={(e) => setEmail(e.target.value)} value={email} name={"email"} />
                 </div>
 
                 <div className="pt-6">
-                    <PasswordInputWrap value={password} setValue={setPassword} />
+                    <PasswordInput onChange={(e) => setPassword(e.target.value)} value={password} name={"password"} />
                 </div>
 
                 <div className="pt-6">
