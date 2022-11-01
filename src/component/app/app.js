@@ -28,46 +28,23 @@ function App() {
 
                 <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
-
                     <Route
                         path="/ingredients/:ingredientId"
                         exact
                         element={<IngredientDetails />}
                     />
-
-                    <Route
-                        path="/login"
-                        element={
-                            <ProtectedGuestRoute>
-                                <Login />
-                            </ProtectedGuestRoute>
-                        }
-                    />
-
-                    <Route
-                        path="/register"
-                        element={
-                            <ProtectedGuestRoute>
-                                <Register />
-                            </ProtectedGuestRoute>
-                        }
-                    />
-
+                    <Route path="/login" element={<ProtectedGuestRoute Element={<Login />} />} />
                     <Route
                         path="/reset-password"
-                        element={
-                            <ProtectedGuestRoute>
-                                <ResetPassword />
-                            </ProtectedGuestRoute>
-                        }
+                        element={<ProtectedGuestRoute Element={<ResetPassword />} />}
                     />
                     <Route
                         path="/forgot-password"
-                        element={
-                            <ProtectedGuestRoute>
-                                <ForgotPassword />
-                            </ProtectedGuestRoute>
-                        }
+                        element={<ProtectedGuestRoute Element={<ForgotPassword />} />}
+                    />
+                    <Route
+                        path="/register"
+                        element={<ProtectedGuestRoute Element={<Register />} />}
                     />
 
                     {/* Страница только для юзеров */}
