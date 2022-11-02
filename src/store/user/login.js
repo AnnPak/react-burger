@@ -25,13 +25,12 @@ const loginSlice = createSlice({
                 state.loginError = false;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                const { user, accessToken, refreshToken, success } = action.payload;
+                const { accessToken, refreshToken, success } = action.payload;
 
                 state.loginSending = false;
                 state.loginError = false;
                 state.loginSuccess = success ? true : false;
-
-                state.user = user;
+                
                 success && setCookie("accessToken", accessToken);
                 success && setCookie("refreshToken", refreshToken);
                 success && setCookie("isUserLogged", true);

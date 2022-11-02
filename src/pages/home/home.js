@@ -7,7 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../component/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../component/burger-constructor/burger-constructor";
 import { fetchIngredients } from "../../store/ingredients/slice";
-import { userRequest, refreshToken } from "../../store/user/user";
+import { fetchRefresh } from "../../store/user/user";
 import { getCookie } from "../../utils/cookie";
 
 import Preloader from "../../component/preloader/preloader";
@@ -19,29 +19,21 @@ const Home = () => {
     const { isLoading, isError } = useSelector((store) => store.ingredients);
 
     const isUserLogged = getCookie("isUserLogged");
+
     useEffect(() => {
         dispatch(fetchIngredients());
         if (isUserLogged === "true") {
-            const requestHeaders = {
-                "Content-Type": "application/json",
-                Authorization: getCookie("accessToken"),
+            const options = {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                    Authorization: getCookie("accessToken"),
+                },
+                body: null,
             };
-            const token = getCookie("refreshToken");
 
-            // Запрос данных пользователя
-            dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-                //если срок действия токена истек
-                if (data.payload.message === "jwt expired") {
-                    dispatch(refreshToken(token)).then((data) => {
-                        const requestHeaders = {
-                            "Content-Type": "application/json",
-                            Authorization: data.payload.accessToken,
-                        };
-                        //запрос данных пользователя с новым токеном
-                        dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
-                    });
-                }
-            });
+            dispatch(fetchRefresh(options));
         }
 
         // eslint-disable-next-line

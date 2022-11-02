@@ -16,8 +16,13 @@ import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import { getCookie, deleteCookie } from "../../utils/cookie";
+
 
 function App() {
+    console.log(getCookie("accessToken"))
+    // deleteCookie('isUserLogged')
+    
     const ModalSwitch = () => {
         const location = useLocation();
         let background = location.state && location.state.background;

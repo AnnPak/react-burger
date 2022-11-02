@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import classnames from "classnames";
 
-import { userRequest, refreshToken } from "../../store/user/user";
+import { fetchRefresh } from "../../store/user/user";
 import { getCookie } from "../../utils/cookie";
 import { logoutUser } from "../../store/user/logout";
 
@@ -14,32 +14,21 @@ const ProfileNav = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isUserLogged = getCookie("isUserLogged");
     const pathname = window.location.pathname;
 
     useEffect(() => {
-        if (isUserLogged === "true") {
-            const requestHeaders = {
-                "Content-Type": "application/json",
-                Authorization: getCookie("accessToken"),
-            };
-            const token = getCookie("refreshToken");
 
-            // Запрос данных пользователя
-            dispatch(userRequest({ headers: requestHeaders, method: "GET" })).then((data) => {
-                //если срок действия токена истек
-                if (data.payload.message === "jwt expired") {
-                    dispatch(refreshToken(token)).then((data) => {
-                        const requestHeaders = {
-                            "Content-Type": "application/json",
-                            Authorization: data.payload.accessToken,
-                        };
-                        //запрос данных пользователя с новым токеном
-                        dispatch(userRequest({ headers: requestHeaders, method: "GET" }));
-                    });
-                }
-            });
+        const options = {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: getCookie("accessToken"),
+            },
+            body: null,
         }
+
+        dispatch(fetchRefresh(options))
         // eslint-disable-next-line
     }, []);
 

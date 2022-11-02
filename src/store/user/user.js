@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setCookie } from "../../utils/cookie";
 
-import { requestForUser, requestToken } from "../../utils/request";
+import { updateUserData, fetchWithRefresh } from "../../utils/request";
 import { GET_USER, TOKEN_API } from "../../utils/constants";
 
 const initialState = {
@@ -14,16 +13,15 @@ const initialState = {
     
 };
 
-export const userRequest = createAsyncThunk("user/userRequest", async ({headers, method, body}) => {
-    return await requestForUser({url: GET_USER, headers, method, body})
+export const fetchRefresh = createAsyncThunk("user/fetchRefresh", async (options) => {
+    return await fetchWithRefresh({url: GET_USER, options})
     .then(data => {
         return data
       });
 });
 
-
-export const refreshToken = createAsyncThunk("user/refreshToken", async (token) => {
-    return await requestToken({url: TOKEN_API, token})
+export const userRequest = createAsyncThunk("user/userRequest", async ({headers, method, body}) => {
+    return await updateUserData({url: GET_USER, headers, method, body})
     .then(data => {
         return data
       });
@@ -35,32 +33,17 @@ const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(userRequest.pending, (state) => {
-                state.userSending = true;
-                state.loginError = false;
+            .addCase(fetchRefresh.pending, (state) => {
+                state.refreshTokenSending = true;
             })
-            .addCase(userRequest.fulfilled, (state, action) => {
+            .addCase(fetchRefresh.fulfilled, (state, action) => {
                 const {success, user} = action.payload
                 state.userSending = false;
                 state.userError = success ? false : true;
                 state.user = success && user;
+                // success && setCookie("accessToken", accessToken);
             })
-            .addCase(userRequest.rejected, (state) => {
-                state.userSending = false;
-                state.userError = true;
-            })
-            
-            .addCase(refreshToken.pending, (state) => {
-                state.refreshTokenSending = true;
-            })
-            .addCase(refreshToken.fulfilled, (state, action) => {
-                const {success, accessToken} = action.payload
-
-                state.refreshTokenSending = false;
-                state.jwtExpired = false;
-                success && setCookie("accessToken", accessToken);
-            })
-            .addCase(refreshToken.rejected, (state) => {
+            .addCase(fetchRefresh.rejected, (state) => {
                 state.refreshTokenError = true;
                 state.refreshTokenSending = false;
             })
