@@ -44,6 +44,13 @@ const UserDataForm = () => {
         };
         const requestBody = JSON.stringify(requestArray);
 
+        setPasswordInput((passwordInput) => ({
+            ...passwordInput,
+            isDisabled: true,
+        }));
+        setInputName((nameInput) => ({ ...nameInput, isDisabled: true }));
+        setInputLogin((loginInput) => ({ ...loginInput, isDisabled: true }));
+
         dispatch(userRequest({ headers: requestHeaders, method, body: requestBody })); //изменение данных пользователя
     };
 
@@ -75,6 +82,14 @@ const UserDataForm = () => {
         setInputLogin((loginInput) => ({ ...loginInput, value: user.email }));
         setPasswordInput((loginInput) => ({ ...loginInput, value: "" }));
         setBtnsHidden(true);
+
+        setPasswordInput((passwordInput) => ({
+            ...passwordInput,
+            isDisabled: true,
+        }));
+        setInputName((nameInput) => ({ ...nameInput, isDisabled: true }));
+        setInputLogin((loginInput) => ({ ...loginInput, isDisabled: true }));
+
     };
 
 
