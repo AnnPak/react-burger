@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
 import { LOGOUT_API } from "../../utils/constants";
-import { deleteCookie, setCookie } from "../../utils/cookie";
+import { deleteCookie } from "../../utils/cookie";
 
 const initialState = {
     logoutSending: false,
@@ -28,11 +28,11 @@ const logoutSlice = createSlice({
 
                 state.logoutSending = false;
                 state.logoutError = false;
-                success && deleteCookie("refreshToken");
+                success && localStorage.removeItem("refreshToken");
                 success && deleteCookie("accessToken");
                 success && localStorage.removeItem("bun");
                 success && localStorage.removeItem("constructorIngredients");
-                success && setCookie("isUserLogged", false)
+                success && localStorage.setItem("isUserLogged", false)
             })
             .addCase(logoutUser.rejected, (state) => {
                 state.logoutSending = false;

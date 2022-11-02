@@ -32,14 +32,14 @@ const loginSlice = createSlice({
                 state.loginSuccess = success ? true : false;
                 
                 success && setCookie("accessToken", accessToken);
-                success && setCookie("refreshToken", refreshToken);
-                success && setCookie("isUserLogged", true);
+                success && localStorage.setItem("refreshToken", refreshToken);
+                success && localStorage.setItem("isUserLogged", true);
             })
             .addCase(loginUser.rejected, (state) => {
                 state.loginSending = false;
                 state.loginError = true;
                 state.loginSuccess = false;
-                setCookie("isUserLogged", false);
+                localStorage.setItem("isUserLogged", false);
             });
     },
 });

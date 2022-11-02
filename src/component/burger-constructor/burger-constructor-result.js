@@ -16,7 +16,7 @@ const BurgerConstructorResult = () => {
     const navigate = useNavigate();
 
     const createOrder = () => {
-        if (getCookie("isUserLogged") === "true") {
+        if (localStorage.getItem("isUserLogged") === "true") {
             dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
                 ? constructorIngredients.map((item) => item._id)

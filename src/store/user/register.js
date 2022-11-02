@@ -32,10 +32,11 @@ const redisterSlice = createSlice({
                 state.registerSuccess = success ? true : false;
 
                 setCookie("accessToken", accessToken);
-                setCookie("refreshToken", refreshToken);
-                success ? setCookie("isUserLogged", true) : setCookie("isUserLogged", false);
+                localStorage.setItem("refreshToken", refreshToken);
+                success ? localStorage.setItem("isUserLogged", true) : localStorage.setItem("isUserLogged", false);
             })
             .addCase(registerUser.rejected, (state) => {
+                localStorage.setItem("isUserLogged", false);
                 state.registerSending = false;
                 state.registerError = true;
                 state.registerSuccess = false;

@@ -89,9 +89,7 @@ const UserDataForm = () => {
         }));
         setInputName((nameInput) => ({ ...nameInput, isDisabled: true }));
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: true }));
-
     };
-
 
     return (
         <form className={styles.form} onSubmit={changeUserData}>

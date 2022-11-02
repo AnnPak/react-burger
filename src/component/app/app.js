@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 
 import {
@@ -16,13 +16,31 @@ import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { getCookie, deleteCookie } from "../../utils/cookie";
-
+import { getCookie } from "../../utils/cookie";
+import { userFetchWithRefresh } from "../../store/user/user";
+import { useDispatch } from "react-redux";
 
 function App() {
-    console.log(getCookie("accessToken"))
-    // deleteCookie('isUserLogged')
-    
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const options = {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: getCookie("accessToken"),
+            },
+            body: null,
+        };
+
+        dispatch(userFetchWithRefresh(options)).then((data) => {
+            data.error && localStorage.setItem("isUserLogged", false);
+            data.payload?.success && localStorage.setItem("isUserLogged", true);
+        });
+        // eslint-disable-next-line
+    }, []);
+
     const ModalSwitch = () => {
         const location = useLocation();
         let background = location.state && location.state.background;
