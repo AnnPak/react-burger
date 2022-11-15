@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const LinkItem = (props) => {
+const LinkItem = ({className, to, ...props}) => {
     return (
-        <a className={props.class} href="/">
+        <a className={className} href={to}>
             {props.children}
         </a>
     );

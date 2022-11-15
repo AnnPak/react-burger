@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
+import { getCookie } from "../../utils/cookie"; 
 
 import {
     updateBurderIngredients,
@@ -39,6 +40,18 @@ const BurgerConstructorWpaper = () => {
         },
         [dispatch]
     );
+
+    useEffect(() => {
+        if(localStorage.getItem('constructorIngredients')){
+            const IngredientsWithoutBun = JSON.parse(localStorage.getItem('constructorIngredients'))
+            dispatch(updateBurderIngredients(IngredientsWithoutBun))
+        }
+        if(localStorage.getItem('bun') ) {
+            const bun = JSON.parse(localStorage.getItem('bun'))
+            dispatch(setBun(bun))
+        }
+    }, [])
+
 
     return (
         <section className={styles.constructorElements}>

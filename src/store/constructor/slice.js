@@ -16,20 +16,39 @@ const ingredientsSlice = createSlice({
             state.constructorIngredients = state.constructorIngredients.filter(
                 (el, index) => index !== +action.payload
             );
+            localStorage.removeItem("constructorIngredients");
+            localStorage.setItem(
+                "constructorIngredients",
+                JSON.stringify(state.constructorIngredients)
+            );
         },
         updateBurderIngredients: (state, action) => {
             state.constructorIngredients = action.payload
                 ? action.payload
                 : state.constructorIngredients;
+
+            localStorage.removeItem("constructorIngredients");
+            localStorage.setItem(
+                "constructorIngredients",
+                JSON.stringify(state.constructorIngredients)
+            );
         },
         setBun: (state, action) => {
             state.bun = action.payload;
+            localStorage.removeItem("bun");
+            localStorage.setItem("bun", JSON.stringify(state.bun));
         },
         setIngredientsWithoutBun: {
             reducer: (state, action) => {
                 state.constructorIngredients = state.constructorIngredients
                     ? [...state.constructorIngredients, action.payload]
                     : [action.payload];
+
+                localStorage.removeItem("constructorIngredients");
+                localStorage.setItem(
+                    "constructorIngredients",
+                    JSON.stringify(state.constructorIngredients)
+                );
             },
             prepare: (payload) => ({
                 payload: {
@@ -40,20 +59,15 @@ const ingredientsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(fetchOrder.fulfilled, (state) => {
-                state.constructorIngredients = null;
-                state.bun = null;
-            })
+        builder.addCase(fetchOrder.fulfilled, (state) => {
+            state.constructorIngredients = null;
+            state.bun = null;
+        });
     },
 });
 
 const { actions, reducer } = ingredientsSlice;
 
 export default reducer;
-export const { 
-    deleteBurderIngredient, 
-    updateBurderIngredients,
-    setIngredientsWithoutBun, 
-    setBun 
-} = actions;
+export const { deleteBurderIngredient, updateBurderIngredients, setIngredientsWithoutBun, setBun } =
+    actions;

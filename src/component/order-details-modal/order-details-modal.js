@@ -1,9 +1,5 @@
 import classnames from "classnames";
-import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
-import Preloader from "../preloader/preloader";
 
 import styles from "./order-details-modal.module.scss";
 import doneImg from "../../images/done.png";
@@ -38,23 +34,4 @@ const OrderDetails = () => {
     );
 };
 
-const OrderDetailsModal = () => {
-    const { orderStatus } = useSelector((store) => store.order);
-
-    return (
-        <Modal>
-            <>
-                {orderStatus === "loading" && <Preloader />}
-                {orderStatus === "success" && <OrderDetails />}
-                {orderStatus === "error" && (
-                    <p className="text text_type_main-medium">
-                        <InfoIcon type="error" />
-                        Ошибка!
-                    </p>
-                )}
-            </>
-        </Modal>
-    );
-};
-
-export default OrderDetailsModal;
+export default OrderDetails;
