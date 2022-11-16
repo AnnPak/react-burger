@@ -20,23 +20,24 @@ import { getCookie } from "../../utils/cookie";
 import { userFetchWithRefresh } from "../../store/user/user";
 import { useDispatch } from "react-redux";
 
-function App() {
-    const dispatch = useDispatch();
 
+function App() {
+    const dispatch = useDispatch<any>();
+    
     useEffect(() => {
         const options = {
             method: "GET",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
-                Authorization: getCookie("accessToken"),
+                "Authorization": getCookie("accessToken"),
             },
             body: null,
         };
 
-        dispatch(userFetchWithRefresh(options)).then((data) => {
-            data.error && localStorage.setItem("isUserLogged", false);
-            data.payload?.success && localStorage.setItem("isUserLogged", true);
+        dispatch(userFetchWithRefresh(options)).then((data: any) => {
+            data.error && localStorage.setItem("isUserLogged", 'false');
+            data.payload?.success && localStorage.setItem("isUserLogged", 'true');
         });
         // eslint-disable-next-line
     }, []);
@@ -53,7 +54,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route
                         path="/ingredients/:ingredientId"
-                        exact
+                        // exact
                         element={<IngredientDetails />}
                     />
                     <Route path="/login" element={<ProtectedGuestRoute Element={<Login />} />} />

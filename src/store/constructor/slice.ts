@@ -38,7 +38,7 @@ const ingredientsSlice = createSlice({
             localStorage.removeItem("bun");
             localStorage.setItem("bun", JSON.stringify(state.bun));
         },
-        setIngredientsWithoutBun: {
+        seTingredientsWithoutBun: {
             reducer: (state, action) => {
                 state.constructorIngredients = state.constructorIngredients
                     ? [...state.constructorIngredients, action.payload]
@@ -69,5 +69,5 @@ const ingredientsSlice = createSlice({
 const { actions, reducer } = ingredientsSlice;
 
 export default reducer;
-export const { deleteBurderIngredient, updateBurderIngredients, setIngredientsWithoutBun, setBun } =
+export const { deleteBurderIngredient, updateBurderIngredients, seTingredientsWithoutBun, setBun } =
     actions;

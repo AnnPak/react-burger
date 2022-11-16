@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { getCookie } from "../../utils/cookie"; 
-
+import { TMoveCard, TIngredient } from "../../utils/types";
 import {
     updateBurderIngredients,
-    setIngredientsWithoutBun,
+    seTingredientsWithoutBun,
     setBun,
 } from "../../store/constructor/slice";
 
@@ -19,17 +18,17 @@ const BurgerConstructorWpaper = () => {
 
     const [, dropTargerRef] = useDrop({
         accept: "ingredients",
-        drop(ingredient) {
+        drop(ingredient:TIngredient) {
             if (ingredient.type === "bun") {
                 dispatch(setBun(ingredient));
             } else {
-                dispatch(setIngredientsWithoutBun(ingredient));
+                dispatch(seTingredientsWithoutBun(ingredient));
             }
         },
     });
-
-    const moveCard = useCallback(
-        (dragIndex, hoverIndex, constructorIngredients) => {
+    
+    const moveCard = useCallback<TMoveCard>(
+        (dragIndex:number, hoverIndex:number, constructorIngredients:TIngredient[]): any => {
             const dragCard = constructorIngredients[dragIndex];
             const newCards = [...constructorIngredients];
 
@@ -43,11 +42,11 @@ const BurgerConstructorWpaper = () => {
 
     useEffect(() => {
         if(localStorage.getItem('constructorIngredients')){
-            const IngredientsWithoutBun = JSON.parse(localStorage.getItem('constructorIngredients'))
+            const IngredientsWithoutBun = JSON.parse(localStorage.getItem('constructorIngredients') || '{}')
             dispatch(updateBurderIngredients(IngredientsWithoutBun))
         }
         if(localStorage.getItem('bun') ) {
-            const bun = JSON.parse(localStorage.getItem('bun'))
+            const bun = JSON.parse(localStorage.getItem('bun') || '{}')
             dispatch(setBun(bun))
         }
     }, [])
@@ -70,7 +69,7 @@ const BurgerConstructorWpaper = () => {
 
             <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargerRef}>
                 {constructorIngredients != null &&
-                    constructorIngredients.map((item, index) => (
+                    constructorIngredients.map((item:TIngredient, index:number) => (
                         <BurgerConstructorElement
                             moveCard={moveCard}
                             classname={styles.constructorElement}

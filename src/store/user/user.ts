@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { TOptionsProps } from "../../utils/types";
 import { updateUserData, fetchWithRefresh } from "../../utils/request";
 import { GET_USER } from "../../utils/constants";
 
@@ -14,7 +14,7 @@ const initialState = {
 
 export const userFetchWithRefresh = createAsyncThunk(
     "user/userFetchWithRefresh",
-    async (options) => {
+    async (options:TOptionsProps) => {
         return await fetchWithRefresh({ url: GET_USER, options }).then((data) => {
             return data;
         });

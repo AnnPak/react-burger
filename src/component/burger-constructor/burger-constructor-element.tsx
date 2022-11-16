@@ -1,17 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop, useDrag, XYCoord } from "react-dnd";
 import { nanoid } from "nanoid";
 
-import { DATA_PROPS_TYPE } from "../../utils/constants";
+import { BurgerConstructorElementProps } from "../../utils/types";
 import { deleteBurderIngredient } from "../../store/constructor/slice";
 
 import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructorElement = ({ ingredient, ...props }) => {
+const BurgerConstructorElement: FC<BurgerConstructorElementProps> = ({ ingredient, ...props }) => {
     const { position, classname, index, moveCard } = props;
     const { price, image, name, type } = ingredient;
 
@@ -19,13 +18,13 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
     const dispatch = useDispatch();
 
     const ref = useRef(null);
-    const bunIndicators = {
-        top: " (верх)",
-        bottom: " (низ)",
+    const bunIndicators:{[name: string]: string} = {
+        'top': " (верх)",
+        'bottom': " (низ)",
     };
     const elementName = position ? name + bunIndicators[position] : name;
     
-    const deleteIngredient = (index) => {
+    const deleteIngredient = (index:number) => {
         dispatch(deleteBurderIngredient(index));
     };
 
@@ -37,7 +36,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             };
         },
 
-        hover(item, monitor) {
+        hover(item:any, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -51,8 +50,8 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const clientOffset:XYCoord | null = monitor?.getClientOffset();
+            const hoverClientY = clientOffset.y  - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
@@ -77,7 +76,7 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
 
     if (type !== "bun") drag(drop(ref));
 
-    const preventDefault = (e) => e.preventDefault();
+    const preventDefault = (e:any) => e.preventDefault();
 
     return (
         <section
@@ -107,14 +106,6 @@ const BurgerConstructorElement = ({ ingredient, ...props }) => {
             </div>
         </section>
     );
-};
-
-BurgerConstructorElement.propTypes = {
-    classname: PropTypes.string.isRequired,
-    ingredient: DATA_PROPS_TYPE.isRequired,
-    moveCard: PropTypes.func.isRequired,
-    index: PropTypes.number,
-    position: PropTypes.string,
 };
 
 export default BurgerConstructorElement;
