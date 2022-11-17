@@ -4,7 +4,7 @@ import { updateUserData, fetchWithRefresh } from "../../utils/request";
 import { GET_USER } from "../../utils/constants";
 
 const initialState = {
-    user: null, //anna1 anna@anna.com anna123
+    user: null,
     userSending: false,
     userError: false,
 
@@ -21,10 +21,10 @@ export const userFetchWithRefresh = createAsyncThunk(
     }
 );
 
-export const userRequest = createAsyncThunk(
+export const userRequest:(headers:Record<string, string>, method:string, body:string) => void = createAsyncThunk(
     "user/userRequest",
     async ({ headers, method, body }) => {
-        return await updateUserData({ url: GET_USER, headers, method, body }).then((data) => {
+        return await updateUserData(GET_USER, headers, body, method  ).then((data) => {
             return data;
         });
     }

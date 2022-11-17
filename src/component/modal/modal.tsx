@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
@@ -11,13 +10,18 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.scss";
 import { removeModal } from "../../store/modal/slice";
 
-const Modal = ({ title, isRedirect, ...props }) => {
-    const modalRoot = document.getElementById("react-modals");
+type TModal = {
+    title: string
+    isRedirect: boolean
+}
+
+const Modal: FC<PropsWithChildren<TModal>>  = ({ title, isRedirect, children }) => {
+    const modalRoot = document.getElementById("react-modals")!;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const closeModalByEsc = (evt) => {
+        const closeModalByEsc = (evt:KeyboardEvent) => {
             if (evt.key === "Escape") {
                 dispatch(removeModal());
                 isRedirect && navigate(-1);
@@ -49,16 +53,11 @@ const Modal = ({ title, isRedirect, ...props }) => {
                         <p className="text text_type_main-default">{title}</p>
                     </div>
                 )}
-                <div className={styles.modalBody}>{props.children}</div>
+                <div className={styles.modalBody}>{children}</div>
             </div>
         </>,
         modalRoot
     );
-};
-
-Modal.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.node.isRequired,
 };
 
 export default Modal;

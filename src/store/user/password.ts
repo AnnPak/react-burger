@@ -3,7 +3,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../utils/request";
 import { FORGOT_PSWRD, RESET_PSWRD } from "../../utils/constants";
 
-const initialState = {
+type TPasswordState = {
+    forgotSending: boolean,
+    forgotSuccess: boolean,
+    forgotError: boolean,
+
+    resetSending: boolean,
+    resetSuccess: boolean,
+    resetError: boolean,
+}
+
+const initialState:TPasswordState = {
     forgotSending: false,
     forgotSuccess: false,
     forgotError: false,

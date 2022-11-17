@@ -28,12 +28,12 @@ const BurgerConstructorWpaper = () => {
     });
     
     const moveCard = useCallback<TMoveCard>(
-        (dragIndex:number, hoverIndex:number, constructorIngredients:TIngredient[]): any => {
+        (dragIndex, hoverIndex, constructorIngredients): any => {
             const dragCard = constructorIngredients[dragIndex];
             const newCards = [...constructorIngredients];
 
             newCards.splice(dragIndex, 1);
-            newCards.splice(hoverIndex, 0, dragCard);
+            hoverIndex && newCards.splice(hoverIndex, 0, dragCard);
 
             dispatch(updateBurderIngredients(newCards));
         },

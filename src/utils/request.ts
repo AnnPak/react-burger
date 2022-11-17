@@ -1,11 +1,11 @@
 import { TOKEN_API } from "./constants";
 import { setCookie } from "./cookie";
 
-export const request = async (url, body = null, method = "GET") => {
+export const request = async (url: string, body?: any, method?: string) => {
     const requestOptions = {
-        method: method,
+        method: method ? method : "GET",
         headers: { "Content-Type": "application/json" },
-        body: body,
+        body: body ? body : null,
     };
 
     return fetch(url, requestOptions).then((response) => {
@@ -16,18 +16,19 @@ export const request = async (url, body = null, method = "GET") => {
     });
 };
 
-export const updateUserData = async ({
-    url,
-    headers = { "Content-Type": "application/json" },
-    method = "GET",
-    body = null,
-}) => {
-    const requestOptions = {
-        method: method,
+export const updateUserData = async (
+    url: string,
+    headers: HeadersInit | undefined,
+    body?: string,
+    method?: string
+) => {
+    const requestOptions: RequestInit = {
+        method: method ? method : "GET",
         mode: "cors",
         headers: headers,
-        body: body,
+        body: body ? body : null,
     };
+
     return fetch(url, requestOptions).then((response) => {
         return response.json();
     });
@@ -54,7 +55,7 @@ export const fetchWithRefresh = async ({ url, options }) => {
         const res = await fetch(url, options);
         const { refreshToken, accessToken } = await refreshTokenRequest();
 
-        setCookie("accessToken", accessToken);
+        setCookie("accessToken", accessToken, null);
         localStorage.setItem("refreshToken", refreshToken);
 
         options.headers.Authorization = accessToken;
@@ -66,7 +67,7 @@ export const fetchWithRefresh = async ({ url, options }) => {
         if (err.message === "jwt expired") {
             const { refreshToken, accessToken } = await refreshTokenRequest();
 
-            setCookie("accessToken", accessToken);
+            setCookie("accessToken", accessToken, null);
             localStorage.setItem("refreshToken", refreshToken);
 
             options.headers.Authorization = accessToken;

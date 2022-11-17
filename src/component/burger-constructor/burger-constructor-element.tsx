@@ -1,30 +1,30 @@
-import React, { useRef, FC } from "react";
+import { useRef, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop, useDrag, XYCoord } from "react-dnd";
 import { nanoid } from "nanoid";
 
-import { BurgerConstructorElementProps } from "../../utils/types";
+import { TBurgerConstructorElementProps } from "../../utils/types";
 import { deleteBurderIngredient } from "../../store/constructor/slice";
 
 import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructorElement: FC<BurgerConstructorElementProps> = ({ ingredient, ...props }) => {
+const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredient, ...props }) => {
     const { position, classname, index, moveCard } = props;
     const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store) => store.burgerConstructor);
     const dispatch = useDispatch();
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLInputElement>(null);
     const bunIndicators:{[name: string]: string} = {
         'top': " (верх)",
         'bottom': " (низ)",
     };
     const elementName = position ? name + bunIndicators[position] : name;
     
-    const deleteIngredient = (index:number) => {
+    const deleteIngredient = (index:number|undefined) => {
         dispatch(deleteBurderIngredient(index));
     };
 
@@ -42,22 +42,22 @@ const BurgerConstructorElement: FC<BurgerConstructorElementProps> = ({ ingredien
             }
 
             const dragIndex = item.index;
-            const hoverIndex = index;
+            const hoverIndex:number | undefined = index;
 
             if (dragIndex === hoverIndex) {
                 return;
             }
-
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+           
+            const hoverBoundingRect = ref?.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset:XYCoord | null = monitor?.getClientOffset();
+            const clientOffset = monitor.getClientOffset()!;
             const hoverClientY = clientOffset.y  - hoverBoundingRect.top;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            if (hoverIndex && dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
             }
 
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            if (hoverIndex && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
 
@@ -86,7 +86,7 @@ const BurgerConstructorElement: FC<BurgerConstructorElementProps> = ({ ingredien
             data-handler-id={handlerId}
             {...(index && {index: {index}})} 
         >
-            {!position && <DragIcon className={styles.dragIcon} />}
+            {!position && <DragIcon type="secondary" />}
 
             <div
                 className={classnames(

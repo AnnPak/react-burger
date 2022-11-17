@@ -3,16 +3,18 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchIngredients } from "../../store/ingredients/slice";
 
+import { TIngredient } from "../../utils/types";
+
 import styles from "./ingredient-details-modal.module.scss";
 
 const IngredientDetails = () => {
     const { ingredientId } = useParams();
     const { ingredients } = useSelector((store) => store.ingredients);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     !ingredients && dispatch(fetchIngredients());
 
-    const ingredient = ingredients.find((item) => item._id === ingredientId);
+    const ingredient = ingredients.find((item:TIngredient) => item._id === ingredientId);
 
     return (
         ingredient && (

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import classnames from "classnames";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
 
-import { DATA_PROPS_TYPE } from "../../utils/constants";
+import { TIngredient } from "../../utils/types";
 import { addIngredientToModal } from "../../store/modal/slice";
 
 import styles from "./burger-ingredients-list.module.scss";
 
-const BurgerIngredientsItem = ({ ingredient }) => {
+const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) => {
     const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
 
-    const [resultIndredients, setResultIndredients] = useState(null);
+    const [resultIndredients, setResultIndredients] = useState<Array<TIngredient> | null>(null);
 
     const { name, image, price, _id } = ingredient;
 
@@ -64,10 +64,6 @@ const BurgerIngredientsItem = ({ ingredient }) => {
             <p>{name}</p>
         </Link>
     );
-};
-
-BurgerIngredientsItem.propTypes = {
-    ingredient: DATA_PROPS_TYPE.isRequired,
 };
 
 export default BurgerIngredientsItem;

@@ -1,17 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { FC, PropsWithChildren  } from "react";
 
-const LinkItem = ({className, to, ...props}) => {
+import { TLinkItem } from "../../utils/types";
+
+const LinkItem: FC<PropsWithChildren<TLinkItem>> = ({ className, to, children }) => {
     return (
         <a className={className} href={to}>
-            {props.children}
+            {children}
         </a>
     );
-};
-
-LinkItem.propTypes = {
-    class: PropTypes.string,
-    children: PropTypes.node.isRequired,
 };
 
 export default LinkItem;

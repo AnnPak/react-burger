@@ -24,16 +24,16 @@ const UserDataForm = () => {
         isDisabled: true,
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
-    const changeUserData = (e) => {
+    const changeUserData = (e:any) => {
         e.preventDefault();
         setBtnsHidden(true);
 
         const accessToken = getCookie("accessToken");
-        const requestHeaders = {
+        const requestHeaders:HeadersInit | undefined = {
             "Content-Type": "application/json",
-            Authorization: `${accessToken}`,
+            "Authorization": `${accessToken}`,
         };
         const method = "PATCH";
 
@@ -51,7 +51,7 @@ const UserDataForm = () => {
         setInputName((nameInput) => ({ ...nameInput, isDisabled: true }));
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: true }));
 
-        dispatch(userRequest({ headers: requestHeaders, method, body: requestBody })); //изменение данных пользователя
+        dispatch(userRequest(requestHeaders, method, requestBody)); //изменение данных пользователя
     };
 
     useEffect(() => {

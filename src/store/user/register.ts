@@ -4,7 +4,13 @@ import { request } from "../../utils/request";
 import { setCookie } from "../../utils/cookie";
 import { REGISTER_API } from "../../utils/constants";
 
-const initialState = {
+type TRegisterState = {
+    registerSending: boolean,
+    registerSuccess: null | boolean,
+    registerError: boolean,
+}
+
+const initialState:TRegisterState = {
     registerSending: false,
     registerError: false,
     registerSuccess: null,
@@ -31,12 +37,12 @@ const redisterSlice = createSlice({
                 state.registerError = false;
                 state.registerSuccess = success ? true : false;
 
-                setCookie("accessToken", accessToken);
+                setCookie("accessToken", accessToken, null);
                 localStorage.setItem("refreshToken", refreshToken);
-                success ? localStorage.setItem("isUserLogged", true) : localStorage.setItem("isUserLogged", false);
+                success ? localStorage.setItem("isUserLogged", 'true') : localStorage.setItem("isUserLogged", 'false');
             })
             .addCase(registerUser.rejected, (state) => {
-                localStorage.setItem("isUserLogged", false);
+                localStorage.setItem("isUserLogged", 'false');
                 state.registerSending = false;
                 state.registerError = true;
                 state.registerSuccess = false;

@@ -4,7 +4,12 @@ import { request } from "../../utils/request";
 import { LOGOUT_API } from "../../utils/constants";
 import { deleteCookie } from "../../utils/cookie";
 
-const initialState = {
+type TLogoutState = {
+    logoutSending: boolean,
+    logoutError: boolean,
+}
+
+const initialState:TLogoutState = {
     logoutSending: false,
     logoutError: false,
 };
@@ -32,7 +37,7 @@ const logoutSlice = createSlice({
                 success && deleteCookie("accessToken");
                 success && localStorage.removeItem("bun");
                 success && localStorage.removeItem("constructorIngredients");
-                success && localStorage.setItem("isUserLogged", false)
+                success && localStorage.setItem("isUserLogged", 'false')
             })
             .addCase(logoutUser.rejected, (state) => {
                 state.logoutSending = false;

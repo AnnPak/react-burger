@@ -1,9 +1,11 @@
+import { TInitalState } from './../../utils/types';
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
 import { fetchOrder } from "../order/slice";
 
-const initialState = {
+
+const initialState:TInitalState = {
     constructorIngredients: null,
     bun: null,
 };
@@ -13,7 +15,7 @@ const ingredientsSlice = createSlice({
     initialState,
     reducers: {
         deleteBurderIngredient: (state, action) => {
-            state.constructorIngredients = state.constructorIngredients.filter(
+            state.constructorIngredients = state.constructorIngredients && state.constructorIngredients.filter(
                 (el, index) => index !== +action.payload
             );
             localStorage.removeItem("constructorIngredients");

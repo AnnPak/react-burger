@@ -24,7 +24,6 @@ const ingredientsSlice = createSlice({
             .addCase(fetchOrder.fulfilled, (state, action) => {
                 state.orderNumber = action.payload.order.number;
                 state.orderStatus = "success";
-                state.bun = null;
                 
                 localStorage.removeItem("bun");
                 localStorage.removeItem("constructorIngredients");
