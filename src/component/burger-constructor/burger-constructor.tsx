@@ -12,8 +12,8 @@ import styles from "./burger-constructor.module.scss";
 import { removeModal } from "../../store/modal/slice";
 
 const BurgerConstructor = () => {
-    const { isOrderModalVisible } = useSelector((store) => store.modal);
-    const { orderStatus } = useSelector((store) => store.order);
+    const { isOrderModalVisible } = useSelector((store:any) => store.modal);
+    const { orderStatus } = useSelector((store:any) => store.order);
 
     return (
         <section className={classnames("mt-25", styles.burgerSectionConstructor)}>

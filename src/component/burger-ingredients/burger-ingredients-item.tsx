@@ -11,7 +11,7 @@ import { addIngredientToModal } from "../../store/modal/slice";
 import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) => {
-    const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
 
     const [resultIndredients, setResultIndredients] = useState<Array<TIngredient> | null>(null);
 

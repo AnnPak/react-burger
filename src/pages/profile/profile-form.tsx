@@ -9,7 +9,7 @@ import { userRequest } from "../../store/user/user";
 import styles from "./profile.module.scss";
 
 const UserDataForm = () => {
-    const { user } = useSelector((store) => store.user);
+    const { user } = useSelector((store:any) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState(true);
     const [nameInput, setInputName] = useState({
         value: "",

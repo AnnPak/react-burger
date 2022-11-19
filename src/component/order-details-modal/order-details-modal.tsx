@@ -5,7 +5,7 @@ import styles from "./order-details-modal.module.scss";
 import doneImg from "../../images/done.png";
 
 const OrderDetails = () => {
-    const { orderNumber } = useSelector((store) => store.order);
+    const { orderNumber } = useSelector((store:any) => store.order);
 
     return (
         <>

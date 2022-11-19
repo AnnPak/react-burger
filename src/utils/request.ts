@@ -1,3 +1,4 @@
+import { TOptionsProps } from './types';
 import { TOKEN_API } from "./constants";
 import { setCookie } from "./cookie";
 
@@ -50,14 +51,13 @@ export const refreshTokenRequest = () => {
     }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async ({ url, options }) => {
+export const fetchWithRefresh = async (url:string, options:TOptionsProps) => {
     try {
         const res = await fetch(url, options);
         const { refreshToken, accessToken } = await refreshTokenRequest();
 
-        setCookie("accessToken", accessToken, null);
+        setCookie("accessToken", accessToken, {});
         localStorage.setItem("refreshToken", refreshToken);
-
         options.headers.Authorization = accessToken;
 
         await fetch(url, options);
@@ -67,7 +67,7 @@ export const fetchWithRefresh = async ({ url, options }) => {
         if (err.message === "jwt expired") {
             const { refreshToken, accessToken } = await refreshTokenRequest();
 
-            setCookie("accessToken", accessToken, null);
+            setCookie("accessToken", accessToken, {});
             localStorage.setItem("refreshToken", refreshToken);
 
             options.headers.Authorization = accessToken;

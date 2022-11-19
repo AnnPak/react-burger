@@ -14,7 +14,7 @@ type TBurgerIngredientsList = {
 
 const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
     const { typesOfIngredients, setTabsValue } = props;
-    const { ingredients } = useSelector((store) => store.ingredients);
+    const { ingredients } = useSelector((store:any) => store.ingredients);
 
     const callTabsAction = (inView: boolean, type: string) => {
         inView === true && setTabsValue(type);

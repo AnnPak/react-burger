@@ -13,7 +13,7 @@ import BurgerConstructorElement from "./burger-constructor-element";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWpaper = () => {
-    const { bun, constructorIngredients } = useSelector((store) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
     const dispatch = useDispatch();
 
     const [, dropTargerRef] = useDrop({

@@ -8,7 +8,7 @@ import { forgotPassword } from "../../store/user/password";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const { forgotSuccess } = useSelector((store) => store.password);
+    const { forgotSuccess } = useSelector((store:any) => store.password);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();

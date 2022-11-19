@@ -9,7 +9,7 @@ import styles from "./ingredient-details-modal.module.scss";
 
 const IngredientDetails = () => {
     const { ingredientId } = useParams();
-    const { ingredients } = useSelector((store) => store.ingredients);
+    const { ingredients } = useSelector((store:any) => store.ingredients);
 
     const dispatch = useDispatch<any>();
     !ingredients && dispatch(fetchIngredients());

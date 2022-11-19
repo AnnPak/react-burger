@@ -12,7 +12,7 @@ import { getCookie } from "../../utils/cookie";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorResult = () => {
-    const { constructorIngredients, bun } = useSelector((store) => store.burgerConstructor);
+    const { constructorIngredients, bun } = useSelector((store:any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 

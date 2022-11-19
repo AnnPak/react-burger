@@ -15,13 +15,13 @@ const initialState = {
 export const userFetchWithRefresh = createAsyncThunk(
     "user/userFetchWithRefresh",
     async (options:TOptionsProps) => {
-        return await fetchWithRefresh({ url: GET_USER, options }).then((data) => {
+        return await fetchWithRefresh(GET_USER, options).then((data) => {
             return data;
         });
     }
 );
 
-export const userRequest:(headers:Record<string, string>, method:string, body:string) => void = createAsyncThunk(
+export const userRequest:(headers:any, method:string, body:string) => void = createAsyncThunk(
     "user/userRequest",
     async ({ headers, method, body }) => {
         return await updateUserData(GET_USER, headers, body, method  ).then((data) => {
@@ -45,11 +45,11 @@ const userSlice = createSlice({
                 state.userError = success ? false : true;
                 state.user = success && user;
                 success
-                    ? localStorage.setItem("isUserLogged", true)
-                    : localStorage.setItem("isUserLogged", false);
+                    ? localStorage.setItem("isUserLogged", 'true')
+                    : localStorage.setItem("isUserLogged", 'false');
             })
             .addCase(userFetchWithRefresh.rejected, (state) => {
-                localStorage.setItem("isUserLogged", false);
+                localStorage.setItem("isUserLogged", 'false');
                 state.refreshTokenError = true;
                 state.refreshTokenSending = false;
             });

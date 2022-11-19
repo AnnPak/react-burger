@@ -13,7 +13,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [isError, setIsError] = useState(false);
 
-    const { registerSuccess } = useSelector((store) => store.register);
+    const { registerSuccess } = useSelector((store:any) => store.register);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

@@ -12,7 +12,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [isError, setIsError] = useState(false);
 
-    const { loginSuccess } = useSelector((store) => store.login);
+    const { loginSuccess } = useSelector((store:any) => store.login);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

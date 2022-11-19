@@ -14,7 +14,7 @@ import styles from "./home.module.scss";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { isLoading, isError } = useSelector((store) => store.ingredients);
+    const { isLoading, isError } = useSelector((store:any) => store.ingredients);
 
     useEffect(() => {
         dispatch(fetchIngredients());

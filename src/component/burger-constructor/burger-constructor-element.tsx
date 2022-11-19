@@ -2,7 +2,7 @@ import { useRef, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
-import { useDrop, useDrag, XYCoord } from "react-dnd";
+import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps } from "../../utils/types";
@@ -14,7 +14,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const { position, classname, index, moveCard } = props;
     const { price, image, name, type } = ingredient;
 
-    const { constructorIngredients } = useSelector((store) => store.burgerConstructor);
+    const { constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
     const dispatch = useDispatch();
 
     const ref = useRef<HTMLInputElement>(null);
