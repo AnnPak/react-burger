@@ -5,11 +5,12 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 
 import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
+import AppHeader from "../../component/app-header/app-header";
 
 const ResetPassword = () => {
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
-    const { resetSuccess } = useSelector((store:any) => store.password);
+    const { resetSuccess } = useSelector((store: any) => store.password);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -20,9 +21,9 @@ const ResetPassword = () => {
         // eslint-disable-next-line
     }, []);
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: any) => {
         e.preventDefault();
-        const requestBody = JSON.stringify({ password: password, token: code });
+        const requestBody: string = JSON.stringify({ password: password, token: code });
         dispatch(resetPassword(requestBody));
     };
 
@@ -32,40 +33,47 @@ const ResetPassword = () => {
     }, [resetSuccess]);
 
     return (
-        <section className={styles.formWrapper}>
-            <p className="text text_type_main-medium">Восстановление пароля</p>
-            <form onSubmit={onSubmit}>
-                <div className="pt-6">
-                    <PasswordInput onChange={(e) => setPassword(e.target.value)} value={password} name={"password"} />
-                </div>
-                <div className="pt-6">
-                    <Input
-                        type="text"
-                        name="code"
-                        placeholder="Введите код из письма"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        errorText={"Ошибка"}
-                        size={"default"}
-                    />
-                </div>
+        <>
+            <AppHeader />
+            <section className={styles.formWrapper}>
+                <p className="text text_type_main-medium">Восстановление пароля</p>
+                <form onSubmit={onSubmit}>
+                    <div className="pt-6">
+                        <PasswordInput
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            name={"password"}
+                        />
+                    </div>
+                    <div className="pt-6">
+                        <Input
+                            type="text"
+                            name="code"
+                            placeholder="Введите код из письма"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            errorText={"Ошибка"}
+                            size={"default"}
+                        />
+                    </div>
 
-                <div className="pt-6">
-                    <Button type="primary" size="large" htmlType="submit">
-                        Сохранить
-                    </Button>
-                </div>
+                    <div className="pt-6">
+                        <Button type="primary" size="large" htmlType="submit">
+                            Сохранить
+                        </Button>
+                    </div>
 
-                <div className="pt-20">
-                    <p className="text text_type_main-default text_color_inactive pt-4">
-                        Вспомнили пароль?
-                        <Link to="/login" className={styles.link}>
-                            Войти
-                        </Link>
-                    </p>
-                </div>
-            </form>
-        </section>
+                    <div className="pt-20">
+                        <p className="text text_type_main-default text_color_inactive pt-4">
+                            Вспомнили пароль?
+                            <Link to="/login" className={styles.link}>
+                                Войти
+                            </Link>
+                        </p>
+                    </div>
+                </form>
+            </section>
+        </>
     );
 };
 

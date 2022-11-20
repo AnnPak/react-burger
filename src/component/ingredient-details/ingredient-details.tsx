@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import classnames from "classnames";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchIngredients } from "../../store/ingredients/slice";
 
+import { fetchIngredients } from "../../store/ingredients/slice";
 import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
-import { useEffect, useState } from "react";
 
 const IngredientDetails = () => {
     const { ingredientId } = useParams();

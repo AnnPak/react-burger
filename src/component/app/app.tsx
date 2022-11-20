@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
     Home,
@@ -9,16 +10,17 @@ import {
     ForgotPassword,
     UserDataForm,
     Orders,
+    NotFound,
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
-import styles from "./app.module.scss";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getCookie } from "../../utils/cookie";
 import { userFetchWithRefresh } from "../../store/user/user";
-import { useDispatch, useSelector } from "react-redux";
+
+import styles from "./app.module.scss";
 
 function App() {
     const dispatch = useDispatch<any>();
@@ -47,15 +49,11 @@ function App() {
 
         return (
             <div className={styles.App}>
-                <AppHeader />
+                {/* <AppHeader /> */}
 
                 <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
-                    <Route
-                        path="/ingredients/:ingredientId"
-                        exact
-                        element={<IngredientDetails />}
-                    />
+                    <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
                     <Route
                         path="/login"
                         element={<ProtectedRoute onlyUnAuth={false} element={<Login />} />}
@@ -81,18 +79,22 @@ function App() {
                             <ProtectedRoute
                                 onlyUnAuth={true}
                                 element={
-                                    <section className={styles.profilePage}>
-                                        <ProfileNav />
+                                    <>
+                                        <AppHeader />
+                                        <section className={styles.profilePage}>
+                                            <ProfileNav />
 
-                                        <Routes>
-                                            <Route index element={<UserDataForm />} />
-                                            <Route path="/orders" element={<Orders />} />
-                                        </Routes>
-                                    </section>
+                                            <Routes>
+                                                <Route index element={<UserDataForm />} />
+                                                <Route path="/orders" element={<Orders />} />
+                                            </Routes>
+                                        </section>
+                                    </>
                                 }
                             />
                         }
                     />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
 
                 {background && (
