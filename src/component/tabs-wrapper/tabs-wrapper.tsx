@@ -1,22 +1,10 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./tabs-wrapper.module.scss";
 import { TTabsWrapper, TScrollIntoViewOptions } from "../../utils/types";
 
-const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
-    const getTitle = (type: string) => {
-        switch (type) {
-            case "bun":
-                return "Булки";
-            case "sauce":
-                return "Соусы";
-            case "main":
-                return "Начинки";
-            default:
-        }
-    };
-
+const TabsWrapper: FC<TTabsWrapper> = ({ tabsValue }) => {
     const scrollOptions: TScrollIntoViewOptions = { behavior: "smooth" };
 
     const scrollToContainer = (type: string) => {
@@ -32,7 +20,7 @@ const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
                 active={tabsValue === "bun"}
                 onClick={() => scrollToContainer("bun")}
             >
-                {getTitle("bun")}
+                Булки
             </Tab>
             <Tab
                 key={"sauce"}
@@ -40,7 +28,7 @@ const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
                 active={tabsValue === "sauce"}
                 onClick={() => scrollToContainer("main")}
             >
-                {getTitle("main")}
+                Начинки
             </Tab>
             <Tab
                 key={"main"}
@@ -48,7 +36,7 @@ const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
                 active={tabsValue === "main"}
                 onClick={() => scrollToContainer("sauce")}
             >
-                {getTitle("sauce")}
+                Соусы
             </Tab>
         </div>
     );

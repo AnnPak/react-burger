@@ -15,7 +15,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const ref = useRef<HTMLInputElement>(null);
     const bunIndicators:TStringArray = {

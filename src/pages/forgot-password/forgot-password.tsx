@@ -8,12 +8,12 @@ import { forgotPassword } from "../../store/user/password";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>("");
-    const { forgotSuccess } = useSelector((store:any) => store.password);
-    
+    const { forgotSuccess } = useSelector((store: any) => store.password);
+
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
-    const onSubmit = (e:any) => {
+    const onSubmit = (e: any) => {
         e.preventDefault();
 
         const requestBody = JSON.stringify({ email: email });
@@ -21,7 +21,8 @@ const ForgotPassword = () => {
     };
 
     useEffect(() => {
-        forgotSuccess && navigate("/reset-password", { state: { prevPath: window.location.pathname } } );
+        forgotSuccess &&
+            navigate("/reset-password", { state: { prevPath: window.location.pathname } });
         // eslint-disable-next-line
     }, [forgotSuccess]);
 
@@ -30,7 +31,11 @@ const ForgotPassword = () => {
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <form onSubmit={onSubmit}>
                 <div className="pt-6">
-                    <EmailInput onChange={(e) => setEmail(e.target.value)} value={email} name={"email"} />
+                    <EmailInput
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        name={"email"}
+                    />
                 </div>
 
                 <div className="pt-6">

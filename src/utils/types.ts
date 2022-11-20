@@ -9,6 +9,7 @@ export type TIngredient = {
     calories: number;
     price: number;
     image: string;
+    image_large:string
 };
 
 export type TStringArray = {
@@ -50,6 +51,16 @@ export type TProfileFormInput = {
     value: string,
     isDisabled: boolean,
 }
+
+export type TModal = {
+    title?: string;
+    isRedirect?: boolean;
+};
+
+export type TLinkItem = {
+    className: string;
+    to: string;
+};
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import classnames from "classnames";
@@ -14,7 +14,7 @@ const ProfileNav = () => {
     const navigate = useNavigate();
     const pathname = window.location.pathname;
 
-    const changeActiveItem = (e:any) => {
+    const changeActiveItem = (e: any) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
     };

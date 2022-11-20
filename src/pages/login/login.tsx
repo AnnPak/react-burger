@@ -21,9 +21,9 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
 
-    const userRegister = (e:any) => {
+    const userRegister = (e: any) => {
         e.preventDefault();
-        const requestBody:string = JSON.stringify({ email: email, password: password });
+        const requestBody: string = JSON.stringify({ email: email, password: password });
         dispatch(loginUser(requestBody));
     };
 

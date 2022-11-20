@@ -9,7 +9,6 @@ import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 
 import styles from "./burger-constructor.module.scss";
-import { removeModal } from "../../store/modal/slice";
 
 const BurgerConstructor = () => {
     const { isOrderModalVisible } = useSelector((store:any) => store.modal);
@@ -20,7 +19,7 @@ const BurgerConstructor = () => {
             <BurgerConstructorWpaper />
             <BurgerConstructorResult />
             {isOrderModalVisible && (
-                <Modal action={removeModal}>
+                <Modal>
                     <>
                         {orderStatus === "loading" && <Preloader />}
                         {orderStatus === "success" && <OrderDetails />}

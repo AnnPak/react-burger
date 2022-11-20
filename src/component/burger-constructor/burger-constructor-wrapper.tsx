@@ -14,7 +14,7 @@ import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWpaper = () => {
     const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const [, dropTargerRef] = useDrop({
         accept: "ingredients",

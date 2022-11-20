@@ -26,7 +26,6 @@ const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
     const [saucesRef, inViewSauces] = useInView({
         threshold: 0,
         rootMargin: "-400px 0px 0px 0px",
-
     });
 
     const selectRefByType = (type: string) => {

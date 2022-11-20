@@ -18,7 +18,7 @@ const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) 
     const { name, image, price, _id } = ingredient;
 
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const [{ opacity }, dragRef] = useDrag({
         type: "ingredients",

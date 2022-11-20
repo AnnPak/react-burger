@@ -10,7 +10,7 @@ import { TProfileFormInput } from "../../utils/types";
 import styles from "./profile.module.scss";
 
 const UserDataForm = () => {
-    const { user } = useSelector((store:any) => store.user);
+    const { user } = useSelector((store: any) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
     const [nameInput, setInputName] = useState<TProfileFormInput>({
         value: "",
@@ -27,14 +27,14 @@ const UserDataForm = () => {
 
     const dispatch = useDispatch<any>();
 
-    const changeUserData = (e:any) => {
+    const changeUserData = (e: any) => {
         e.preventDefault();
         setBtnsHidden(true);
 
         const accessToken = getCookie("accessToken");
-        const requestHeaders:HeadersInit | undefined = {
+        const requestHeaders: HeadersInit | undefined = {
             "Content-Type": "application/json",
-            "Authorization": `${accessToken}`,
+            Authorization: `${accessToken}`,
         };
         const method = "PATCH";
 

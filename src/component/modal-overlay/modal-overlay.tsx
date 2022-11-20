@@ -5,7 +5,7 @@ import { removeModal } from "../../store/modal/slice";
 import styles from "./modal-overlay.module.scss";
 
 const ModalOverlay = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     return (
         <section

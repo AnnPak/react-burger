@@ -18,7 +18,7 @@ const IngredientDetails = () => {
 
     useEffect(() => {
         ingredients && setIngredient(ingredients.find((item:TIngredient) => item._id === ingredientId))
-    }, [ingredients])
+    }, [ingredients, ingredientId])
 
 
     return (
@@ -26,7 +26,7 @@ const IngredientDetails = () => {
             <>
                 <div className={styles.ingredientModalContent}>
                     <div className={styles.ingredientModalImg}>
-                        <img src={ingredient?.image_large} alt={ingredient.name} />
+                        <img src={ingredient?.image_large} alt={ingredient?.name} />
                     </div>
                     <div
                         className={classnames(
@@ -34,27 +34,27 @@ const IngredientDetails = () => {
                             "text text_type_main-medium"
                         )}
                     >
-                        {ingredient.name}
+                        {ingredient?.name}
                     </div>
                 </div>
 
                 <div className={styles.ingredientComposition}>
                     <div className={styles.ingredientCompositionItem}>
                         <div className="text text_type_main-small">Калории,ккал</div>
-                        <div className="text text_type_digits-medium">{ingredient.calories}</div>
+                        <div className="text text_type_digits-medium">{ingredient?.calories}</div>
                     </div>
                     <div className={styles.ingredientCompositionItem}>
                         <div className="text text_type_main-small">Белки, г</div>
-                        <div className="text text_type_digits-medium">{ingredient.proteins}</div>
+                        <div className="text text_type_digits-medium">{ingredient?.proteins}</div>
                     </div>
                     <div className={styles.ingredientCompositionItem}>
                         <div className="text text_type_main-small">Жиры, г</div>
-                        <div className="text text_type_digits-medium">{ingredient.fat}</div>
+                        <div className="text text_type_digits-medium">{ingredient?.fat}</div>
                     </div>
                     <div className={styles.ingredientCompositionItem}>
                         <div className="text text_type_main-small">Углеводы, г</div>
                         <div className="text text_type_digits-medium">
-                            {ingredient.carbohydrates}
+                            {ingredient?.carbohydrates}
                         </div>
                     </div>
                 </div>
