@@ -26,7 +26,6 @@ const BurgerIngredients = () => {
             <TabsWrapper
                 typesOfIngredients={typesOfIngredients}
                 tabsValue={tabsValue}
-                setTabsValue={setTabsValue()}
             />
 
             {typesOfIngredients && (

@@ -1,16 +1,20 @@
-import { TInitalState } from './../../utils/types';
+import { TIngredient } from './../../utils/types';
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
 import { fetchOrder } from "../order/slice";
 
-
-const initialState:TInitalState = {
+export type TConstructorState = {
+    constructorIngredients: null | Array<TIngredient>
+    bun: null | TIngredient
+}
+  
+const initialState:TConstructorState = {
     constructorIngredients: null,
     bun: null,
 };
 
-const ingredientsSlice = createSlice({
+const construstorsSlice = createSlice({
     name: "burgerConstructor",
     initialState,
     reducers: {
@@ -68,7 +72,7 @@ const ingredientsSlice = createSlice({
     },
 });
 
-const { actions, reducer } = ingredientsSlice;
+const { actions, reducer } = construstorsSlice;
 
 export default reducer;
 export const { deleteBurderIngredient, updateBurderIngredients, seTingredientsWithoutBun, setBun } =

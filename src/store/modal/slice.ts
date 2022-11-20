@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TIngredient } from "../../utils/types";
 
-const initialState = {
+export type TModalState = {
+    ingredientInModal: null | Array<TIngredient>
+    isOrderModalVisible: boolean
+}
+
+const initialState:TModalState = {
     isOrderModalVisible: false,
     ingredientInModal: null,
 };
 
-const ingredientsSlice = createSlice({
+const modalSlice = createSlice({
     name: "modal",
     initialState,
     reducers: {
@@ -24,7 +30,7 @@ const ingredientsSlice = createSlice({
     },
 });
 
-const { actions, reducer } = ingredientsSlice;
+const { actions, reducer } = modalSlice;
 
 export default reducer;
 export const { addIngredientToModal, addOrderToModal, removeModal } = actions;

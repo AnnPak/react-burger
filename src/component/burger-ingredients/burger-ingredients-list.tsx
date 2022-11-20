@@ -1,6 +1,6 @@
-import { FC, Dispatch } from "react";
+import { FC, Dispatch, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { InView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import classnames from "classnames";
 
 import BurgerIngredientsSection from "./burger-ingredients-section";
@@ -14,35 +14,63 @@ type TBurgerIngredientsList = {
 
 const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
     const { typesOfIngredients, setTabsValue } = props;
-    const { ingredients } = useSelector((store:any) => store.ingredients);
+    const { ingredients } = useSelector((store: any) => store.ingredients);
 
-    const callTabsAction = (inView: boolean, type: string) => {
-        inView === true && setTabsValue(type);
+    const [bunsRef, inViewBuns] = useInView({
+        threshold: 0,
+        // rootMargin: "0px 0px -400px 0px",
+    });
+
+    const [mainsRef, inViewMain] = useInView({
+        threshold: 0,
+        // rootMargin: "0px 0px -400px 0px",
+    });
+    const [saucesRef, inViewSauces] = useInView({
+        threshold: 0,
+        rootMargin: "-400px 0px 0px 0px",
+
+    });
+
+    const selectRefByType = (type: string) => {
+        switch (type) {
+            case "bun":
+                return bunsRef;
+            case "sauce":
+                return mainsRef;
+            case "main":
+                return saucesRef;
+        }
     };
 
+    useEffect(() => {
+        if (inViewBuns) {
+            setTabsValue("bun");
+        } else if (inViewSauces) {
+            console.log("sauce")
+            setTabsValue("sauce");
+        } else if (inViewMain) {
+            console.log("main")
+            setTabsValue("main");
+        }
+    }, [inViewBuns, inViewMain, inViewSauces]);
+
     return (
-        <section
-            className={classnames(styles.ingredientsSectionsList, "mt-10")}
-        >
+        <section className={classnames(styles.ingredientsSectionsList, "mt-10")}>
             {ingredients &&
                 typesOfIngredients &&
                 //вывожу секции ингредиентов по типам
                 typesOfIngredients.map((ingredientType) => (
-                    <InView
+                    <div
+                        ref={selectRefByType(ingredientType)}
                         id={"section-" + ingredientType}
                         key={ingredientType}
-                        onChange={(inView) =>
-                            callTabsAction(inView, ingredientType)
-                        }
-                        threshold={0.25}
-                        rootMargin="0px 0px -30% 0px"
-                        initialInView={ingredientType === "bun" ? true : false}
                     >
                         <BurgerIngredientsSection
                             ingredients={ingredients}
                             type={ingredientType}
+                            data-visible={inViewBuns}
                         />
-                    </InView>
+                    </div>
                 ))}
         </section>
     );

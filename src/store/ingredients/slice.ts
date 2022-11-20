@@ -2,8 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
 import { INGREDIENTS_API } from "../../utils/constants";
+import { TIngredient } from "../../utils/types";
 
-const initialState = {
+export type TIngredientsState = {
+    ingredients: null | Array<TIngredient>
+    isLoading: boolean
+    isError: boolean
+}
+
+const initialState:TIngredientsState = {
     ingredients: null,
     isLoading: false,
     isError: false,

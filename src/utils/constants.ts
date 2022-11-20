@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { TTITLE_LIST } from './types';
+import { TStringArray } from './types';
 
 export const DATA_PROPS_TYPE = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -13,7 +13,7 @@ export const DATA_PROPS_TYPE = PropTypes.shape({
     image: PropTypes.string.isRequired
 });
 
-export const TITLE_LIST:TTITLE_LIST = {
+export const TITLE_LIST:TStringArray = {
     'bun': "Булки",
     'sauce': "Соусы",
     'main': "Начинки",

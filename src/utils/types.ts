@@ -11,7 +11,7 @@ export type TIngredient = {
     image: string;
 };
 
-export type TTITLE_LIST = {
+export type TStringArray = {
     [name: string]: string;
 };
 
@@ -50,11 +50,6 @@ export type TLinkItem = {
     className: string;
     to: string;
 };
-
-export type TInitalState = {
-  constructorIngredients: null | Array<TIngredient>
-  bun: null | TIngredient
-}
 
 
 

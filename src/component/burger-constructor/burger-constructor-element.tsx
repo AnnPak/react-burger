@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
-import { TBurgerConstructorElementProps } from "../../utils/types";
+import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
 import { deleteBurderIngredient } from "../../store/constructor/slice";
 
 import styles from "./burger-constructor.module.scss";
@@ -18,7 +18,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const dispatch = useDispatch();
 
     const ref = useRef<HTMLInputElement>(null);
-    const bunIndicators:{[name: string]: string} = {
+    const bunIndicators:TStringArray = {
         'top': " (верх)",
         'bottom': " (низ)",
     };
