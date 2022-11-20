@@ -10,7 +10,7 @@ import {
     UserDataForm,
     Orders,
 } from "../../pages";
-import { ProtectedGuestRoute, ProtectedUserRoute } from "../protected-routes";
+import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import styles from "./app.module.scss";
@@ -18,26 +18,25 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getCookie } from "../../utils/cookie";
 import { userFetchWithRefresh } from "../../store/user/user";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
     const dispatch = useDispatch<any>();
-    
+
     useEffect(() => {
         const options = {
             method: "GET",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
-                "Authorization": getCookie("accessToken"),
+                Authorization: getCookie("accessToken"),
             },
             body: null,
         };
 
         dispatch(userFetchWithRefresh(options)).then((data: any) => {
-            data.error && localStorage.setItem("isUserLogged", 'false');
-            data.payload?.success && localStorage.setItem("isUserLogged", 'true');
+            data.error && localStorage.setItem("isUserLogged", "false");
+            data.payload?.success && localStorage.setItem("isUserLogged", "true");
         });
         // eslint-disable-next-line
     }, []);
@@ -54,21 +53,24 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route
                         path="/ingredients/:ingredientId"
-                        // exact
+                        exact
                         element={<IngredientDetails />}
                     />
-                    <Route path="/login" element={<ProtectedGuestRoute Element={<Login />} />} />
+                    <Route
+                        path="/login"
+                        element={<ProtectedRoute onlyUnAuth={false} element={<Login />} />}
+                    />
                     <Route
                         path="/reset-password"
-                        element={<ProtectedGuestRoute Element={<ResetPassword />} />}
+                        element={<ProtectedRoute onlyUnAuth={false} element={<ResetPassword />} />}
                     />
                     <Route
                         path="/forgot-password"
-                        element={<ProtectedGuestRoute Element={<ForgotPassword />} />}
+                        element={<ProtectedRoute onlyUnAuth={false} element={<ForgotPassword />} />}
                     />
                     <Route
                         path="/register"
-                        element={<ProtectedGuestRoute Element={<Register />} />}
+                        element={<ProtectedRoute onlyUnAuth={false} element={<Register />} />}
                     />
 
                     {/* Страница только для юзеров */}
@@ -76,16 +78,19 @@ function App() {
                     <Route
                         path="/profile/*"
                         element={
-                            <ProtectedUserRoute>
-                                <section className={styles.profilePage}>
-                                    <ProfileNav />
+                            <ProtectedRoute
+                                onlyUnAuth={true}
+                                element={
+                                    <section className={styles.profilePage}>
+                                        <ProfileNav />
 
-                                    <Routes>
-                                        <Route index element={<UserDataForm />} />
-                                        <Route path="/orders" element={<Orders />} />
-                                    </Routes>
-                                </section>
-                            </ProtectedUserRoute>
+                                        <Routes>
+                                            <Route index element={<UserDataForm />} />
+                                            <Route path="/orders" element={<Orders />} />
+                                        </Routes>
+                                    </section>
+                                }
+                            />
                         }
                     />
                 </Routes>

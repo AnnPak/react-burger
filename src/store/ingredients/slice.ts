@@ -16,7 +16,7 @@ const initialState:TIngredientsState = {
     isError: false,
 };
 
-export const fetchIngredients = createAsyncThunk("ingredients/fetchFilters", async () => {
+export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients", async () => {
     return await request(INGREDIENTS_API);
 });
 

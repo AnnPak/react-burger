@@ -6,22 +6,27 @@ import { fetchIngredients } from "../../store/ingredients/slice";
 import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
+import { useEffect, useState } from "react";
 
 const IngredientDetails = () => {
     const { ingredientId } = useParams();
     const { ingredients } = useSelector((store:any) => store.ingredients);
-    console.log(ingredients)
+    const [ingredient, setIngredient] = useState<TIngredient|null>(null)
+
     const dispatch = useDispatch<any>();
     !ingredients && dispatch(fetchIngredients());
 
-    const ingredient = ingredients.find((item:TIngredient) => item._id === ingredientId);
+    useEffect(() => {
+        ingredients && setIngredient(ingredients.find((item:TIngredient) => item._id === ingredientId))
+    }, [ingredients])
+
 
     return (
         ingredient && (
             <>
                 <div className={styles.ingredientModalContent}>
                     <div className={styles.ingredientModalImg}>
-                        <img src={ingredient.image_large} alt={ingredient.name} />
+                        <img src={ingredient?.image_large} alt={ingredient.name} />
                     </div>
                     <div
                         className={classnames(

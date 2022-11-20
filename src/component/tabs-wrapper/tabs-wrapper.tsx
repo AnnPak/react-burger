@@ -18,11 +18,9 @@ const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
     };
 
     const scrollOptions: TScrollIntoViewOptions = { behavior: "smooth" };
-    // const scrollOptions:boolean | ScrollIntoViewOptions = { top: 0, left: 0, behavior: "smooth" };
 
     const scrollToContainer = (type: string) => {
         const idSection: string = "section-" + type;
-        console.log(idSection);
         document.getElementById(idSection)?.scrollIntoView(scrollOptions);
     };
 
@@ -52,17 +50,6 @@ const TabsWrapper: FC<TTabsWrapper> = ({ typesOfIngredients, tabsValue }) => {
             >
                 {getTitle("sauce")}
             </Tab>
-            {/* {typesOfIngredients &&
-                typesOfIngredients.map((type) => (
-                    <Tab
-                        key={type}
-                        value={type}
-                        active={tabsValue === type}
-                        onClick={() => scrollToContainer(type)}
-                    >
-                        {getTitle(type)}
-                    </Tab>
-                ))} */}
         </div>
     );
 };

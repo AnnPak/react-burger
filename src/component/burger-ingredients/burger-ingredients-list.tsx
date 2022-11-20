@@ -18,12 +18,10 @@ const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
 
     const [bunsRef, inViewBuns] = useInView({
         threshold: 0,
-        // rootMargin: "0px 0px -400px 0px",
     });
 
     const [mainsRef, inViewMain] = useInView({
         threshold: 0,
-        // rootMargin: "0px 0px -400px 0px",
     });
     const [saucesRef, inViewSauces] = useInView({
         threshold: 0,
@@ -46,10 +44,8 @@ const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
         if (inViewBuns) {
             setTabsValue("bun");
         } else if (inViewSauces) {
-            console.log("sauce")
             setTabsValue("sauce");
         } else if (inViewMain) {
-            console.log("main")
             setTabsValue("main");
         }
     }, [inViewBuns, inViewMain, inViewSauces]);
