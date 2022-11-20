@@ -16,7 +16,7 @@ const initialState:TRegisterState = {
     registerSuccess: null,
 };
 
-export const registerUser = createAsyncThunk("user/registerUser", async (requestBody) => {
+export const registerUser = createAsyncThunk("user/registerUser", async (requestBody:string) => {
     return await request(REGISTER_API, requestBody, "POST");
 });
 

@@ -23,11 +23,13 @@ const initialState:TPasswordState = {
     resetError: false,
 };
 
-export const forgotPassword = createAsyncThunk("user/forgotPassword", async (requestBody) => {
+export const forgotPassword = createAsyncThunk(
+    "user/forgotPassword", 
+    async (requestBody:string) => {
     return await request(FORGOT_PSWRD, requestBody, "POST");
 });
 
-export const resetPassword = createAsyncThunk("user/resetPassword", async (requestBody) => {
+export const resetPassword = createAsyncThunk("user/resetPassword", async (requestBody:string) => {
     return await request(RESET_PSWRD, requestBody, "POST");
 });
 

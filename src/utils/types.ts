@@ -46,10 +46,10 @@ export type TTabsWrapper = {
 
 export type TScrollIntoViewOptions = boolean | ScrollIntoViewOptions;
 
-export type TLinkItem = {
-    className: string;
-    to: string;
-};
+export type TProfileFormInput = {
+    value: string,
+    isDisabled: boolean,
+}
 
 
 

@@ -17,7 +17,7 @@ const initialState:TLoginState = {
     loginError: false,
 };
 
-export const loginUser = createAsyncThunk("user/loginUser", async (requestBody) => {
+export const loginUser = createAsyncThunk("user/loginUser", async (requestBody:string) => {
     return await request(LOGIN_API, requestBody, "POST");
 });
 

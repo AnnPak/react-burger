@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren  } from "react";
 
-import { TLinkItem } from "../../utils/types";
+import { TStringArray } from "../../utils/types";
 
-const LinkItem: FC<PropsWithChildren<TLinkItem>> = ({ className, to, children }) => {
+const LinkItem: FC<PropsWithChildren<TStringArray>> = ({ className, to, children }) => {
     return (
         <a className={className} href={to}>
             {children}

@@ -7,13 +7,13 @@ import styles from "../login/login.module.scss";
 import { forgotPassword } from "../../store/user/password";
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState<string>("");
     const { forgotSuccess } = useSelector((store:any) => store.password);
     
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
-    const onSubmit = (e) => {
+    const onSubmit = (e:any) => {
         e.preventDefault();
 
         const requestBody = JSON.stringify({ email: email });

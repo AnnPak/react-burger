@@ -1,4 +1,3 @@
-import { TOptionsProps } from './types';
 import { TOKEN_API } from "./constants";
 import { setCookie } from "./cookie";
 

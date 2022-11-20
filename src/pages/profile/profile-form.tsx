@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
 import { userRequest } from "../../store/user/user";
+import { TProfileFormInput } from "../../utils/types";
 
 import styles from "./profile.module.scss";
 
 const UserDataForm = () => {
     const { user } = useSelector((store:any) => store.user);
-    const [isBtnsHidden, setBtnsHidden] = useState(true);
-    const [nameInput, setInputName] = useState({
+    const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
+    const [nameInput, setInputName] = useState<TProfileFormInput>({
         value: "",
         isDisabled: true,
     });
-    const [loginInput, setInputLogin] = useState({
+    const [loginInput, setInputLogin] = useState<TProfileFormInput>({
         value: "",
         isDisabled: true,
     });
-    const [passwordInput, setPasswordInput] = useState({
+    const [passwordInput, setPasswordInput] = useState<TProfileFormInput>({
         value: "",
         isDisabled: true,
     });

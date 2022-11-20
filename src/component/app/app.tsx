@@ -26,20 +26,22 @@ function App() {
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
-        const options = {
-            method: "GET",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                Authorization: getCookie("accessToken"),
-            },
-            body: null,
-        };
-
-        dispatch(userFetchWithRefresh(options)).then((data: any) => {
-            data.error && localStorage.setItem("isUserLogged", "false");
-            data.payload?.success && localStorage.setItem("isUserLogged", "true");
-        });
+        if(getCookie("accessToken")) {
+            const options = {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                    Authorization: getCookie("accessToken"),
+                },
+                body: null,
+            };
+    
+            dispatch(userFetchWithRefresh(options)).then((data: any) => {
+                data.error && localStorage.setItem("isUserLogged", "false");
+                data.payload?.success && localStorage.setItem("isUserLogged", "true");
+            });
+        }
         // eslint-disable-next-line
     }, []);
 
@@ -49,7 +51,7 @@ function App() {
 
         return (
             <div className={styles.App}>
-                {/* <AppHeader /> */}
+                <AppHeader />
 
                 <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
@@ -80,7 +82,6 @@ function App() {
                                 onlyUnAuth={true}
                                 element={
                                     <>
-                                        <AppHeader />
                                         <section className={styles.profilePage}>
                                             <ProfileNav />
 

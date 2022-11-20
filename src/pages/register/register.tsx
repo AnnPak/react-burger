@@ -12,17 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../store/user/register";
 
 import styles from "../login/login.module.scss";
-import AppHeader from "../../component/app-header/app-header";
 
 const Register = () => {
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [isError, setIsError] = useState(false);
+    const [email, setEmail] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [isError, setIsError] = useState<boolean>(false);
 
     const { registerSuccess } = useSelector((store: any) => store.register);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const navigate = useNavigate();
     const userRegister = (e: any) => {
         e.preventDefault();
@@ -47,7 +46,6 @@ const Register = () => {
 
     return (
         <>
-            <AppHeader />
             <section className={styles.formWrapper}>
                 {isError && (
                     <div className={styles.errorMessage}>

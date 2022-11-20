@@ -11,13 +11,11 @@ import {
 import { loginUser } from "../../store/user/login";
 
 import styles from "./login.module.scss";
-import AppHeader from "../../component/app-header/app-header";
 
 const Login = () => {
-    const [email, setEmail] = useState(" ");
-    const [password, setPassword] = useState("");
-    const [isError, setIsError] = useState(false);
-
+    const [email, setEmail] = useState<string>(" ");
+    const [password, setPassword] = useState<string>("");
+    const [isError, setIsError] = useState<boolean>(false);
     const { loginSuccess } = useSelector((store: any) => store.login);
 
     const navigate = useNavigate();
@@ -25,7 +23,6 @@ const Login = () => {
 
     const userRegister = (e:any) => {
         e.preventDefault();
-
         const requestBody:string = JSON.stringify({ email: email, password: password });
         dispatch(loginUser(requestBody));
     };
@@ -44,7 +41,6 @@ const Login = () => {
 
     return (
         <>
-            <AppHeader />
             <section className={styles.formWrapper}>
                 {isError && (
                     <div className={styles.errorMessage}>

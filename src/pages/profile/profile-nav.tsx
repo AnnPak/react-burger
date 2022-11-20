@@ -8,13 +8,13 @@ import { logoutUser } from "../../store/user/logout";
 import styles from "./profile.module.scss";
 
 const ProfileNav = () => {
-    const [content, setContent] = useState("profile");
+    const [content, setContent] = useState<string>("profile");
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const navigate = useNavigate();
     const pathname = window.location.pathname;
 
-    const changeActiveItem = (e) => {
+    const changeActiveItem = (e:any) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
     };

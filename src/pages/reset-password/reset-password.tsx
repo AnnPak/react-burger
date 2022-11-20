@@ -5,14 +5,13 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 
 import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
-import AppHeader from "../../component/app-header/app-header";
 
 const ResetPassword = () => {
-    const [password, setPassword] = useState("");
-    const [code, setCode] = useState("");
+    const [password, setPassword] = useState<string>("");
+    const [code, setCode] = useState<string>("");
     const { resetSuccess } = useSelector((store: any) => store.password);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -34,7 +33,6 @@ const ResetPassword = () => {
 
     return (
         <>
-            <AppHeader />
             <section className={styles.formWrapper}>
                 <p className="text text_type_main-medium">Восстановление пароля</p>
                 <form onSubmit={onSubmit}>

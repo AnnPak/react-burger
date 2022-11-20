@@ -14,7 +14,7 @@ const initialState:TLogoutState = {
     logoutError: false,
 };
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async (requestBody) => {
+export const logoutUser = createAsyncThunk("user/logoutUser", async (requestBody:string) => {
     return await request(LOGOUT_API, requestBody, "POST");
 });
 

@@ -7,12 +7,10 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../component/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../component/burger-constructor/burger-constructor";
 import { fetchIngredients } from "../../store/ingredients/slice";
-import AppHeader from "../../component/app-header/app-header";
 
 import Preloader from "../../component/preloader/preloader";
 
 import styles from "./home.module.scss";
-
 
 const Home = () => {
     const dispatch = useDispatch<any>();
@@ -25,7 +23,6 @@ const Home = () => {
 
     return (
         <>
-            <AppHeader/>
             {isLoading && <Preloader />}
 
             {!isLoading && (

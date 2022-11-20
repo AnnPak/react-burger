@@ -13,7 +13,7 @@ const initialState:TOrderlState = {
     orderStatus: "idle",
 };
 
-export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody) => {
+export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody:string) => {
     return await request(ORDERS_API, requestBody, "POST");
 });
 
