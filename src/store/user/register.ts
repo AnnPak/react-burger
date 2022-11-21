@@ -20,8 +20,8 @@ export const registerUser = createAsyncThunk("user/registerUser", async (request
     return await request(REGISTER_API, requestBody, "POST");
 });
 
-const redisterSlice = createSlice({
-    name: "redister",
+const registerSlice = createSlice({
+    name: "register",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -50,6 +50,6 @@ const redisterSlice = createSlice({
     },
 });
 
-const { reducer } = redisterSlice;
+const { reducer } = registerSlice;
 
 export default reducer;

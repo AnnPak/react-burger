@@ -32,11 +32,10 @@ const UserDataForm = () => {
         setBtnsHidden(true);
 
         const accessToken = getCookie("accessToken");
-        const requestHeaders: HeadersInit | undefined = {
+        const requestHeaders: HeadersInit = {
             "Content-Type": "application/json",
             Authorization: `${accessToken}`,
         };
-        const method = "PATCH";
 
         const requestArray = {
             name: nameInput.value,
@@ -45,6 +44,11 @@ const UserDataForm = () => {
         };
         const requestBody = JSON.stringify(requestArray);
 
+        const options: RequestInit = {
+            method: "PATCH",
+            headers: requestHeaders,
+            body: requestBody,
+        };
         setPasswordInput((passwordInput) => ({
             ...passwordInput,
             isDisabled: true,
@@ -52,7 +56,7 @@ const UserDataForm = () => {
         setInputName((nameInput) => ({ ...nameInput, isDisabled: true }));
         setInputLogin((loginInput) => ({ ...loginInput, isDisabled: true }));
 
-        dispatch(userRequest(requestHeaders, method, requestBody)); //изменение данных пользователя
+        dispatch(userRequest(options)); //изменение данных пользователя
     };
 
     useEffect(() => {

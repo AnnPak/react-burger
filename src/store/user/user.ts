@@ -20,10 +20,11 @@ export const userFetchWithRefresh = createAsyncThunk(
     }
 );
 
-export const userRequest:(headers:any, method:string, body:string) => void = createAsyncThunk(
+export const userRequest = createAsyncThunk(
     "user/userRequest",
-    async ({ headers, method, body }) => {
-        return await updateUserData(GET_USER, headers, body, method  ).then((data) => {
+    async (options:RequestInit) => {
+        return await updateUserData(GET_USER, options  ).then((data) => {
+            console.log(data)
             return data;
         });
     }

@@ -17,5 +17,5 @@ export const LOGOUT_API = `${BASE_URL}/auth/logout`;
 export const TOKEN_API = `${BASE_URL}/auth/token`;
 export const GET_USER = `${BASE_URL}/auth/user`;
 
-export const FORGOT_PSWRD = `${BASE_URL}/password-reset`;
-export const RESET_PSWRD = `${BASE_URL}/password-reset/reset`;
+export const FORGOT_PSSWRD = `${BASE_URL}/password-reset`;
+export const RESET_PSSWRD = `${BASE_URL}/password-reset/reset`;

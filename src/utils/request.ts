@@ -16,31 +16,19 @@ export const request = async (url: string, body?: any, method?: string) => {
     });
 };
 
-export const updateUserData = async (
-    url: string,
-    headers: HeadersInit | undefined,
-    body?: string,
-    method?: string
-) => {
-    const requestOptions: RequestInit = {
-        method: method ? method : "GET",
-        mode: "cors",
-        headers: headers,
-        body: body ? body : null,
-    };
-
-    return fetch(url, requestOptions).then((response) => {
+export const updateUserData = async (url: string, options: RequestInit) => {
+    return fetch(url, options).then((response) => {
         return response.json();
     });
 };
 
-const checkResponse = (res:Record<string, any>) => {
-    return res.ok ? res.json() : res.json().then((err:Record<string, any>) => Promise.reject(err));
+const checkResponse = (res: Record<string, any>) => {
+    return res.ok ? res.json() : res.json().then((err: Record<string, any>) => Promise.reject(err));
 };
 
 export const refreshTokenRequest = () => {
     const requestHeaders: HeadersInit = new Headers();
-    requestHeaders.set('Content-Type', 'application/json');
+    requestHeaders.set("Content-Type", "application/json");
     return fetch(`${TOKEN_API}`, {
         method: "POST",
         headers: {
@@ -52,18 +40,18 @@ export const refreshTokenRequest = () => {
     }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url:string, options:RequestInit) => {
+export const fetchWithRefresh = async (url: string, options: RequestInit) => {
     try {
-        const headersInit: HeadersInit = {'Content-Type': 'application/json'};
+        const headersInit: HeadersInit = { "Content-Type": "application/json" };
         options.headers = headersInit;
-        options.headers.Authorization = getCookie("accessToken") ? getCookie("accessToken")! : '';
-        
+        options.headers.Authorization = getCookie("accessToken") ? getCookie("accessToken")! : "";
+
         const res = await fetch(url, options);
         return await checkResponse(res);
-    } catch (err:any) {
+    } catch (err: any) {
         if (err.message === "jwt expired") {
             const { refreshToken, accessToken } = await refreshTokenRequest();
-            const headersInit: HeadersInit = {'Content-Type': 'application/json'};
+            const headersInit: HeadersInit = { "Content-Type": "application/json" };
 
             setCookie("accessToken", accessToken, {});
             localStorage.setItem("refreshToken", refreshToken);
