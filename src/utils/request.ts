@@ -1,5 +1,5 @@
 import { TOKEN_API } from "./constants";
-import { setCookie } from "./cookie";
+import { setCookie, getCookie } from "./cookie";
 
 export const request = async (url: string, body?: any, method?: string) => {
     const requestOptions = {
@@ -39,6 +39,8 @@ const checkResponse = (res:any) => {
 };
 
 export const refreshTokenRequest = () => {
+    const requestHeaders: HeadersInit = new Headers();
+    requestHeaders.set('Content-Type', 'application/json');
     return fetch(`${TOKEN_API}`, {
         method: "POST",
         headers: {
@@ -50,25 +52,22 @@ export const refreshTokenRequest = () => {
     }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url:string, options:any) => {
+export const fetchWithRefresh = async (url:string, options:RequestInit) => {
     try {
+        const headersInit: HeadersInit = {'Content-Type': 'application/json'};
+        options.headers = headersInit;
+        options.headers.Authorization = getCookie("accessToken") ? getCookie("accessToken")! : '';
+        
         const res = await fetch(url, options);
-        const { refreshToken, accessToken } = await refreshTokenRequest();
-
-        setCookie("accessToken", accessToken, {});
-        localStorage.setItem("refreshToken", refreshToken);
-        options.headers.Authorization = accessToken;
-
-        await fetch(url, options);
-
         return await checkResponse(res);
     } catch (err:any) {
         if (err.message === "jwt expired") {
             const { refreshToken, accessToken } = await refreshTokenRequest();
+            const headersInit: HeadersInit = {'Content-Type': 'application/json'};
 
             setCookie("accessToken", accessToken, {});
             localStorage.setItem("refreshToken", refreshToken);
-
+            options.headers = headersInit;
             options.headers.Authorization = accessToken;
 
             const res = await fetch(url, options);

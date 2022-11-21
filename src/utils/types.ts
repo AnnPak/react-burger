@@ -18,7 +18,7 @@ export type TStringArray = {
 
 export type TMoveCard = (
     dragIndex: number,
-    hoverIndex: number | undefined,
+    hoverIndex: number,
     constructorIngredients: TIngredient[]
 ) => any;
 
@@ -26,18 +26,8 @@ export type TBurgerConstructorElementProps = {
     ingredient: TIngredient;
     position?: "top" | "bottom";
     classname?: string;
-    index?: number;
+    index: number;
     moveCard: TMoveCard;
-};
-
-export type TOptionsProps = {
-    method: string;
-    mode: string;
-    headers: {
-        "Content-Type": string;
-        Authorization?: string | undefined;
-    };
-    body: any;
 };
 
 export type TTabsWrapper = {

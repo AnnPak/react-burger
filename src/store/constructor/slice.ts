@@ -14,11 +14,11 @@ const initialState:TConstructorState = {
     bun: null,
 };
 
-const construstorsSlice = createSlice({
+const constructorsSlice = createSlice({
     name: "burgerConstructor",
     initialState,
     reducers: {
-        deleteBurderIngredient: (state, action) => {
+        deleteBurgerIngredient: (state, action) => {
             state.constructorIngredients = state.constructorIngredients && state.constructorIngredients.filter(
                 (el, index) => index !== +action.payload
             );
@@ -28,7 +28,7 @@ const construstorsSlice = createSlice({
                 JSON.stringify(state.constructorIngredients)
             );
         },
-        updateBurderIngredients: (state, action) => {
+        updateBurgerIngredients: (state, action) => {
             state.constructorIngredients = action.payload
                 ? action.payload
                 : state.constructorIngredients;
@@ -44,7 +44,7 @@ const construstorsSlice = createSlice({
             localStorage.removeItem("bun");
             localStorage.setItem("bun", JSON.stringify(state.bun));
         },
-        seTingredientsWithoutBun: {
+        setIngredientsWithoutBun: {
             reducer: (state, action) => {
                 state.constructorIngredients = state.constructorIngredients
                     ? [...state.constructorIngredients, action.payload]
@@ -56,7 +56,7 @@ const construstorsSlice = createSlice({
                     JSON.stringify(state.constructorIngredients)
                 );
             },
-            prepare: (payload) => ({
+            prepare: (payload:TIngredient) => ({
                 payload: {
                     ...payload,
                     key: nanoid(),
@@ -72,8 +72,8 @@ const construstorsSlice = createSlice({
     },
 });
 
-const { actions, reducer } = construstorsSlice;
+const { actions, reducer } = constructorsSlice;
 
 export default reducer;
-export const { deleteBurderIngredient, updateBurderIngredients, seTingredientsWithoutBun, setBun } =
+export const { deleteBurgerIngredient, updateBurgerIngredients, setIngredientsWithoutBun, setBun } =
     actions;

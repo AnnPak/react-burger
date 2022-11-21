@@ -4,7 +4,7 @@ import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import OrderDetails from "../order-details-modal/order-details-modal";
 import BurgerConstructorResult from "./burger-constructor-result";
-import BurgerConstructorWpaper from "./burger-constructor-wrapper";
+import BurgerConstructorWrapper from "./burger-constructor-wrapper";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 
@@ -16,7 +16,7 @@ const BurgerConstructor = () => {
 
     return (
         <section className={classnames("mt-25", styles.burgerSectionConstructor)}>
-            <BurgerConstructorWpaper />
+            <BurgerConstructorWrapper />
             <BurgerConstructorResult />
             {isOrderModalVisible && (
                 <Modal>

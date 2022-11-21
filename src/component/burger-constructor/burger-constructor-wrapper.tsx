@@ -4,38 +4,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { TMoveCard, TIngredient } from "../../utils/types";
 import {
-    updateBurderIngredients,
-    seTingredientsWithoutBun,
+    updateBurgerIngredients,
+    setIngredientsWithoutBun,
     setBun,
 } from "../../store/constructor/slice";
 
 import BurgerConstructorElement from "./burger-constructor-element";
 import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructorWpaper = () => {
+const BurgerConstructorWrapper = () => {
     const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
 
-    const [, dropTargerRef] = useDrop({
+    const [, dropTargetRef] = useDrop({
         accept: "ingredients",
         drop(ingredient:TIngredient) {
             if (ingredient.type === "bun") {
                 dispatch(setBun(ingredient));
             } else {
-                dispatch(seTingredientsWithoutBun(ingredient));
+                dispatch(setIngredientsWithoutBun(ingredient));
             }
         },
     });
     
     const moveCard = useCallback<TMoveCard>(
-        (dragIndex, hoverIndex, constructorIngredients): any => {
+        (dragIndex, hoverIndex, constructorIngredients) => {
             const dragCard = constructorIngredients[dragIndex];
             const newCards = [...constructorIngredients];
 
             newCards.splice(dragIndex, 1);
-            hoverIndex && newCards.splice(hoverIndex, 0, dragCard);
+            newCards.splice(hoverIndex, 0, dragCard);
 
-            dispatch(updateBurderIngredients(newCards));
+            dispatch(updateBurgerIngredients(newCards));
         },
         [dispatch]
     );
@@ -43,7 +43,7 @@ const BurgerConstructorWpaper = () => {
     useEffect(() => {
         if(localStorage.getItem('constructorIngredients')){
             const IngredientsWithoutBun = JSON.parse(localStorage.getItem('constructorIngredients') || '{}')
-            dispatch(updateBurderIngredients(IngredientsWithoutBun))
+            dispatch(updateBurgerIngredients(IngredientsWithoutBun))
         }
         if(localStorage.getItem('bun') ) {
             const bun = JSON.parse(localStorage.getItem('bun') || '{}')
@@ -62,12 +62,13 @@ const BurgerConstructorWpaper = () => {
                         styles.constructorLockElement,
                         "pr-4"
                     )}
+                    index={-1}
                     position="top"
                     ingredient={bun}
                 />
             )}
 
-            <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargerRef}>
+            <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargetRef}>
                 {constructorIngredients != null &&
                     constructorIngredients.map((item:TIngredient, index:number) => (
                         <BurgerConstructorElement
@@ -88,6 +89,7 @@ const BurgerConstructorWpaper = () => {
                         styles.constructorLockElement,
                         "pr-4"
                     )}
+                    index={-1}
                     position="bottom"
                     ingredient={bun}
                 />
@@ -96,4 +98,4 @@ const BurgerConstructorWpaper = () => {
     );
 };
 
-export default BurgerConstructorWpaper;
+export default BurgerConstructorWrapper;

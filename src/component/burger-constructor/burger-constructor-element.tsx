@@ -6,7 +6,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
-import { deleteBurderIngredient } from "../../store/constructor/slice";
+import { deleteBurgerIngredient } from "../../store/constructor/slice";
 
 import styles from "./burger-constructor.module.scss";
 
@@ -25,7 +25,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const elementName = position ? name + bunIndicators[position] : name;
     
     const deleteIngredient = (index:number|undefined) => {
-        dispatch(deleteBurderIngredient(index));
+        dispatch(deleteBurgerIngredient(index));
     };
 
     const [{ handlerId }, drop] = useDrop({
@@ -42,7 +42,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
             }
 
             const dragIndex = item.index;
-            const hoverIndex:number | undefined = index;
+            const hoverIndex = index;
 
             if (dragIndex === hoverIndex) {
                 return;

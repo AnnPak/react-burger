@@ -27,13 +27,13 @@ function App() {
 
     useEffect(() => {
         if(getCookie("accessToken")) {
-            const options = {
+            const requestHeaders = new Headers();
+            requestHeaders.set('Content-Type', 'application/json');
+
+            const options:RequestInit = {
                 method: "GET",
                 mode: "cors",
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                    Authorization: getCookie("accessToken"),
-                },
+                headers: {'Content-Type': 'application/json'},
                 body: null,
             };
     
