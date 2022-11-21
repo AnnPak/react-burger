@@ -34,8 +34,8 @@ export const updateUserData = async (
     });
 };
 
-const checkResponse = (res:any) => {
-    return res.ok ? res.json() : res.json().then((err:any) => Promise.reject(err));
+const checkResponse = (res:Record<string, any>) => {
+    return res.ok ? res.json() : res.json().then((err:Record<string, any>) => Promise.reject(err));
 };
 
 export const refreshTokenRequest = () => {
