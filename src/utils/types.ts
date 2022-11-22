@@ -15,6 +15,17 @@ export type TIngredient = {
 export type TStringArray = {
     [name: string]: string;
 };
+export type TBooleanArray = {
+    [name:string]: boolean
+}
+export type TUseForm = {
+    initialValues:{
+        [name:string]: string
+    }
+    disableRules: {
+        [name:string]: boolean
+    },
+}
 
 export type TMoveCard = (
     dragIndex: number,
@@ -36,11 +47,6 @@ export type TTabsWrapper = {
 };
 
 export type TScrollIntoViewOptions = boolean | ScrollIntoViewOptions;
-
-export type TProfileFormInput = {
-    value: string,
-    isDisabled: boolean,
-}
 
 export type TModal = {
     title?: string;
