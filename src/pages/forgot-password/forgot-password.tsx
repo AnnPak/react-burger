@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,11 +13,10 @@ const ForgotPassword = () => {
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
-    const onSubmit = (e: any) => {
+    const onSubmit = (e: FormEvent ) => {
         e.preventDefault();
-
-        const requestBody = JSON.stringify({ email: email });
-        dispatch(forgotPassword(requestBody));
+        
+        dispatch(forgotPassword(JSON.stringify({ email: email })));
     };
 
     useEffect(() => {

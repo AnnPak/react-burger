@@ -1,16 +1,15 @@
 import classnames from "classnames";
-import { useDispatch } from "react-redux";
-import { removeModal } from "../../store/modal/slice";
+import { FC } from "react";
+
+import { TModalOverlay } from "../../utils/types";
 
 import styles from "./modal-overlay.module.scss";
 
-const ModalOverlay = () => {
-    const dispatch = useDispatch<any>();
-
+const ModalOverlay: FC<TModalOverlay> = ({ closePopup }) => {
     return (
         <section
             className={classnames(styles.modalOverlay, styles.modalShow)}
-            onClick={() => dispatch(removeModal())}
+            onClick={() => closePopup()}
         />
     );
 };

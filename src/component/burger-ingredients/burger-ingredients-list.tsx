@@ -47,6 +47,7 @@ const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
         } else if (inViewMain) {
             setTabsValue("main");
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inViewBuns, inViewMain, inViewSauces]);
 
     return (

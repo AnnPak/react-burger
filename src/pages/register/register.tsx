@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     Button,
@@ -23,7 +23,7 @@ const Register = () => {
 
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
-    const userRegister = (e: any) => {
+    const userRegister = (e: FormEvent) => {
         e.preventDefault();
         const requestBody: string = JSON.stringify({
             email: email,

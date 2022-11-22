@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import classnames from "classnames";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { fetchIngredients } from "../../store/ingredients/slice";
 import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
@@ -13,13 +12,9 @@ const IngredientDetails = () => {
     const { ingredients } = useSelector((store:any) => store.ingredients);
     const [ingredient, setIngredient] = useState<TIngredient|null>(null)
 
-    const dispatch = useDispatch<any>();
-    !ingredients && dispatch(fetchIngredients());
-
     useEffect(() => {
         ingredients && setIngredient(ingredients.find((item:TIngredient) => item._id === ingredientId))
     }, [ingredients, ingredientId])
-
 
     return (
         ingredient && (

@@ -16,11 +16,15 @@ const Modal: FC<PropsWithChildren<TModal>> = ({ title, isRedirect, children }) =
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
+    const closePopup = () => {
+        dispatch(removeModal());
+        isRedirect && navigate(-1);
+    };
+
     useEffect(() => {
         const closeModalByEsc = (evt: KeyboardEvent) => {
             if (evt.key === "Escape") {
-                dispatch(removeModal());
-                isRedirect && navigate(-1);
+                closePopup();
             }
         };
 
@@ -31,14 +35,13 @@ const Modal: FC<PropsWithChildren<TModal>> = ({ title, isRedirect, children }) =
 
     return createPortal(
         <>
-            <ModalOverlay />
+            <ModalOverlay closePopup={closePopup}/>
             <div className={classnames(styles.modal, "p-10")} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalClose}>
                     <CloseIcon
                         type="primary"
                         onClick={() => {
-                            dispatch(removeModal());
-                            isRedirect && navigate(-1);
+                            closePopup();
                         }}
                     />
                 </div>

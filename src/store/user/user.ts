@@ -24,7 +24,6 @@ export const userRequest = createAsyncThunk(
     "user/userRequest",
     async (options:RequestInit) => {
         return await updateUserData(GET_USER, options  ).then((data) => {
-            console.log(data)
             return data;
         });
     }

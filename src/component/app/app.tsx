@@ -21,27 +21,23 @@ import { getCookie } from "../../utils/cookie";
 import { userFetchWithRefresh } from "../../store/user/user";
 
 import styles from "./app.module.scss";
+import { fetchIngredients } from "../../store/ingredients/slice";
 
 function App() {
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
-        if(getCookie("accessToken")) {
-            const requestHeaders = new Headers();
-            requestHeaders.set('Content-Type', 'application/json');
-
-            const options:RequestInit = {
-                method: "GET",
-                mode: "cors",
-                headers: {'Content-Type': 'application/json'},
-                body: null,
-            };
-    
-            dispatch(userFetchWithRefresh(options)).then((data: any) => {
-                data.error && localStorage.setItem("isUserLogged", "false");
-                data.payload?.success && localStorage.setItem("isUserLogged", "true");
-            });
+        if (getCookie("accessToken")) {
+            dispatch(
+                userFetchWithRefresh({
+                    method: "GET",
+                    mode: "cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: null,
+                })
+            )
         }
+        dispatch(fetchIngredients());
         // eslint-disable-next-line
     }, []);
 
@@ -58,19 +54,19 @@ function App() {
                     <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
                     <Route
                         path="/login"
-                        element={<ProtectedRoute onlyUnAuth={false} element={<Login />} />}
+                        element={<ProtectedRoute anonymous={true} element={<Login />} />}
                     />
                     <Route
                         path="/reset-password"
-                        element={<ProtectedRoute onlyUnAuth={false} element={<ResetPassword />} />}
+                        element={<ProtectedRoute anonymous={true} element={<ResetPassword />} />}
                     />
                     <Route
                         path="/forgot-password"
-                        element={<ProtectedRoute onlyUnAuth={false} element={<ForgotPassword />} />}
+                        element={<ProtectedRoute anonymous={true} element={<ForgotPassword />} />}
                     />
                     <Route
                         path="/register"
-                        element={<ProtectedRoute onlyUnAuth={false} element={<Register />} />}
+                        element={<ProtectedRoute anonymous={true} element={<Register />} />}
                     />
 
                     {/* Страница только для юзеров */}
@@ -79,7 +75,7 @@ function App() {
                         path="/profile/*"
                         element={
                             <ProtectedRoute
-                                onlyUnAuth={true}
+                                anonymous={false}
                                 element={
                                     <>
                                         <section className={styles.profilePage}>

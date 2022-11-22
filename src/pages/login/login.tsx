@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,7 +21,7 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
 
-    const userRegister = (e: any) => {
+    const userRegister = (e: FormEvent) => {
         e.preventDefault();
         const requestBody: string = JSON.stringify({ email: email, password: password });
         dispatch(loginUser(requestBody));

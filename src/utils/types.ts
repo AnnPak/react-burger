@@ -58,5 +58,13 @@ export type TLinkItem = {
     to: string;
 };
 
+export type TProtectedRoute = {
+    anonymous: boolean;
+    element: JSX.Element;
+};
+
+export type TModalOverlay = {closePopup: () => void}
+
+
 
 
