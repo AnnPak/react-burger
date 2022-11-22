@@ -1,17 +1,20 @@
 import { FC } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { TProtectedRoute } from "../utils/types";
 
-type TProtectedRoute = {
-    onlyUnAuth: boolean;
-    element: JSX.Element;
-};
+export const  ProtectedRoute: FC<TProtectedRoute> = ({ element, anonymous = false }) => {
+    const isLoggedIn = localStorage.getItem("isUserLogged");
 
-export const ProtectedRoute: FC<TProtectedRoute> = ({ onlyUnAuth, element }) => {
-    const isUserLogged = localStorage.getItem("isUserLogged");
-
-    if (onlyUnAuth) {
-        return isUserLogged === "true" ? element : <Navigate to="/login" />;
-    } else {
-        return isUserLogged === "false" || !isUserLogged ? element : <Navigate to="/" />;
+    const location = useLocation();
+    const from = location.state?.from || '/';
+    
+    if (anonymous && isLoggedIn) {
+      return <Navigate to={ from } />;
     }
-};
+  
+    if (!anonymous && !isLoggedIn) {
+      return <Navigate to="/login" state={{ from: location}}/>;
+    }
+  
+    return element;
+  }
