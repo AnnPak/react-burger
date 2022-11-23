@@ -67,9 +67,13 @@ function App() {
                         path="/register"
                         element={<ProtectedRoute anonymous={true} element={<Register />} />}
                     />
-                    <Route path="/logout" element={<LogoutPage />} />
+                  
 
                     {/* Страница только для юзеров */}
+                    <Route
+                        path="/logout"
+                        element={<ProtectedRoute anonymous={false} element={<LogoutPage />} />}
+                    />
 
                     <Route
                         path="/profile/*"

@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import Preloader from "../../component/preloader/preloader";
 import { logoutUser } from "../../store/user/logout";
 
 const LogoutPage: FC = () => {
@@ -23,7 +24,7 @@ const LogoutPage: FC = () => {
         }
     }, []);
 
-    return null;
+    return <Preloader/>;
 };
 
 export default LogoutPage;
