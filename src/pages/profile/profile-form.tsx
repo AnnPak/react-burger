@@ -4,7 +4,7 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import classnames from "classnames";
 
 import { getCookie } from "../../utils/cookie";
-import { userRequest } from "../../store/user/user";
+import { userUpdate } from "../../store/user/user";
 import { useForm } from "../../hooks/useForm";
 
 import styles from "./profile.module.scss";
@@ -42,13 +42,14 @@ const UserDataForm = () => {
             body: JSON.stringify(values),
         };
 
-        dispatch(userRequest(options)); //изменение данных пользователя
+        dispatch(userUpdate(options)); //изменение данных пользователя
     };
 
     useEffect(() => {
         user && setFieldValue({...values, login: user.email, name: user.name} );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
+    console.log(user)
 
     useEffect(() => {
         Object.values(disableValue).includes(false) ? setBtnsHidden(false) : setBtnsHidden(true)

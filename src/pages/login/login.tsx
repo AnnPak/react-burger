@@ -8,7 +8,7 @@ import {
     PasswordInput,
     EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { loginUser } from "../../store/user/login";
+import { loginUser } from "../../store/user/user";
 
 import styles from "./login.module.scss";
 
@@ -16,28 +16,35 @@ const Login = () => {
     const [email, setEmail] = useState<string>(" ");
     const [password, setPassword] = useState<string>("");
     const [isError, setIsError] = useState<boolean>(false);
-    const { loginSuccess } = useSelector((store: any) => store.login);
 
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
 
     const userRegister = (e: FormEvent) => {
         e.preventDefault();
-        const requestBody: string = JSON.stringify({ email: email, password: password });
-        dispatch(loginUser(requestBody));
+        dispatch(loginUser(JSON.stringify({ email: email, password: password })))
+            .then((data) => {
+                if (data.payload.success) {
+                    navigate("/");
+                } else {
+                    throw new Error("throw an error");
+                }
+            })
+            .catch(() => {
+                setIsError(true);
+            });
     };
 
     useEffect(() => {
-        loginSuccess && navigate("/");
-        loginSuccess === false && setIsError(true);
-
-        const setErrorTimeout = setTimeout(() => setIsError(false), 5000);
-        return () => {
-            clearTimeout(setErrorTimeout);
-        };
+        if (isError) {
+            const setErrorTimeout = setTimeout(() => setIsError(false), 5000);
+            return () => {
+                clearTimeout(setErrorTimeout);
+            };
+        }
 
         // eslint-disable-next-line
-    }, [loginSuccess]);
+    }, [isError]);
 
     return (
         <>
