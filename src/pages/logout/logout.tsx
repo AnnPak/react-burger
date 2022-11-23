@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import Preloader from "../../component/preloader/preloader";
+import { useLocation, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../store/user/logout";
 
 const LogoutPage: FC = () => {
