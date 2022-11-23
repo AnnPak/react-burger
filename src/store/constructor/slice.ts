@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient } from './../../utils/types';
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
@@ -45,7 +46,7 @@ const constructorsSlice = createSlice({
             localStorage.setItem("bun", JSON.stringify(state.bun));
         },
         setIngredientsWithoutBun: {
-            reducer: (state, action) => {
+            reducer: (state, action:PayloadAction<TIngredient>) => {
                 state.constructorIngredients = state.constructorIngredients
                     ? [...state.constructorIngredients, action.payload]
                     : [action.payload];
