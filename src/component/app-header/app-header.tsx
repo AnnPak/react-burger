@@ -15,7 +15,7 @@ const Navbar = () => {
     return (
         <nav className="mt-4">
             <div className={styles.navbarItem}>
-                <LinkItem
+                <LinkItem 
                     className={classnames(
                         styles.navbarItemLink,
                         pathname.indexOf("/profile") === -1 && styles.navbarItemLinkActive,

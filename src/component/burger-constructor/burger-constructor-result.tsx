@@ -32,7 +32,7 @@ const BurgerConstructorResult = () => {
 
             dispatch(fetchOrder(requestBody));
         } else {
-            navigate("/login");
+            navigate("/login", { replace: true });
         }
     };
 

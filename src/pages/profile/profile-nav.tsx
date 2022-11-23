@@ -1,29 +1,16 @@
 import { useState, MouseEvent } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
-
-import { logoutUser } from "../../store/user/logout";
 
 import styles from "./profile.module.scss";
 
 const ProfileNav = () => {
     const [content, setContent] = useState<string|null>("profile");
 
-    const dispatch = useDispatch<any>();
-    const navigate = useNavigate();
     const pathname = window.location.pathname;
-
     const changeActiveItem = (e: MouseEvent<HTMLElement>) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
-    };
-
-    const userLogout = () => {
-        const refreshToken = localStorage.getItem("refreshToken");
-        const requestBody = JSON.stringify({ token: refreshToken });
-
-        dispatch(logoutUser(requestBody)).then(() => navigate("/login"));
     };
 
     return (
@@ -52,17 +39,17 @@ const ProfileNav = () => {
             >
                 История заказов
             </Link>
-            <div
+            <Link
                 className={classnames(
                     styles.navbarItem,
                     content === "logout" ? styles.navbarItemActive : "",
                     "text text_type_main-medium pt-4 pb-4"
                 )}
                 data-value="logout"
-                onClick={userLogout}
+                to='/logout'
             >
                 Выход
-            </div>
+            </Link>
         </div>
     );
 };

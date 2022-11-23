@@ -6,5 +6,7 @@ import ForgotPassword from "./forgot-password/forgot-password";
 import UserDataForm from "./profile/profile-form";
 import Orders from "./profile/profile-orders";
 import NotFound from "./notfound/notfound";
+import LogoutPage from "./logout/logout";
 
-export { Home, Login, Register, ResetPassword, ForgotPassword, UserDataForm, Orders, NotFound };
+
+export { Home, Login, Register, ResetPassword, ForgotPassword, UserDataForm, Orders, NotFound, LogoutPage };

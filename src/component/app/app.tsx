@@ -11,6 +11,7 @@ import {
     UserDataForm,
     Orders,
     NotFound,
+    LogoutPage,
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
@@ -25,18 +26,31 @@ import { fetchIngredients } from "../../store/ingredients/slice";
 
 function App() {
     const dispatch = useDispatch<any>();
+    const isLoggedIn = localStorage.getItem("isUserLogged");
 
     useEffect(() => {
-        if (getCookie("accessToken")) {
-            dispatch(
-                userFetchWithRefresh({
-                    method: "GET",
-                    mode: "cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: null,
-                })
-            )
-        }
+        isLoggedIn && dispatch(
+            userFetchWithRefresh({
+                method: "GET",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+                body: null,
+            })
+        )
+        console.log('loool')
+        // eslint-disable-next-line
+    }, [isLoggedIn]);
+
+    useEffect(() => {
+        dispatch(
+            userFetchWithRefresh({
+                method: "GET",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+                body: null,
+            })
+        )
+        console.log('loool')
         dispatch(fetchIngredients());
         // eslint-disable-next-line
     }, []);
@@ -67,6 +81,10 @@ function App() {
                     <Route
                         path="/register"
                         element={<ProtectedRoute anonymous={true} element={<Register />} />}
+                    />
+                    <Route
+                        path="/logout"
+                        element={<LogoutPage/>}
                     />
 
                     {/* Страница только для юзеров */}
