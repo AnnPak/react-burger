@@ -35,7 +35,7 @@ const initialState: TUserState = {
 export const userFetchWithRefresh = createAsyncThunk(
     "user/userFetchWithRefresh",
     async (options: RequestInit) => {
-        return await fetchWithRefresh(GET_USER, options)
+        return await fetchWithRefresh(GET_USER)
             .then((data) => {
                 return data;
             })

@@ -40,7 +40,6 @@ const UserDataForm:FC = () => {
         user && setFieldValue({ ...values, login: user.email, name: user.name });
         // eslint-disable-next-line
     }, [user]);
-    console.log(user);
 
     useEffect(() => {
         Object.values(disableValue).includes(false) ? setBtnsHidden(false) : setBtnsHidden(true);

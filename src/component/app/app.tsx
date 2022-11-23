@@ -27,15 +27,7 @@ function App() {
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
-        dispatch(
-            userFetchWithRefresh({
-                method: "GET",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" },
-                body: null,
-            })
-        );
-
+        dispatch(userFetchWithRefresh({}));
         dispatch(fetchIngredients());
         // eslint-disable-next-line
     }, []);
@@ -67,7 +59,6 @@ function App() {
                         path="/register"
                         element={<ProtectedRoute anonymous={true} element={<Register />} />}
                     />
-                  
 
                     {/* Страница только для юзеров */}
                     <Route

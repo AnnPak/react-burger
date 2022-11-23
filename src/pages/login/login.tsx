@@ -24,7 +24,6 @@ const Login: FC = () => {
         e.preventDefault();
         dispatch(loginUser({ email: email, password: password }))
             .then((data: any) => {
-                console.log(data);
                 if (data.payload.success) {
                     navigate("/");
                 } else {
