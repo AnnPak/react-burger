@@ -4,15 +4,17 @@ import { TProtectedRoute } from "../utils/types";
 
 export const  ProtectedRoute: FC<TProtectedRoute> = ({ element, anonymous = false }) => {
     const isLoggedIn = localStorage.getItem("isUserLogged");
-
+    
     const location = useLocation();
     const from = location.state?.from || '/';
-    
-    if (anonymous && isLoggedIn) {
+
+    if (anonymous && isLoggedIn === 'true') {
+
       return <Navigate to={ from } />;
     }
   
-    if (!anonymous && !isLoggedIn) {
+    if (!anonymous && isLoggedIn === 'false') {
+
       return <Navigate to="/login" state={{ from: location}}/>;
     }
   
