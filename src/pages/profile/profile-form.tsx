@@ -12,11 +12,11 @@ import styles from "./profile.module.scss";
 const UserDataForm = () => {
     const { user } = useSelector((store: any) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
-    const {values, setFieldValue, setFieldDisabled, disableValue} = useForm({
+    const { values, setFieldValue, setFieldDisabled, disableValue } = useForm({
         initialValues: {
-            name: '',
-            login: '',
-            password: '',
+            name: "",
+            login: "",
+            password: "",
         },
         disableRules: {
             name: true,
@@ -27,37 +27,29 @@ const UserDataForm = () => {
 
     const dispatch = useDispatch<any>();
 
-    const onSubmit = (e: FormEvent ) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         setBtnsHidden(true);
-        setFieldDisabled({name: true, password: true, login: true })
-
-        const options: RequestInit = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `${getCookie("accessToken")}`,
-            },
-            body: JSON.stringify(values),
-        };
-
-        dispatch(userUpdate(options)); //изменение данных пользователя
+        setFieldDisabled({ name: true, password: true, login: true });
+        dispatch(
+            userUpdate(values)
+        ); //изменение данных пользователя
     };
 
     useEffect(() => {
-        user && setFieldValue({...values, login: user.email, name: user.name} );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        user && setFieldValue({ ...values, login: user.email, name: user.name });
+        // eslint-disable-next-line
     }, [user]);
-    console.log(user)
+    console.log(user);
 
     useEffect(() => {
-        Object.values(disableValue).includes(false) ? setBtnsHidden(false) : setBtnsHidden(true)
-    },[disableValue])
+        Object.values(disableValue).includes(false) ? setBtnsHidden(false) : setBtnsHidden(true);
+    }, [disableValue]);
 
     const cancel = () => {
-        setFieldValue({login: user.email, name: user.name, password: ''})
-        setFieldDisabled({name: true, password: true, login: true })
+        setFieldValue({ login: user.email, name: user.name, password: "" });
+        setFieldDisabled({ name: true, password: true, login: true });
         setBtnsHidden(true);
     };
 
@@ -66,13 +58,13 @@ const UserDataForm = () => {
             <Input
                 type={"text"}
                 placeholder={"Имя"}
-                onChange={(e) => setFieldValue({...values, name: e.currentTarget.value})}
+                onChange={(e) => setFieldValue({ ...values, name: e.currentTarget.value })}
                 icon={disableValue.name ? "EditIcon" : "CloseIcon"}
                 value={values.name}
                 disabled={disableValue.name}
                 name={"name"}
                 error={false}
-                onIconClick={(e) => setFieldDisabled({...values, name: !disableValue.name})}
+                onIconClick={(e) => setFieldDisabled({ ...values, name: !disableValue.name })}
                 errorText={"Ошибка"}
                 size={"default"}
             />
@@ -80,29 +72,31 @@ const UserDataForm = () => {
                 <Input
                     type={"text"}
                     placeholder={"Логин"}
-                    onChange={(e) => setFieldValue({...values, login: e.currentTarget.value})}
+                    onChange={(e) => setFieldValue({ ...values, login: e.currentTarget.value })}
                     icon={disableValue.login ? "EditIcon" : "CloseIcon"}
                     value={values.login}
                     name={"login"}
                     disabled={disableValue.login}
                     error={false}
-                    onIconClick={(e) => setFieldDisabled({...values, login: !disableValue.login})}
+                    onIconClick={(e) => setFieldDisabled({ ...values, login: !disableValue.login })}
                     errorText={"Ошибка"}
                     size={"default"}
                 />
             </div>
-            
+
             <div className="pt-6">
                 <Input
                     type="password"
                     placeholder="Пароль"
-                    onChange={(e) => setFieldValue({...values, password: e.currentTarget.value})}
+                    onChange={(e) => setFieldValue({ ...values, password: e.currentTarget.value })}
                     icon={disableValue.password ? "EditIcon" : "CloseIcon"}
                     value={values.password}
                     disabled={disableValue.password}
                     name="password"
                     error={false}
-                    onIconClick={(e) => setFieldDisabled({...values, password: !disableValue.password})}
+                    onIconClick={(e) =>
+                        setFieldDisabled({ ...values, password: !disableValue.password })
+                    }
                     errorText="Ошибка"
                     size="default"
                 />

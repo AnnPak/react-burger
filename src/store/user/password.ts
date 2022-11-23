@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
 import { FORGOT_PSSWRD } from "../../utils/constants";
+import { TStringArray } from "../../utils/types";
 
 type TPasswordState = {
     forgotSending: boolean,
@@ -25,12 +26,12 @@ const initialState:TPasswordState = {
 
 export const forgotPassword = createAsyncThunk(
     "user/forgotPassword", 
-    async (requestBody:string) => {
-    return await request(FORGOT_PSSWRD, requestBody, "POST");
+    async (requestBody:TStringArray) => {
+    return await request(FORGOT_PSSWRD, JSON.stringify(requestBody), "POST");
 });
 
-export const resetPassword = createAsyncThunk("user/resetPassword", async (requestBody:string) => {
-    return await request(FORGOT_PSSWRD, requestBody, "POST");
+export const resetPassword = createAsyncThunk("user/resetPassword", async (requestBody:TStringArray) => {
+    return await request(FORGOT_PSSWRD, JSON.stringify(requestBody), "POST");
 });
 
 const passwordSlice = createSlice({

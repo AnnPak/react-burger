@@ -2,19 +2,26 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
 import { ORDERS_API } from "../../utils/constants";
+import { TStringArray } from "../../utils/types";
 
-export type TOrderlState = {
+export type TOrderState = {
     orderNumber: null | number
     orderStatus: string
 }
 
-const initialState:TOrderlState = {
+const initialState:TOrderState = {
     orderNumber: null,
     orderStatus: "idle",
 };
 
-export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody:string) => {
-    return await request(ORDERS_API, requestBody, "POST");
+type TFetchOrder = {
+    ingredients: Array<number>
+    Authorization: string
+}
+
+
+export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody:TFetchOrder) => {
+    return await request(ORDERS_API, JSON.stringify(requestBody), "POST");
 });
 
 const orderSlice = createSlice({

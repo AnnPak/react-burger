@@ -1,3 +1,4 @@
+import { TStringArray } from './../../utils/types';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
@@ -16,8 +17,8 @@ const initialState:TRegisterState = {
     registerSuccess: null,
 };
 
-export const registerUser = createAsyncThunk("user/registerUser", async (requestBody:string) => {
-    return await request(REGISTER_API, requestBody, "POST");
+export const registerUser = createAsyncThunk("user/registerUser", async (requestBody:TStringArray) => {
+    return await request(REGISTER_API, JSON.stringify(requestBody), "POST");
 });
 
 const registerSlice = createSlice({

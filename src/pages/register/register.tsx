@@ -25,12 +25,13 @@ const Register = () => {
     const navigate = useNavigate();
     const userRegister = (e: FormEvent) => {
         e.preventDefault();
-        const requestBody: string = JSON.stringify({
-            email: email,
-            password: password,
-            name: name,
-        });
-        dispatch(registerUser(requestBody));
+        dispatch(
+            registerUser({
+                email: email,
+                password: password,
+                name: name,
+            })
+        );
     };
 
     useEffect(() => {

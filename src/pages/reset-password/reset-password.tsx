@@ -22,8 +22,7 @@ const ResetPassword = () => {
 
     const onSubmit = (e: any) => {
         e.preventDefault();
-        const requestBody: string = JSON.stringify({ password: password, token: code });
-        dispatch(resetPassword(requestBody));
+        dispatch(resetPassword({ password: password, token: code }));
     };
 
     useEffect(() => {

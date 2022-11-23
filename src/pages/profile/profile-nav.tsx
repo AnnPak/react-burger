@@ -5,7 +5,7 @@ import classnames from "classnames";
 import styles from "./profile.module.scss";
 
 const ProfileNav = () => {
-    const [content, setContent] = useState<string|null>("profile");
+    const [content, setContent] = useState<string | null>("profile");
 
     const pathname = window.location.pathname;
     const changeActiveItem = (e: MouseEvent<HTMLElement>) => {
@@ -46,7 +46,7 @@ const ProfileNav = () => {
                     "text text_type_main-medium pt-4 pb-4"
                 )}
                 data-value="logout"
-                to='/logout'
+                to="/logout"
             >
                 Выход
             </Link>

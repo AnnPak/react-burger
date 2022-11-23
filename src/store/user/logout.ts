@@ -1,3 +1,4 @@
+import { TStringArray } from './../../utils/types';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { request } from "../../utils/request";
@@ -14,8 +15,8 @@ const initialState:TLogoutState = {
     logoutError: false,
 };
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async (requestBody:string) => {
-    return await request(LOGOUT_API, requestBody, "POST");
+export const logoutUser = createAsyncThunk("user/logoutUser", async (requestBody:TStringArray) => {
+    return await request(LOGOUT_API, JSON.stringify(requestBody), "POST");
 });
 
 const logoutSlice = createSlice({

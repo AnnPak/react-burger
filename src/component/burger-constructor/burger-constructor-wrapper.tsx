@@ -13,12 +13,12 @@ import BurgerConstructorElement from "./burger-constructor-element";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper = () => {
-    const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useSelector((store: any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
 
     const [, dropTargetRef] = useDrop({
         accept: "ingredients",
-        drop(ingredient:TIngredient) {
+        drop(ingredient: TIngredient) {
             if (ingredient.type === "bun") {
                 dispatch(setBun(ingredient));
             } else {
@@ -26,7 +26,7 @@ const BurgerConstructorWrapper = () => {
             }
         },
     });
-    
+
     const moveCard = useCallback<TMoveCard>(
         (dragIndex, hoverIndex, constructorIngredients) => {
             const dragCard = constructorIngredients[dragIndex];
@@ -41,16 +41,17 @@ const BurgerConstructorWrapper = () => {
     );
 
     useEffect(() => {
-        if(localStorage.getItem('constructorIngredients')){
-            const IngredientsWithoutBun = JSON.parse(localStorage.getItem('constructorIngredients') || '{}')
-            dispatch(updateBurgerIngredients(IngredientsWithoutBun))
+        if (localStorage.getItem("constructorIngredients")) {
+            dispatch(
+                updateBurgerIngredients(
+                    JSON.parse(localStorage.getItem("constructorIngredients") || "{}")
+                )
+            );
         }
-        if(localStorage.getItem('bun') ) {
-            const bun = JSON.parse(localStorage.getItem('bun') || '{}')
-            dispatch(setBun(bun))
+        if (localStorage.getItem("bun")) {
+            dispatch(setBun(JSON.parse(localStorage.getItem("bun") || "{}")));
         }
-    }, [])
-
+    }, []);
 
     return (
         <section className={styles.constructorElements}>
@@ -70,7 +71,7 @@ const BurgerConstructorWrapper = () => {
 
             <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargetRef}>
                 {constructorIngredients != null &&
-                    constructorIngredients.map((item:TIngredient, index:number) => (
+                    constructorIngredients.map((item: TIngredient, index: number) => (
                         <BurgerConstructorElement
                             moveCard={moveCard}
                             classname={styles.constructorElement}

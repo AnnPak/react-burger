@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
     Button,
@@ -22,8 +22,9 @@ const Login = () => {
 
     const userRegister = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(loginUser(JSON.stringify({ email: email, password: password })))
-            .then((data) => {
+        dispatch(loginUser({ email: email, password: password }))
+            .then((data: any) => {
+                console.log(data);
                 if (data.payload.success) {
                     navigate("/");
                 } else {

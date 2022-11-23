@@ -16,13 +16,13 @@ const LogoutPage = () => {
             localStorage.setItem("isUserLogged", "false");
             const refreshToken = localStorage.getItem("refreshToken");
 
-            dispatch(logoutUser(JSON.stringify({ token: refreshToken })));
+            refreshToken && dispatch(logoutUser({ token: refreshToken }));
 
             navigate("/login", { state: { form: location } });
         }
     }, []);
 
-    return (<Navigate to="/login" />)
+    return <Navigate to="/login" />;
 };
 
 export default LogoutPage;

@@ -1,3 +1,4 @@
+import { TStringArray } from './types';
 import { TOKEN_API } from "./constants";
 import { setCookie, getCookie } from "./cookie";
 
@@ -16,8 +17,15 @@ export const request = async (url: string, body?: any, method?: string) => {
     });
 };
 
-export const updateUserData = async (url: string, options: RequestInit) => {
-    return fetch(url, options).then((response) => {
+export const updateUserData = async (url: string, values: TStringArray) => {
+    return fetch(url, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${getCookie("accessToken")}`,
+        },
+        body: JSON.stringify(values)
+    }).then((response) => {
         return response.json();
     });
 };
@@ -27,8 +35,6 @@ const checkResponse = (res: Record<string, any>) => {
 };
 
 export const refreshTokenRequest = () => {
-    const requestHeaders: HeadersInit = new Headers();
-    requestHeaders.set("Content-Type", "application/json");
     return fetch(`${TOKEN_API}`, {
         method: "POST",
         headers: {

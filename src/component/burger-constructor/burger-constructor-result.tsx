@@ -12,7 +12,7 @@ import { getCookie } from "../../utils/cookie";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorResult = () => {
-    const { constructorIngredients, bun } = useSelector((store:any) => store.burgerConstructor);
+    const { constructorIngredients, bun } = useSelector((store: any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
@@ -20,17 +20,17 @@ const BurgerConstructorResult = () => {
         if (localStorage.getItem("isUserLogged") === "true") {
             dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
-                ? constructorIngredients.map((item:TIngredient):string => item._id)
+                ? constructorIngredients.map((item: TIngredient): string => item._id)
                 : []; //список id ингредиентов
             const bunId = bun ? bun._id : null; // id булки
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
 
-            const requestBody = JSON.stringify({
-                ingredients: orderIngredientsIds,
-                Authorization: getCookie("accessToken"),
-            });
-
-            dispatch(fetchOrder(requestBody));
+            dispatch(
+                fetchOrder({
+                    ingredients: orderIngredientsIds,
+                    Authorization: `${getCookie("accessToken")}`
+                })
+            );
         } else {
             navigate("/login", { replace: true });
         }
@@ -39,8 +39,8 @@ const BurgerConstructorResult = () => {
     const fullprice = useMemo(() => {
         const ingredientsPrice = constructorIngredients
             ? constructorIngredients
-                  .map((item:TIngredient):number => item.price)
-                  .reduce((prev:number, curr:number):number => prev + curr, 0)
+                  .map((item: TIngredient): number => item.price)
+                  .reduce((prev: number, curr: number): number => prev + curr, 0)
             : 0;
         const bunPrice = bun ? bun.price : 0;
 
