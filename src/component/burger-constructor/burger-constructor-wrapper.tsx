@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import classnames from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -12,7 +12,7 @@ import {
 import BurgerConstructorElement from "./burger-constructor-element";
 import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructorWrapper = () => {
+const BurgerConstructorWrapper: FC = () => {
     const { bun, constructorIngredients } = useSelector((store: any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
 

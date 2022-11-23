@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,7 +11,7 @@ import { getCookie } from "../../utils/cookie";
 
 import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructorResult = () => {
+const BurgerConstructorResult: FC = () => {
     const { constructorIngredients, bun } = useSelector((store: any) => store.burgerConstructor);
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const BurgerConstructorResult = () => {
             dispatch(
                 fetchOrder({
                     ingredients: orderIngredientsIds,
-                    Authorization: `${getCookie("accessToken")}`
+                    Authorization: `${getCookie("accessToken")}`,
                 })
             );
         } else {

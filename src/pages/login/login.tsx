@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -12,7 +12,7 @@ import { loginUser } from "../../store/user/user";
 
 import styles from "./login.module.scss";
 
-const Login = () => {
+const Login: FC = () => {
     const [email, setEmail] = useState<string>(" ");
     const [password, setPassword] = useState<string>("");
     const [isError, setIsError] = useState<boolean>(false);

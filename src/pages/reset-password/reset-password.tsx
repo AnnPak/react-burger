@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,7 +6,7 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
 
-const ResetPassword = () => {
+const ResetPassword:FC = () => {
     const [password, setPassword] = useState<string>("");
     const [code, setCode] = useState<string>("");
     const { resetSuccess } = useSelector((store: any) => store.password);

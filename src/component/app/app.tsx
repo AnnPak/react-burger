@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -18,28 +18,13 @@ import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { getCookie } from "../../utils/cookie";
 import { userFetchWithRefresh } from "../../store/user/user";
+import { fetchIngredients } from "../../store/ingredients/slice";
 
 import styles from "./app.module.scss";
-import { fetchIngredients } from "../../store/ingredients/slice";
 
 function App() {
     const dispatch = useDispatch<any>();
-    const isLoggedIn = localStorage.getItem("isUserLogged");
-
-    useEffect(() => {
-        isLoggedIn && dispatch(
-            userFetchWithRefresh({
-                method: "GET",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" },
-                body: null,
-            })
-        )
-        console.log('loool')
-        // eslint-disable-next-line
-    }, [isLoggedIn]);
 
     useEffect(() => {
         dispatch(
@@ -49,8 +34,8 @@ function App() {
                 headers: { "Content-Type": "application/json" },
                 body: null,
             })
-        )
-        console.log('loool')
+        );
+
         dispatch(fetchIngredients());
         // eslint-disable-next-line
     }, []);
@@ -82,10 +67,7 @@ function App() {
                         path="/register"
                         element={<ProtectedRoute anonymous={true} element={<Register />} />}
                     />
-                    <Route
-                        path="/logout"
-                        element={<LogoutPage/>}
-                    />
+                    <Route path="/logout" element={<LogoutPage />} />
 
                     {/* Страница только для юзеров */}
 

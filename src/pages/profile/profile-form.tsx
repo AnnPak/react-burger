@@ -1,15 +1,14 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
-import { getCookie } from "../../utils/cookie";
 import { userUpdate } from "../../store/user/user";
 import { useForm } from "../../hooks/useForm";
 
 import styles from "./profile.module.scss";
 
-const UserDataForm = () => {
+const UserDataForm:FC = () => {
     const { user } = useSelector((store: any) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
     const { values, setFieldValue, setFieldDisabled, disableValue } = useForm({

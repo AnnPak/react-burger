@@ -1,10 +1,10 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, FC } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 import styles from "./profile.module.scss";
 
-const ProfileNav = () => {
+const ProfileNav:FC = () => {
     const [content, setContent] = useState<string | null>("profile");
 
     const pathname = window.location.pathname;

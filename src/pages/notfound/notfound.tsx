@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const NotFound = () => {
+const NotFound: FC = () => {
     return (
         <section>
             <p className="text text_type_main-large mt-20">404 NOT FOUND</p>

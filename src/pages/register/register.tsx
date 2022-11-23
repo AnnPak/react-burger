@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     Button,
@@ -13,7 +13,7 @@ import { registerUser } from "../../store/user/register";
 
 import styles from "../login/login.module.scss";
 
-const Register = () => {
+const Register:FC = () => {
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");

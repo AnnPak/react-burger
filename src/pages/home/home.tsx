@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DndProvider } from "react-dnd";
@@ -9,7 +10,7 @@ import Preloader from "../../component/preloader/preloader";
 
 import styles from "./home.module.scss";
 
-const Home = () => {
+const Home: FC = () => {
     const { isLoading, isError } = useSelector((store: any) => store.ingredients);
 
     return (

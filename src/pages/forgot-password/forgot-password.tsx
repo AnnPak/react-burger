@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,7 +6,7 @@ import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from "../login/login.module.scss";
 import { forgotPassword } from "../../store/user/password";
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
     const [email, setEmail] = useState<string>("");
     const { forgotSuccess } = useSelector((store: any) => store.password);
 

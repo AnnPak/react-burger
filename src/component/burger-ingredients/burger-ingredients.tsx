@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { TIngredient } from "../../utils/types";
@@ -7,7 +7,7 @@ import TabsWrapper from "../tabs-wrapper/tabs-wrapper";
 
 import styles from "./burger-ingredients.module.scss";
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
     const { ingredients } = useSelector((store:any) => store.ingredients);
     const [typesOfIngredients, setTypesOfIngredients] = useState<Array<string> | null>(null);
     const [tabsValue, setTabsValue] = useState<string | null>(null);

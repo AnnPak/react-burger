@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import classnames from "classnames";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
 
-const IngredientDetails = () => {
+const IngredientDetails: FC = () => {
     const { ingredientId } = useParams();
     const { ingredients } = useSelector((store:any) => store.ingredients);
     const [ingredient, setIngredient] = useState<TIngredient|null>(null)

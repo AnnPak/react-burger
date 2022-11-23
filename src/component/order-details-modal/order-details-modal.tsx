@@ -1,10 +1,11 @@
+import { FC } from "react";
 import classnames from "classnames";
 import { useSelector } from "react-redux";
 
 import styles from "./order-details-modal.module.scss";
 import doneImg from "../../images/done.png";
 
-const OrderDetails = () => {
+const OrderDetails: FC = () => {
     const { orderNumber } = useSelector((store: any) => store.order);
 
     return (
