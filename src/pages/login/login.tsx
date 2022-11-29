@@ -24,7 +24,7 @@ const Login: FC = () => {
     const userRegister = (e: FormEvent) => {
         e.preventDefault();
         dispatch(loginUser({ email: email, password: password }))
-            .then((data: any) => {
+            .then((data) => {
                 if (data.payload.success) {
                     navigate("/");
                 } else {

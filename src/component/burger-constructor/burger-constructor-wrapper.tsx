@@ -14,7 +14,9 @@ import BurgerConstructorElement from "./burger-constructor-element";
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper: FC = () => {
-    const { bun, constructorIngredients } = useSelector((store: RootState) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useSelector(
+        (store: RootState) => store.burgerConstructor
+    );
     const dispatch = useDispatch<AppDispatch>();
 
     const [, dropTargetRef] = useDrop({
@@ -30,13 +32,15 @@ const BurgerConstructorWrapper: FC = () => {
 
     const moveCard = useCallback<TMoveCard>(
         (dragIndex, hoverIndex, constructorIngredients) => {
-            const dragCard = constructorIngredients[dragIndex];
-            const newCards = [...constructorIngredients];
+            if (constructorIngredients) {
+                const dragCard = constructorIngredients[dragIndex];
+                const newCards = [...constructorIngredients];
 
-            newCards.splice(dragIndex, 1);
-            newCards.splice(hoverIndex, 0, dragCard);
+                newCards.splice(dragIndex, 1);
+                newCards.splice(hoverIndex, 0, dragCard);
 
-            dispatch(updateBurgerIngredients(newCards));
+                dispatch(updateBurgerIngredients(newCards));
+            }
         },
         [dispatch]
     );

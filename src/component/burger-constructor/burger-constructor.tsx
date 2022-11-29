@@ -10,10 +10,11 @@ import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 
 import styles from "./burger-constructor.module.scss";
+import { RootState } from "../../store";
 
 const BurgerConstructor: FC = () => {
-    const { isOrderModalVisible } = useSelector((store:any) => store.modal);
-    const { orderStatus } = useSelector((store:any) => store.order);
+    const { isOrderModalVisible } = useSelector((store:RootState) => store.modal);
+    const { orderStatus } = useSelector((store:RootState) => store.order);
 
     return (
         <section className={classnames("mt-25", styles.burgerSectionConstructor)}>

@@ -30,7 +30,7 @@ export type TUseForm = {
 export type TMoveCard = (
     dragIndex: number,
     hoverIndex: number,
-    constructorIngredients: TIngredient[]
+    constructorIngredients: TIngredient[] | null
 ) => any;
 
 export type TBurgerConstructorElementProps = {

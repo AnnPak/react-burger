@@ -15,7 +15,7 @@ const initialState:TOrderState = {
 };
 
 type TFetchOrder = {
-    ingredients: Array<number>
+    ingredients: Array<string | null >
     Authorization: string
 }
 

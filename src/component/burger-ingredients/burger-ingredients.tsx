@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import { TIngredient } from "../../utils/types";
 import BurgerIngredientsList from "./burger-ingredients-list";
 import TabsWrapper from "../tabs-wrapper/tabs-wrapper";
+import { RootState } from "../../store";
 
 import styles from "./burger-ingredients.module.scss";
 
 const BurgerIngredients: FC = () => {
-    const { ingredients } = useSelector((store:any) => store.ingredients);
+    const { ingredients } = useSelector((store:RootState) => store.ingredients);
     const [typesOfIngredients, setTypesOfIngredients] = useState<Array<string> | null>(null);
     const [tabsValue, setTabsValue] = useState<string | null>(null);
 

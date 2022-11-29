@@ -7,12 +7,12 @@ import { Link, useLocation } from "react-router-dom";
 
 import { TIngredient } from "../../utils/types";
 import { addIngredientToModal } from "../../store/modal/slice";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 
 import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) => {
-    const { bun, constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useSelector((store:RootState) => store.burgerConstructor);
 
     const [resultIndredients, setResultIndredients] = useState<Array<TIngredient> | null>(null);
 

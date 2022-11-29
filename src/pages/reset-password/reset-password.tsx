@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, SyntheticEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -22,7 +22,7 @@ const ResetPassword:FC = () => {
         // eslint-disable-next-line
     }, []);
 
-    const onSubmit = (e: any) => {
+    const onSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
         dispatch(resetPassword({ password: password, token: code }));
     };

@@ -1,16 +1,16 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from './../../utils/types';
+import { PayloadAction } from "@reduxjs/toolkit";
+import { TIngredient } from "./../../utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
 import { fetchOrder } from "../order/slice";
 
 export type TConstructorState = {
-    constructorIngredients: null | Array<TIngredient>
-    bun: null | TIngredient
-}
-  
-const initialState:TConstructorState = {
+    constructorIngredients: null | Array<TIngredient>;
+    bun: null | TIngredient;
+};
+
+const initialState: TConstructorState = {
     constructorIngredients: null,
     bun: null,
 };
@@ -20,9 +20,9 @@ const constructorsSlice = createSlice({
     initialState,
     reducers: {
         deleteBurgerIngredient: (state, action) => {
-            state.constructorIngredients = state.constructorIngredients && state.constructorIngredients.filter(
-                (el, index) => index !== +action.payload
-            );
+            state.constructorIngredients =
+                state.constructorIngredients &&
+                state.constructorIngredients.filter((el, index) => index !== +action.payload);
             localStorage.removeItem("constructorIngredients");
             localStorage.setItem(
                 "constructorIngredients",
@@ -46,7 +46,7 @@ const constructorsSlice = createSlice({
             localStorage.setItem("bun", JSON.stringify(state.bun));
         },
         setIngredientsWithoutBun: {
-            reducer: (state, action:PayloadAction<TIngredient>) => {
+            reducer: (state, action: PayloadAction<TIngredient>) => {
                 state.constructorIngredients = state.constructorIngredients
                     ? [...state.constructorIngredients, action.payload]
                     : [action.payload];
@@ -57,7 +57,7 @@ const constructorsSlice = createSlice({
                     JSON.stringify(state.constructorIngredients)
                 );
             },
-            prepare: (payload:TIngredient) => ({
+            prepare: (payload: TIngredient) => ({
                 payload: {
                     ...payload,
                     key: nanoid(),
