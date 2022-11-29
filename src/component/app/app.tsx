@@ -20,11 +20,12 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { userFetchWithRefresh } from "../../store/user/user";
 import { fetchIngredients } from "../../store/ingredients/slice";
+import { AppDispatch } from "../../store";
 
 import styles from "./app.module.scss";
 
 function App() {
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         dispatch(userFetchWithRefresh({}));

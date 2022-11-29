@@ -3,15 +3,17 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "../login/login.module.scss";
 import { resetPassword } from "../../store/user/password";
+import { AppDispatch, RootState } from "../../store";
+
+import styles from "../login/login.module.scss";
 
 const ResetPassword:FC = () => {
     const [password, setPassword] = useState<string>("");
     const [code, setCode] = useState<string>("");
-    const { resetSuccess } = useSelector((store: any) => store.password);
+    const { resetSuccess } = useSelector((store: RootState) => store.password);
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const location = useLocation();
 

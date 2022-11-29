@@ -8,6 +8,7 @@ import {
     PasswordInput,
     EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { AppDispatch } from "../../store";
 import { loginUser } from "../../store/user/user";
 
 import styles from "./login.module.scss";
@@ -18,7 +19,7 @@ const Login: FC = () => {
     const [isError, setIsError] = useState<boolean>(false);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const userRegister = (e: FormEvent) => {
         e.preventDefault();

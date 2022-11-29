@@ -7,11 +7,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../component/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../component/burger-constructor/burger-constructor";
 import Preloader from "../../component/preloader/preloader";
+import { RootState } from "../../store";
 
 import styles from "./home.module.scss";
 
 const Home: FC = () => {
-    const { isLoading, isError } = useSelector((store: any) => store.ingredients);
+    const { isLoading, isError } = useSelector((store: RootState) => store.ingredients);
 
     return (
         <>

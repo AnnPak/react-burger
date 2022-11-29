@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { registerUser } from "../../store/user/register";
+import { AppDispatch, RootState } from "../../store";
 
 import styles from "../login/login.module.scss";
 
@@ -19,9 +20,9 @@ const Register:FC = () => {
     const [password, setPassword] = useState<string>("");
     const [isError, setIsError] = useState<boolean>(false);
 
-    const { registerSuccess } = useSelector((store: any) => store.register);
+    const { registerSuccess } = useSelector((store: RootState) => store.register);
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const userRegister = (e: FormEvent) => {
         e.preventDefault();

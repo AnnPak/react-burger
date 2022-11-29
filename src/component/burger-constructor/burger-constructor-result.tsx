@@ -8,12 +8,13 @@ import { TIngredient } from "../../utils/types";
 import { addOrderToModal } from "../../store/modal/slice";
 import { fetchOrder } from "../../store/order/slice";
 import { getCookie } from "../../utils/cookie";
+import { AppDispatch, RootState } from "../../store";
 
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorResult: FC = () => {
-    const { constructorIngredients, bun } = useSelector((store: any) => store.burgerConstructor);
-    const dispatch = useDispatch<any>();
+    const { constructorIngredients, bun } = useSelector((store: RootState) => store.burgerConstructor);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const createOrder = () => {

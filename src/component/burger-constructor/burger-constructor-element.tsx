@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
 import { deleteBurgerIngredient } from "../../store/constructor/slice";
+import { AppDispatch } from "../../store";
 
 import styles from "./burger-constructor.module.scss";
 
@@ -15,7 +16,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store:any) => store.burgerConstructor);
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const ref = useRef<HTMLInputElement>(null);
     const bunIndicators:TStringArray = {

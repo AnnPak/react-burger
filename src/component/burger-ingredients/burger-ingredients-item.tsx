@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { TIngredient } from "../../utils/types";
 import { addIngredientToModal } from "../../store/modal/slice";
+import { AppDispatch } from "../../store";
 
 import styles from "./burger-ingredients-list.module.scss";
 
@@ -18,7 +19,7 @@ const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) 
     const { name, image, price, _id } = ingredient;
 
     const location = useLocation();
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [{ opacity }, dragRef] = useDrag({
         type: "ingredients",

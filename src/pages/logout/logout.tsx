@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Preloader from "../../component/preloader/preloader";
 import { logoutUser } from "../../store/user/logout";
+import { AppDispatch } from "../../store";
 
 const LogoutPage: FC = () => {
     const isLoggedIn = localStorage.getItem("isUserLogged");
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from || "/";

@@ -8,13 +8,14 @@ import {
     setIngredientsWithoutBun,
     setBun,
 } from "../../store/constructor/slice";
-
+import { AppDispatch, RootState } from "../../store";
 import BurgerConstructorElement from "./burger-constructor-element";
+
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper: FC = () => {
-    const { bun, constructorIngredients } = useSelector((store: any) => store.burgerConstructor);
-    const dispatch = useDispatch<any>();
+    const { bun, constructorIngredients } = useSelector((store: RootState) => store.burgerConstructor);
+    const dispatch = useDispatch<AppDispatch>();
 
     const [, dropTargetRef] = useDrop({
         accept: "ingredients",

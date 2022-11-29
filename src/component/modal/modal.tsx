@@ -8,12 +8,13 @@ import classnames from "classnames";
 import { removeModal } from "../../store/modal/slice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { TModal } from "../../utils/types";
+import { AppDispatch } from "../../store";
 
 import styles from "./modal.module.scss";
 
 const Modal: FC<PropsWithChildren<TModal>> = ({ title, isRedirect, children }) => {
     const modalRoot = document.getElementById("react-modals")!;
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const closePopup = () => {

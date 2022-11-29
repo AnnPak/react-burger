@@ -5,11 +5,12 @@ import classnames from "classnames";
 
 import { userUpdate } from "../../store/user/user";
 import { useForm } from "../../hooks/useForm";
+import { AppDispatch, RootState } from "../../store";
 
 import styles from "./profile.module.scss";
 
 const UserDataForm:FC = () => {
-    const { user } = useSelector((store: any) => store.user);
+    const { user } = useSelector((store: RootState) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
     const { values, setFieldValue, setFieldDisabled, disableValue } = useForm({
         initialValues: {
@@ -24,7 +25,7 @@ const UserDataForm:FC = () => {
         },
     });
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
