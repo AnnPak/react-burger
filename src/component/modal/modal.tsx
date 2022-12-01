@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
-import { removeModal } from "../../store/modal/slice";
+import { removeModal } from "../../redux/store/modal/slice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { TModal } from "../../utils/types";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../redux/store";
 
 import styles from "./modal.module.scss";
 

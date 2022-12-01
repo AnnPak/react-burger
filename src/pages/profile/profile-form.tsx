@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
-import { userUpdate } from "../../store/user/user";
+import { userUpdate } from "../../redux/store/user/user";
 import { useForm } from "../../hooks/useForm";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch, RootState } from "../../redux/store";
 
 import styles from "./profile.module.scss";
 

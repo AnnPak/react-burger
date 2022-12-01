@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { request } from "../../utils/request";
-import { ORDERS_API } from "../../utils/constants";
-import { TStringArray } from "../../utils/types";
+import { request } from "../../../utils/request";
+import { ORDERS_API } from "../../../utils/constants";
+import { TStringArray } from "../../../utils/types";
 
 export type TOrderState = {
     orderNumber: null | number

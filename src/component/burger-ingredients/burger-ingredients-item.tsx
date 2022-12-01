@@ -6,8 +6,8 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import { Link, useLocation } from "react-router-dom";
 
 import { TIngredient } from "../../utils/types";
-import { addIngredientToModal } from "../../store/modal/slice";
-import { AppDispatch, RootState } from "../../store";
+import { addIngredientToModal } from "../../redux/store/modal/slice";
+import { AppDispatch, RootState } from "../../redux/store";
 
 import styles from "./burger-ingredients-list.module.scss";
 

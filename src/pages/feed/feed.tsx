@@ -12,7 +12,7 @@ const FeedPage: FC = () => {
             </p>
             <div className={styles.orderFeedWrapper}>
                 <div className={classnames(styles.ordersList, "mt-2, mr-15")}>
-                    <div className={classnames(styles.orderItem, "p-6 mt-4")}>
+                    <div className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}>
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
                             <p
                                 className={classnames(
@@ -109,7 +109,7 @@ const FeedPage: FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={classnames(styles.orderItem, "p-6 mt-4")}>
+                    <div className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}>
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
                             <p
                                 className={classnames(
@@ -206,7 +206,7 @@ const FeedPage: FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={classnames(styles.orderItem, "p-6 mt-4")}>
+                    <div className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}>
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
                             <p
                                 className={classnames(
@@ -303,7 +303,7 @@ const FeedPage: FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={classnames(styles.orderItem, "p-6 mt-4")}>
+                    <div className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}>
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
                             <p
                                 className={classnames(

@@ -10,7 +10,7 @@ import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 
 import styles from "./burger-constructor.module.scss";
-import { RootState } from "../../store";
+import { RootState } from "../../redux/store";
 
 const BurgerConstructor: FC = () => {
     const { isOrderModalVisible } = useSelector((store:RootState) => store.modal);

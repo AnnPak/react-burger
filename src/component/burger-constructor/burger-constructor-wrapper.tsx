@@ -7,8 +7,8 @@ import {
     updateBurgerIngredients,
     setIngredientsWithoutBun,
     setBun,
-} from "../../store/constructor/slice";
-import { AppDispatch, RootState } from "../../store";
+} from "../../redux/store/constructor/slice";
+import { AppDispatch, RootState } from "../../redux/store";
 import BurgerConstructorElement from "./burger-constructor-element";
 
 import styles from "./burger-constructor.module.scss";

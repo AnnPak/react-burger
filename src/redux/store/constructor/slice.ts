@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { TIngredient } from "./../../utils/types";
+import { TIngredient } from "../../../utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 

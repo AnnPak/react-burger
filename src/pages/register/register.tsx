@@ -9,8 +9,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { registerUser } from "../../store/user/register";
-import { AppDispatch, RootState } from "../../store";
+import { registerUser } from "../../redux/store/user/register";
+import { AppDispatch, RootState } from "../../redux/store";
 
 import styles from "../login/login.module.scss";
 

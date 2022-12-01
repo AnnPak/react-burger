@@ -12,16 +12,17 @@ import {
     Orders,
     NotFound,
     LogoutPage,
-    FeedPage
+    FeedPage,
+    FeedDetailPage
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
 import ProfileNav from "../../pages/profile/profile-nav";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { userFetchWithRefresh } from "../../store/user/user";
-import { fetchIngredients } from "../../store/ingredients/slice";
-import { AppDispatch } from "../../store";
+import { userFetchWithRefresh } from "../../redux/store/user/user";
+import { fetchIngredients } from "../../redux/store/ingredients/slice";
+import { AppDispatch } from "../../redux/store";
 
 import styles from "./app.module.scss";
 
@@ -46,6 +47,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
                     <Route path="/feed" element={<FeedPage />} />
+                    <Route path="/feed/:feedId" element={<FeedDetailPage />} />
                     <Route
                         path="/login"
                         element={<ProtectedRoute anonymous={true} element={<Login />} />}

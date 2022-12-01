@@ -1,9 +1,9 @@
-import { TStringArray } from './../../utils/types';
+import { TStringArray } from '../../../utils/types';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { request } from "../../utils/request";
-import { setCookie } from "../../utils/cookie";
-import { REGISTER_API } from "../../utils/constants";
+import { request } from "../../../utils/request";
+import { setCookie } from "../../../utils/cookie";
+import { REGISTER_API } from "../../../utils/constants";
 
 type TRegisterState = {
     registerSending: boolean,

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
-import { RootState } from "../../store";
+import { RootState } from "../../redux/store";
 
 const IngredientDetails: FC = () => {
     const { ingredientId } = useParams();

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateUserData, fetchWithRefresh, request } from "../../utils/request";
-import { GET_USER, LOGIN_API } from "../../utils/constants";
-import { setCookie } from "../../utils/cookie";
-import { TStringArray } from "../../utils/types";
+import { updateUserData, fetchWithRefresh, request } from "../../../utils/request";
+import { GET_USER, LOGIN_API } from "../../../utils/constants";
+import { setCookie } from "../../../utils/cookie";
+import { TStringArray } from "../../../utils/types";
 
 type TUserState = {
     user: any;

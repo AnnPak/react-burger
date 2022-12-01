@@ -8,6 +8,18 @@ import Orders from "./profile/profile-orders";
 import NotFound from "./notfound/notfound";
 import LogoutPage from "./logout/logout";
 import FeedPage from "./feed/feed";
+import FeedDetailPage from "./feed-detail/feed-detail";
 
-
-export { Home, FeedPage, Login, Register, ResetPassword, ForgotPassword, UserDataForm, Orders, NotFound, LogoutPage };
+export {
+    Home,
+    FeedPage,
+    Login,
+    Register,
+    ResetPassword,
+    ForgotPassword,
+    UserDataForm,
+    Orders,
+    NotFound,
+    LogoutPage,
+    FeedDetailPage,
+};

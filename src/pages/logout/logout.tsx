@@ -2,8 +2,8 @@ import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Preloader from "../../component/preloader/preloader";
-import { logoutUser } from "../../store/user/logout";
-import { AppDispatch } from "../../store";
+import { logoutUser } from "../../redux/store/user/logout";
+import { AppDispatch } from "../../redux/store";
 
 const LogoutPage: FC = () => {
     const isLoggedIn = localStorage.getItem("isUserLogged");

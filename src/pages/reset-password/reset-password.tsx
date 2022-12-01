@@ -3,8 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { resetPassword } from "../../store/user/password";
-import { AppDispatch, RootState } from "../../store";
+import { resetPassword } from "../../redux/store/user/password";
+import { AppDispatch, RootState } from "../../redux/store";
 
 import styles from "../login/login.module.scss";
 

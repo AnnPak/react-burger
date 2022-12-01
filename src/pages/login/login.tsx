@@ -8,8 +8,8 @@ import {
     PasswordInput,
     EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AppDispatch } from "../../store";
-import { loginUser } from "../../store/user/user";
+import { AppDispatch } from "../../redux/store";
+import { loginUser } from "../../redux/store/user/user";
 
 import styles from "./login.module.scss";
 

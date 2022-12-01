@@ -5,10 +5,10 @@ import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-co
 import classnames from "classnames";
 import { TIngredient } from "../../utils/types";
 
-import { addOrderToModal } from "../../store/modal/slice";
-import { fetchOrder } from "../../store/order/slice";
+import { addOrderToModal } from "../../redux/store/modal/slice";
+import { fetchOrder } from "../../redux/store/order/slice";
 import { getCookie } from "../../utils/cookie";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch, RootState } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
 
