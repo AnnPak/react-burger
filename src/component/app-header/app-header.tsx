@@ -30,10 +30,10 @@ const Navbar = () => {
                 <LinkItem
                     className={classnames(
                         styles.navbarItemLink,
-                        pathname.indexOf("/profile/orders") > -1 && styles.navbarItemLinkActive,
+                        pathname.indexOf("/feed") > -1 && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
-                    to="/profile/orders"
+                    to="/feed"
                 >
                     <ListIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Лента заказов</p>

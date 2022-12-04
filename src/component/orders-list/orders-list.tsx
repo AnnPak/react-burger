@@ -41,14 +41,12 @@ const OrdersList: FC<TOrdersList> = ({ orders }) => {
                                 {order.name}
                             </div>
 
-                            <div className={classnames(styles.orderStructure, "mt-6")}>
-                                {ingredients && (
+                            {ingredients && (
                                     <IngredientsInOrder
                                         ingredients={ingredients}
                                         orderIngredients={order.ingredients}
                                     />
                                 )}
-                            </div>
                         </div>
                     </Link>
                 ))}
@@ -59,7 +57,7 @@ const OrdersList: FC<TOrdersList> = ({ orders }) => {
 const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredients }) => {
     const ingredientInOrder = ingredients?.filter((item) => orderIngredients.includes(item._id));
     return (
-        <>
+        <div className={classnames(styles.orderStructure, "mt-6")}>
             <div className={styles.orderIngredients}>
                 {ingredientInOrder.map((item, i) => (
                     <div
@@ -86,7 +84,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
                 560
                 <CurrencyIcon type="primary" />
             </p>
-        </>
+        </div>
     );
 };
 

@@ -111,3 +111,8 @@
 .orderIngredientImg:nth-child(n + 6) {
   display: none;
 }
+
+.orderStructure{
+  display: flex;
+  justify-content: space-between;
+}
