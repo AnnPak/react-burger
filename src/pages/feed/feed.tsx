@@ -1,18 +1,16 @@
 import { FC, useEffect } from "react";
 import { nanoid } from "nanoid";
 import classnames from "classnames";
-import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { wsActionType } from "../../redux/middleware/socket-middleware";
 import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
-import { TIngredientsInOrder } from "../../utils/types";
 
 import styles from "./feed.module.scss";
+import OrdersList from "../../component/orders-list/orders-list";
 
 const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
     const { orders, total, totalToday } = useAppSelector((store: RootState) => store.feed);
-    const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
 
     useEffect(() => {
         dispatch({ type: wsActionType.wsConnecting });
@@ -24,54 +22,10 @@ const FeedPage: FC = () => {
             <p className={classnames("text text_type_main-large mt-10", styles.title)}>
                 Лента заказов
             </p>
+            
             <div className={styles.orderFeedWrapper}>
-                <div className={classnames(styles.ordersList, "mt-2, mr-15")}>
-                    {orders &&
-                        orders.map((order) => (
-                            <div
-                                className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}
-                                key={nanoid()}
-                            >
-                                <div className={classnames(styles.orderItemHeader, "mb-2")}>
-                                    <p
-                                        className={classnames(
-                                            styles.orderNumber,
-                                            "text text_type_digits-default"
-                                        )}
-                                    >
-                                        {"#" + order.number}
-                                    </p>
-                                    <p
-                                        className={classnames(
-                                            styles.date,
-                                            "text text_type_main-default text_color_inactive"
-                                        )}
-                                    >
-                                        <FormattedDate date={new Date(order.createdAt)} />
-                                    </p>
-                                </div>
-                                <div className={classnames(styles.orderBody)}>
-                                    <div
-                                        className={classnames(
-                                            styles.orderName,
-                                            "text text_type_main-medium"
-                                        )}
-                                    >
-                                        {order.name}
-                                    </div>
+                <OrdersList orders={orders}/>
 
-                                    <div className={classnames(styles.orderStructure, "mt-6")}>
-                                        {ingredients && (
-                                            <IngredientsInOrder
-                                                ingredients={ingredients}
-                                                orderIngredients={order.ingredients}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                </div>
                 <div className={styles.ordersPanel}>
                     <div className={styles.orderQueue}>
                         <div className={styles.orderQueueBlock}>
@@ -141,38 +95,6 @@ const FeedPage: FC = () => {
     );
 };
 
-const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredients }) => {
-    const ingredientInOrder = ingredients?.filter((item) => orderIngredients.includes(item._id));
-    return (
-        <>
-            <div className={styles.orderIngredients}>
-                {ingredientInOrder.map((item, i) => (
-                    <div
-                        className={styles.orderIngredientImg}
-                        style={{ zIndex: ingredientInOrder.length - i }}
-                        key={nanoid()}
-                    >
-                        <img src={item.image} alt={item.name} />
 
-                        {ingredientInOrder.length > 5 && (
-                            <p
-                                className={classnames(
-                                    "text text_type_digits-default",
-                                    styles.ingredientsCount
-                                )}
-                            >
-                                {`+${ingredientInOrder.length - 4}`}
-                            </p>
-                        )}
-                    </div>
-                ))}
-            </div>
-            <p className={classnames(styles.orderPrice, "text text_type_digits-default")}>
-                560
-                <CurrencyIcon type="primary" />
-            </p>
-        </>
-    );
-};
 
 export default FeedPage;

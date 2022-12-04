@@ -80,6 +80,10 @@ export type TIngredientsInOrder = {
     orderIngredients: Array<string>
 }
 
+export type TOrdersList = {
+    orders: Array<TOrder> | null
+}
+
 
 
 
