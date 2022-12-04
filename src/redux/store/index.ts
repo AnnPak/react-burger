@@ -10,16 +10,27 @@ import register from "./user/register";
 import password from "./user/password";
 import feed from "./feed/slice";
 import { socketMiddleware } from "../middleware/socket-middleware";
-import { API_HOST_URL } from "../../utils/constants";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const store = configureStore({
-    reducer: { burgerConstructor, ingredients, modal, order, user, register, password, logout, feed},
-    middleware: getDefaultMiddleware({serializableCheck: false}).concat(socketMiddleware('wss://norma.nomoreparties.space/orders/all')),
+    reducer: {
+        burgerConstructor,
+        ingredients,
+        modal,
+        order,
+        user,
+        register,
+        password,
+        logout,
+        feed,
+    },
+    middleware: getDefaultMiddleware({ serializableCheck: false }).concat(
+        socketMiddleware("wss://norma.nomoreparties.space/orders/all")
+    ),
     devTools: process.env.NODE_ENV !== "production",
 });
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();

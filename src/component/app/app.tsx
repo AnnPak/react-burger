@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
     Home,
@@ -22,12 +21,12 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { userFetchWithRefresh } from "../../redux/store/user/user";
 import { fetchIngredients } from "../../redux/store/ingredients/slice";
-import { AppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/store";
 
 import styles from "./app.module.scss";
 
 function App() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(userFetchWithRefresh({}));

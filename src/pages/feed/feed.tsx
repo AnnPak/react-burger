@@ -2,8 +2,10 @@ import { FC, useEffect } from "react";
 import { nanoid } from "nanoid";
 import classnames from "classnames";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import { wsActionType } from "../../redux/middleware/socket-middleware";
 import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
+import { TIngredientsInOrder } from "../../utils/types";
 
 import styles from "./feed.module.scss";
 
@@ -14,6 +16,7 @@ const FeedPage: FC = () => {
 
     useEffect(() => {
         dispatch({ type: wsActionType.wsConnecting });
+        // eslint-disable-next-line
     }, []);
 
     return (
@@ -138,7 +141,7 @@ const FeedPage: FC = () => {
     );
 };
 
-const IngredientsInOrder = ({ ingredients, orderIngredients }) => {
+const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredients }) => {
     const ingredientInOrder = ingredients?.filter((item) => orderIngredients.includes(item._id));
     return (
         <>

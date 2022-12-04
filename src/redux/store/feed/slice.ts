@@ -1,9 +1,10 @@
-import { wsActionType } from '../../middleware/socket-middleware';
 import { createSlice } from "@reduxjs/toolkit";
+import { TOrder } from "../../../utils/types";
+
 export type OrdersInitState = {
-  orders: any;
-  total?: any;
-  totalToday?: any;
+  orders: Array<TOrder> | null;
+  total?: number | null;
+  totalToday?: number | null;
   userOrders:any;
 }
 
@@ -19,13 +20,12 @@ const feedSlice = createSlice({
   initialState,
   reducers: {
     wsMessage: (state, action) => {
-      const { success, orders, total, totalToday } = action.payload;
+      const { orders, total, totalToday } = action.payload;
       state.orders = orders;
       state.total = total;
       state.totalToday = totalToday;
 
     },
-    
   },
 });
 

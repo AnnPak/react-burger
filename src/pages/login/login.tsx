@@ -1,6 +1,5 @@
 import { useState, useEffect, FormEvent, FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
     Button,
@@ -8,7 +7,7 @@ import {
     PasswordInput,
     EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/store";
 import { loginUser } from "../../redux/store/user/user";
 
 import styles from "./login.module.scss";
@@ -19,7 +18,7 @@ const Login: FC = () => {
     const [isError, setIsError] = useState<boolean>(false);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const userRegister = (e: FormEvent) => {
         e.preventDefault();

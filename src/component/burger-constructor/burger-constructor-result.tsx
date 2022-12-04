@@ -1,5 +1,4 @@
 import { FC, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
@@ -8,13 +7,13 @@ import { TIngredient } from "../../utils/types";
 import { addOrderToModal } from "../../redux/store/modal/slice";
 import { fetchOrder } from "../../redux/store/order/slice";
 import { getCookie } from "../../utils/cookie";
-import { AppDispatch, RootState } from "../../redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorResult: FC = () => {
-    const { constructorIngredients, bun } = useSelector((store: RootState) => store.burgerConstructor);
-    const dispatch = useDispatch<AppDispatch>();
+    const { constructorIngredients, bun } = useAppSelector((store: RootState) => store.burgerConstructor);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const createOrder = () => {

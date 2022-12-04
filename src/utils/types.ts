@@ -65,6 +65,21 @@ export type TProtectedRoute = {
 
 export type TModalOverlay = {closePopup: () => void}
 
+export type TOrder = {
+    _id: string;
+    ingredients: string[];
+    status: 'done' | 'created' | 'pending';
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+}
+
+export type TIngredientsInOrder = {
+    ingredients: Array<TIngredient>;
+    orderIngredients: Array<string>
+}
+
 
 
 

@@ -1,75 +1,71 @@
-import { RootState, AppDispatch } from '../store/index';
-// socketMiddleware.ts
-import type { Middleware, MiddlewareAPI } from 'redux';
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-import { wsMessage } from '../store/feed/slice';
-// import type { AppActions, AppDispatch, RootState } from '../types';
+import { RootState, AppDispatch } from "../store/index";
+import type { Middleware, MiddlewareAPI } from "redux";
+import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { wsMessage } from "../store/feed/slice";
 
 export enum wsActionType {
-  wsConnect = 'wsConnect',
-  wsDisconnect = 'wsDisconnect',
-  wsConnecting = 'wsConnecting',
-  wsOpen = 'wsOpen',
-  wsClose = 'wsClose',
-  wsError = 'wsError',
-  wsMessage = 'wsMessage',
+    wsConnect = "wsConnect",
+    wsDisconnect = "wsDisconnect",
+    wsConnecting = "wsConnecting",
+    wsOpen = "wsOpen",
+    wsClose = "wsClose",
+    wsError = "wsError",
+    wsMessage = "wsMessage",
 }
 
 export type TwsActionTypes = {
-  wsConnect: ActionCreatorWithPayload<string>,
-  wsDisconnect: ActionCreatorWithoutPayload,
-  wsConnecting: ActionCreatorWithoutPayload,
-  wsOpen: ActionCreatorWithoutPayload,
-  wsClose: ActionCreatorWithoutPayload,
-  wsError: ActionCreatorWithPayload<string>,
-  wsMessage: ActionCreatorWithPayload<string>,
-}
+    wsConnect: ActionCreatorWithPayload<string>;
+    wsDisconnect: ActionCreatorWithoutPayload;
+    wsConnecting: ActionCreatorWithoutPayload;
+    wsOpen: ActionCreatorWithoutPayload;
+    wsClose: ActionCreatorWithoutPayload;
+    wsError: ActionCreatorWithPayload<string>;
+    wsMessage: ActionCreatorWithPayload<string>;
+};
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
-    return next => (action) => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
- 
-      if (type === 'wsConnecting') {
-            // объект класса WebSocket
+        return (next) => (action) => {
+            const { dispatch } = store;
+            const { type, payload } = action;
 
-        socket = new WebSocket(wsUrl);
-      }
-      if (socket) {
+            if (type === "wsConnecting") {
+                // объект класса WebSocket
 
-        // функция, которая вызывается при открытии сокета
-        socket.onopen = event => {
-          dispatch({ type: 'wsConnect', payload: event });
-        };
+                socket = new WebSocket(wsUrl);
+            }
+            if (socket) {
+                // функция, которая вызывается при открытии сокета
+                socket.onopen = (event) => {
+                    dispatch({ type: "wsConnect", payload: event });
+                };
 
                 // функция, которая вызывается при ошибке соединения
-        socket.onerror = event => {
-          dispatch({ type: 'wsError', payload: event });
-        };
+                socket.onerror = (event) => {
+                    dispatch({ type: "wsError", payload: event });
+                };
 
                 // функция, которая вызывается при получения события от сервера
-        socket.onmessage = event => {
-          const { data: serializedData } = event;
-          const data = JSON.parse(serializedData);
-          dispatch(wsMessage(data));
-        };
+                socket.onmessage = (event) => {
+                    const { data: serializedData } = event;
+                    const data = JSON.parse(serializedData);
+                    dispatch(wsMessage(data));
+                };
                 // функция, которая вызывается при закрытии соединения
-        socket.onclose = event => {
-          dispatch({ type: 'wsClose', payload: event });
-        };
+                socket.onclose = (event) => {
+                    dispatch({ type: "wsClose", payload: event });
+                };
 
-        if (type === 'wsMessage') {
-          const message = payload;
+                if (type === "wsMessage") {
+                    const message = payload;
                     // функция для отправки сообщения на сервер
-          socket.send(JSON.stringify(message));
-        }
-      }
+                    socket.send(JSON.stringify(message));
+                }
+            }
 
-      next(action);
-    };
+            next(action);
+        };
     }) as Middleware;
-}; 
+};

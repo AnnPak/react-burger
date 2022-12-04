@@ -1,6 +1,5 @@
 import { useEffect, FC, PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
@@ -8,13 +7,13 @@ import classnames from "classnames";
 import { removeModal } from "../../redux/store/modal/slice";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { TModal } from "../../utils/types";
-import { AppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/store";
 
 import styles from "./modal.module.scss";
 
 const Modal: FC<PropsWithChildren<TModal>> = ({ title, isRedirect, children }) => {
     const modalRoot = document.getElementById("react-modals")!;
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const closePopup = () => {
