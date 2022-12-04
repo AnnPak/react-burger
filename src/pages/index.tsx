@@ -8,7 +8,7 @@ import Orders from "./profile/profile-orders";
 import NotFound from "./notfound/notfound";
 import LogoutPage from "./logout/logout";
 import FeedPage from "./feed/feed";
-import FeedDetailPage from "./order-detail/order-detail";
+import OrderDetailPage from "./order-detail/order-detail";
 
 export {
     Home,
@@ -21,5 +21,5 @@ export {
     Orders,
     NotFound,
     LogoutPage,
-    FeedDetailPage,
+    OrderDetailPage,
 };

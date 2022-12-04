@@ -12,7 +12,7 @@ import {
     NotFound,
     LogoutPage,
     FeedPage,
-    FeedDetailPage
+    OrderDetailPage
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
@@ -46,7 +46,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
                     <Route path="/feed" element={<FeedPage />} />
-                    <Route path="/feed/:feedId" element={<FeedDetailPage />} />
+                    <Route path="/feed/:feedId" element={<OrderDetailPage />} />
                     <Route
                         path="/login"
                         element={<ProtectedRoute anonymous={true} element={<Login />} />}

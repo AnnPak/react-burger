@@ -11,7 +11,7 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import { FullOrderPrice } from "../../utils/full-order-price";
 import classnames from "classnames";
 
-const FeedDetailPage: FC = () => {
+const OrderDetailPage: FC = () => {
     const { feedId } = useParams();
     const dispatch = useAppDispatch();
     const { orders } = useAppSelector((store: RootState) => store.feed);
@@ -87,4 +87,4 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
     );
 };
 
-export default FeedDetailPage;
+export default OrderDetailPage;
