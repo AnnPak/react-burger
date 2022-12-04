@@ -6,6 +6,7 @@ import classnames from "classnames";
 import { nanoid } from "nanoid";
 import { TIngredientsInOrder, TOrdersList } from "../../utils/types";
 import { FC } from "react";
+import { FullOrderPrice } from "../../utils/full-order-price";
 
 const OrdersList: FC<TOrdersList> = ({ orders }) => {
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
@@ -81,7 +82,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
                 ))}
             </div>
             <p className={classnames(styles.orderPrice, "text text_type_digits-default")}>
-                560
+                {FullOrderPrice(ingredients, orderIngredients)}
                 <CurrencyIcon type="primary" />
             </p>
         </div>

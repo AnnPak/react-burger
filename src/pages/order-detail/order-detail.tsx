@@ -14,30 +14,40 @@ import classnames from "classnames";
 const OrderDetailPage: FC = () => {
     const { feedId } = useParams();
     const dispatch = useAppDispatch();
-    const { orders } = useAppSelector((store: RootState) => store.feed);
+    const { orders, success } = useAppSelector((store: RootState) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
 
     useEffect(() => {
         dispatch({ type: wsActionType.wsConnecting });
-        dispatch({ type: wsActionType.wsClose });
+        return () => {
+            dispatch({ type: wsActionType.wsClose });
+        };
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         orders && setCurrentOrder(orders.find((order) => order._id === feedId));
+        // eslint-disable-next-line
     }, [orders]);
+
+    useEffect(() => {
+        success && dispatch({ type: wsActionType.wsClose });
+        // eslint-disable-next-line
+    }, [success]);
 
     return (
         <section className={classnames(styles.orderDetail)}>
             {!currentOrder && !ingredients && <Preloader />}
             {currentOrder && ingredients && (
                 <div className={styles.order}>
-                    <p className={classnames("text text_type_digits-default", styles.orderNumber)}>{`#${currentOrder.number}`}</p>
+                    <p
+                        className={classnames("text text_type_digits-default", styles.orderNumber)}
+                    >{`#${currentOrder.number}`}</p>
                     <p className="text text_type_main-medium mt-10">{currentOrder.name}</p>
                     <p className={classnames("text text_type_main-small mt-3", styles.orderStatus)}>
-                      {currentOrder.status === "done" && "Выполнен"}
-                      {currentOrder.status === "pending" && "В работе"}
+                        {currentOrder.status === "done" && "Выполнен"}
+                        {currentOrder.status === "pending" && "В работе"}
                     </p>
                     <div>
                         <p className="text text_type_main-medium mt-15">Состав:</p>
@@ -67,22 +77,25 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
     const ingredientInOrder = ingredients?.filter((item) => orderIngredients.includes(item._id));
     return (
         <div className={styles.orderIngredients}>
-            {ingredientInOrder.map((item, i) => (
-                <div className={classnames(styles.orderIngredientItem,'mt-6')} key={nanoid()}>
-                    <div className={styles.leftBlock}>
-                        <img
-                            src={item.image}
-                            alt={item.name}
-                            className={styles.orderIngredientImg}
-                        />
-                        <p className="text text_type_main-small ml-4">{item.name}</p>
+            {ingredientInOrder.map((item, i) => {
+                const count = orderIngredients.filter(i => i === item._id).length;
+                return (
+                    <div className={classnames(styles.orderIngredientItem, "mt-6")} key={nanoid()}>
+                        <div className={styles.leftBlock}>
+                            <img
+                                src={item.image}
+                                alt={item.name}
+                                className={styles.orderIngredientImg}
+                            />
+                            <p className="text text_type_main-small ml-4">{item.name}</p>
+                        </div>
+                        <div className={styles.rightBlock}>
+                            <p className="text text_type_digits-default mr-2">{count} x {count * item.price}</p>
+                            <CurrencyIcon type="primary" />
+                        </div>
                     </div>
-                    <div className={styles.rightBlock}>
-                        <p className="text text_type_digits-default mr-2">{item.price}</p>
-                        <CurrencyIcon type="primary" />
-                    </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 };

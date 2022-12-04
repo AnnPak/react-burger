@@ -25,46 +25,46 @@ export type TwsActionTypes = {
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        let socket: WebSocket | null = null;
+        let socket: WebSocket | null;
 
         return (next) => (action) => {
             const { dispatch } = store;
             const { type, payload } = action;
 
-            if (type === "wsConnecting") {
-                // объект класса WebSocket
+            switch (type) {
+                case "wsConnecting": {
+                    socket = new WebSocket(wsUrl);
 
-                socket = new WebSocket(wsUrl);
-            }
-            if (socket) {
-                // функция, которая вызывается при открытии сокета
-                socket.onopen = (event) => {
-                    dispatch({ type: "wsConnect", payload: event });
-                };
+                    if (socket) {
+                        // функция, которая вызывается при открытии сокета
+                        socket.onopen = () => {
+                            dispatch({ type: "wsConnect" });
+                        };
 
-                // функция, которая вызывается при ошибке соединения
-                socket.onerror = (event) => {
-                    dispatch({ type: "wsError", payload: event });
-                };
+                        // функция, которая вызывается при ошибке соединения
+                        socket.onerror = () => {
+                            dispatch({ type: "wsError" });
+                        };
 
-                // функция, которая вызывается при получения события от сервера
-                socket.onmessage = (event) => {
-                    const { data: serializedData } = event;
-                    const data = JSON.parse(serializedData);
-                    dispatch(wsMessage(data));
-                };
-                // функция, которая вызывается при закрытии соединения
-                socket.onclose = (event) => {
-                    dispatch({ type: "wsClose", payload: event });
-                };
-
-                if (type === "wsMessage") {
+                        // функция, которая вызывается при получения события от сервера
+                        socket.onmessage = (event) => {
+                            const { data: serializedData } = event;
+                            const data = JSON.parse(serializedData);
+                            dispatch(wsMessage(data));
+                        };
+                        // функция, которая вызывается при закрытии соединения
+                        socket.onclose = () => {
+                            dispatch({ type: "wsClose" });
+                        };
+                    }
+                    break;
+                }
+                case "wsMessage":
                     const message = payload;
                     // функция для отправки сообщения на сервер
-                    socket.send(JSON.stringify(message));
-                }
+                    socket?.send(JSON.stringify(message));
+                    break;
             }
-
             next(action);
         };
     }) as Middleware;
