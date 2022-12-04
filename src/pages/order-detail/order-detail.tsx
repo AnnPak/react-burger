@@ -21,7 +21,7 @@ const OrderDetailPage: FC = () => {
     useEffect(() => {
         dispatch({ type: wsActionType.wsConnecting });
         return () => {
-            dispatch({ type: wsActionType.wsClose });
+            // dispatch({ type: wsActionType.wsClose });
         };
         // eslint-disable-next-line
     }, []);
@@ -32,7 +32,7 @@ const OrderDetailPage: FC = () => {
     }, [orders]);
 
     useEffect(() => {
-        success && dispatch({ type: wsActionType.wsClose });
+        // success && dispatch({ type: wsActionType.wsClose });
         // eslint-disable-next-line
     }, [success]);
 

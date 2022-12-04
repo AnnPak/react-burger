@@ -3,7 +3,7 @@ import { TIngredient } from "../../../utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
-import { fetchOrder } from "../order/slice";
+import { createOrder } from "../order/slice";
 
 export type TConstructorState = {
     constructorIngredients: null | Array<TIngredient>;
@@ -66,7 +66,7 @@ const constructorsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchOrder.fulfilled, (state) => {
+        builder.addCase(createOrder.fulfilled, (state) => {
             state.constructorIngredients = null;
             state.bun = null;
         });

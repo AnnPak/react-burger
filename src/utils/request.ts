@@ -16,6 +16,23 @@ export const request = async (url: string, body?: any, method?: string) => {
         return response.json();
     });
 };
+export const requestCreateOrder = async (url: string, body?: any, method?: string) => {
+    const requestOptions = {
+        method: method ? method : "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${getCookie("accessToken")}`,
+        },
+        body: body ? body : null,
+    };
+
+    return fetch(url, requestOptions).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+        }
+        return response.json();
+    });
+};
 
 export const updateUserData = async (url: string, values: TStringArray) => {
     return fetch(url, {

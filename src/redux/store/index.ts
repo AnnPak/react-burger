@@ -11,6 +11,7 @@ import password from "./user/password";
 import feed from "./feed/slice";
 import { socketMiddleware } from "../middleware/socket-middleware";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../../utils/cookie";
 
 const store = configureStore({
     reducer: {
@@ -25,10 +26,12 @@ const store = configureStore({
         feed,
     },
     middleware: getDefaultMiddleware({ serializableCheck: false }).concat(
-        socketMiddleware("wss://norma.nomoreparties.space/orders/all")
+        // socketMiddleware("wss://norma.nomoreparties.space/orders/all"),
+        socketMiddleware(`wss://norma.nomoreparties.space/orders?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}`)
     ),
     devTools: process.env.NODE_ENV !== "production",
 });
+console.log(`wss://norma.nomoreparties.space/orders?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}`)
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -5,18 +5,21 @@ import classnames from "classnames";
 import { TIngredient } from "../../utils/types";
 
 import { addOrderToModal } from "../../redux/store/modal/slice";
-import { fetchOrder } from "../../redux/store/order/slice";
+// import { createOrder } from "../../redux/store/order/slice";
 import { getCookie } from "../../utils/cookie";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
+import { createOrder } from "../../redux/store/order/slice";
 
 const BurgerConstructorResult: FC = () => {
-    const { constructorIngredients, bun } = useAppSelector((store: RootState) => store.burgerConstructor);
+    const { constructorIngredients, bun } = useAppSelector(
+        (store: RootState) => store.burgerConstructor
+    );
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const createOrder = () => {
+    const createNewOrder = () => {
         if (localStorage.getItem("isUserLogged") === "true") {
             dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
@@ -26,9 +29,8 @@ const BurgerConstructorResult: FC = () => {
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
 
             dispatch(
-                fetchOrder({
+                createOrder({
                     ingredients: orderIngredientsIds,
-                    Authorization: `${getCookie("accessToken")}`,
                 })
             );
         } else {
@@ -54,7 +56,7 @@ const BurgerConstructorResult: FC = () => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" size="large" htmlType="button" onClick={createOrder}>
+            <Button type="primary" size="large" htmlType="button" onClick={createNewOrder}>
                 Оформить заказ
             </Button>
         </section>

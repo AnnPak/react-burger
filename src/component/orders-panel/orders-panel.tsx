@@ -17,7 +17,7 @@ const OrdersPanel: FC<TOrdersPanel> = ({ orders, total, totalToday }) => {
                                 ?.filter((order) => order.status === "done")
                                 ?.map(
                                     (order, i) =>
-                                        i <= 15 && (
+                                        i <= 10 && (
                                             <p
                                                 className="text text_type_digits-default mt-2 mr-3"
                                                 key={nanoid()}

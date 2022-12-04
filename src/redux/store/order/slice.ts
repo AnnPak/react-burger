@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { request } from "../../../utils/request";
+import { requestCreateOrder } from "../../../utils/request";
 import { ORDERS_API } from "../../../utils/constants";
-import { TStringArray } from "../../../utils/types";
 
 export type TOrderState = {
     orderNumber: null | number
@@ -16,12 +15,10 @@ const initialState:TOrderState = {
 
 type TFetchOrder = {
     ingredients: Array<string | null >
-    Authorization: string
 }
 
-
-export const fetchOrder = createAsyncThunk("order/fetchOrder", async (requestBody:TFetchOrder) => {
-    return await request(ORDERS_API, JSON.stringify(requestBody), "POST");
+export const createOrder = createAsyncThunk("order/createOrder", async (requestBody:TFetchOrder) => {
+    return await requestCreateOrder(ORDERS_API, JSON.stringify(requestBody), "POST");
 });
 
 const orderSlice = createSlice({
@@ -30,17 +27,17 @@ const orderSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchOrder.pending, (state) => {
+            .addCase(createOrder.pending, (state) => {
                 state.orderStatus = "loading";
             })
-            .addCase(fetchOrder.fulfilled, (state, action) => {
+            .addCase(createOrder.fulfilled, (state, action) => {
                 state.orderNumber = action.payload.order.number;
                 state.orderStatus = "success";
                 
                 localStorage.removeItem("bun");
                 localStorage.removeItem("constructorIngredients");
             })
-            .addCase(fetchOrder.rejected, (state) => {
+            .addCase(createOrder.rejected, (state) => {
                 state.orderStatus = "error";
                 state.orderNumber = null;
             });
