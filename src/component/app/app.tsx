@@ -16,7 +16,7 @@ import {
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
-import ProfileNav from "../../pages/profile/profile-nav";
+import ProfileNav from "../../pages/profile/profile";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { userFetchWithRefresh } from "../../redux/store/user/user";

@@ -1,17 +1,28 @@
-import { useState, MouseEvent, FC } from "react";
+import { useState, MouseEvent, FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
 import styles from "./profile.module.scss";
+import { useAppDispatch } from "../../redux/store";
+import { wsActionType } from "../../redux/middleware/socket-middleware";
 
 const ProfileNav:FC = () => {
     const [content, setContent] = useState<string | null>("profile");
+    const dispatch = useAppDispatch();
 
     const pathname = window.location.pathname;
     const changeActiveItem = (e: MouseEvent<HTMLElement>) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
     };
+
+    useEffect(() => {
+        dispatch({ type: wsActionType.wsUserConnecting });
+        return () => {
+            dispatch({ type: wsActionType.wsClose });
+        };
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div className={styles.navbar}>

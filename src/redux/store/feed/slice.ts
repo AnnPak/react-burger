@@ -28,6 +28,13 @@ const feedSlice = createSlice({
       state.total = total;
       state.totalToday = totalToday;
     },
+    wsUserMessage: (state, action) => {
+      const { success, orders, total, totalToday } = action.payload;
+      state.success = success;
+      state.userOrders = orders;
+      state.total = total;
+      state.totalToday = totalToday;
+    },
     wsClose: (state) => {
       state.success = false;
     },
@@ -35,5 +42,5 @@ const feedSlice = createSlice({
 });
 
 const { actions, reducer } = feedSlice;
-export const {wsMessage} = actions
+export const {wsMessage, wsUserMessage} = actions
 export default reducer;

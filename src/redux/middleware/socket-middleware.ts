@@ -1,7 +1,7 @@
 import { RootState, AppDispatch } from "../store/index";
 import type { Middleware, MiddlewareAPI } from "redux";
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { wsMessage } from "../store/feed/slice";
+import { wsMessage, wsUserMessage } from "../store/feed/slice";
 
 export enum wsActionType {
     wsConnect = "wsConnect",
@@ -11,6 +11,14 @@ export enum wsActionType {
     wsClose = "wsClose",
     wsError = "wsError",
     wsMessage = "wsMessage",
+
+    wsUserConnect = "wsUserConnect",
+    wsUserDisconnect = "wUsersDisconnect",
+    wsUserConnecting = "wsUserConnecting",
+    wsUserOpen = "wsUserOpen",
+    wsUserClose = "wsUserClose",
+    wsUserError = "wsUserError",
+    wsUserMessage = "wsUserMessage",
 }
 
 export type TwsActionTypes = {
@@ -21,6 +29,14 @@ export type TwsActionTypes = {
     wsClose: ActionCreatorWithoutPayload;
     wsError: ActionCreatorWithPayload<string>;
     wsMessage: ActionCreatorWithPayload<string>;
+
+    wsUserConnect: ActionCreatorWithPayload<string>;
+    wsUserDisconnect: ActionCreatorWithoutPayload;
+    wsUserConnecting: ActionCreatorWithoutPayload;
+    wsUserOpen: ActionCreatorWithoutPayload;
+    wsUserClose: ActionCreatorWithoutPayload;
+    wsUserError: ActionCreatorWithPayload<string>;
+    wsUserMessage: ActionCreatorWithPayload<string>;
 };
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
@@ -30,31 +46,51 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
         return (next) => (action) => {
             const { dispatch } = store;
             const { type, payload } = action;
+            const isUserWsUrl = wsUrl.includes("token");
 
             switch (type) {
                 case "wsConnecting": {
-                    socket = new WebSocket(wsUrl);
+                    socket = !isUserWsUrl ? new WebSocket(wsUrl) : null;
 
                     if (socket) {
-                        // функция, которая вызывается при открытии сокета
                         socket.onopen = () => {
                             dispatch({ type: "wsConnect" });
                         };
 
-                        // функция, которая вызывается при ошибке соединения
                         socket.onerror = () => {
                             dispatch({ type: "wsError" });
                         };
 
-                        // функция, которая вызывается при получения события от сервера
                         socket.onmessage = (event) => {
                             const { data: serializedData } = event;
                             const data = JSON.parse(serializedData);
                             dispatch(wsMessage(data));
                         };
-                        // функция, которая вызывается при закрытии соединения
                         socket.onclose = () => {
                             dispatch({ type: "wsClose" });
+                        };
+                    }
+                    break;
+                }
+                case "wsUserConnecting": {
+                    socket = isUserWsUrl ? new WebSocket(wsUrl) : null;
+
+                    if (socket) {
+                        socket.onopen = () => {
+                            dispatch({ type: "wsUserConnect" });
+                        };
+
+                        socket.onerror = () => {
+                            dispatch({ type: "wsUserError" });
+                        };
+
+                        socket.onmessage = (event) => {
+                            const { data: serializedData } = event;
+                            const data = JSON.parse(serializedData);
+                            dispatch(wsUserMessage(data));
+                        };
+                        socket.onclose = () => {
+                            dispatch({ type: "wsUserClose" });
                         };
                     }
                     break;
@@ -63,6 +99,11 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                     const message = payload;
                     // функция для отправки сообщения на сервер
                     socket?.send(JSON.stringify(message));
+                    break;
+                case "wsUserMessage":
+                    const userMessage = payload;
+                    // функция для отправки сообщения на сервер
+                    socket?.send(JSON.stringify(userMessage));
                     break;
             }
             next(action);

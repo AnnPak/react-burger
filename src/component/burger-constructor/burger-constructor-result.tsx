@@ -5,8 +5,6 @@ import classnames from "classnames";
 import { TIngredient } from "../../utils/types";
 
 import { addOrderToModal } from "../../redux/store/modal/slice";
-// import { createOrder } from "../../redux/store/order/slice";
-import { getCookie } from "../../utils/cookie";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
