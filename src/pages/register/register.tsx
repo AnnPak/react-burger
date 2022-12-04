@@ -21,7 +21,7 @@ const Register:FC = () => {
 
     const { registerSuccess } = useAppSelector((store: RootState) => store.register);
 
-    const dispatch = useAppDispatch());
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const userRegister = (e: FormEvent) => {
         e.preventDefault();
