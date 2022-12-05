@@ -1,5 +1,5 @@
 import styles from "./orders-list.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { RootState, useAppSelector } from "../../redux/store";
 import classnames from "classnames";
@@ -8,17 +8,19 @@ import { TIngredientsInOrder, TOrdersList } from "../../utils/types";
 import { FC } from "react";
 import { FullOrderPrice } from "../../utils/full-order-price";
 
-const OrdersList: FC<TOrdersList> = ({ orders }) => {
+const OrdersList: FC<TOrdersList> = ({ orders, pathname }) => {
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
+    const location = useLocation();
 
     return (
         <div className={classnames(styles.ordersList, "mt-2, mr-15")}>
             {orders &&
                 orders.map((order) => (
                     <Link
-                        to={`/feed/${order._id}`}
+                        to={pathname + order._id}
                         className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}
                         key={nanoid()}
+                        state={{ background: location }}
                     >
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
                             <p

@@ -11,17 +11,13 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
     const { pathname } = useLocation();
-    const isConstructor = pathname === "/"
-    const isProfile = pathname === "/profile"
-    const isFeed = pathname === "/feed"
-
     return (
         <nav className="mt-4">
             <div className={styles.navbarItem}>
-                <NavLink 
+                <NavLink
                     className={classnames(
                         styles.navbarItemLink,
-                        isConstructor && styles.navbarItemLinkActive,
+                        pathname.indexOf("/profile") === -1 && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0"
                     )}
                     to="/"
@@ -33,7 +29,7 @@ const Navbar = () => {
                 <NavLink
                     className={classnames(
                         styles.navbarItemLink,
-                        isFeed && styles.navbarItemLinkActive,
+                        pathname.indexOf("/feed") > -1 && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
                     to="/feed"
@@ -47,8 +43,7 @@ const Navbar = () => {
                 <NavLink
                     className={classnames(
                         styles.navbarItemLink,
-                        isProfile &&
-                            styles.navbarItemLinkActive,
+                        pathname.indexOf("/profile") > -1 && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
                     to="/profile"

@@ -31,7 +31,7 @@ const FeedPage: FC = () => {
 
             {orders && (
                 <div className={styles.orderFeedWrapper}>
-                    <OrdersList orders={orders} />
+                    <OrdersList orders={orders} pathname='/feed/'/>
 
                     <OrdersPanel orders={orders} total={total} totalToday={totalToday} />
                 </div>

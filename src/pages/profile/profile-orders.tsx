@@ -9,7 +9,7 @@ const Orders: FC = () => {
     return (
         <>
             {!userOrders && <Preloader />}
-            {userOrders && <OrdersList orders={userOrders} />}
+            {userOrders && <OrdersList orders={userOrders} pathname="/profile/orders/"/>}
         </>
     );
 };

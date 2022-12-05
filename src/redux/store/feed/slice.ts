@@ -6,7 +6,7 @@ export type OrdersInitState = {
   orders: Array<TOrder> | null;
   total?: number | null;
   totalToday?: number | null;
-  userOrders:any;
+  userOrders:Array<TOrder> | null;
 }
 
 export const initialState:OrdersInitState = {

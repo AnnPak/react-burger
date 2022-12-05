@@ -82,6 +82,7 @@ export type TIngredientsInOrder = {
 
 export type TOrdersList = {
     orders: Array<TOrder> | null;
+    pathname: string;
 };
 
 export type TOrdersPanel = {
@@ -89,3 +90,9 @@ export type TOrdersPanel = {
     total: number | null | undefined;
     totalToday: number | null | undefined;
 };
+
+export type TOrderDetail = {
+    isUserOrder?: boolean;
+    isModal?: boolean;
+}
+

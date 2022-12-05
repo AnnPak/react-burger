@@ -4,35 +4,48 @@ import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 import { wsActionType } from "../../redux/middleware/socket-middleware";
 
 import styles from "./order-detail.module.scss";
-import { TIngredientsInOrder, TOrder } from "../../utils/types";
+import { TIngredientsInOrder, TOrder, TOrderDetail } from "../../utils/types";
 import Preloader from "../../component/preloader/preloader";
 import { nanoid } from "nanoid";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FullOrderPrice } from "../../utils/full-order-price";
 import classnames from "classnames";
 
-const OrderDetailPage: FC = () => {
-    const { feedId } = useParams();
+const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
+    const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, success } = useAppSelector((store: RootState) => store.feed);
+    const { orders, success, userOrders } = useAppSelector((store: RootState) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
 
     useEffect(() => {
-        dispatch({ type: wsActionType.wsConnecting });
-        return () => {
-            // dispatch({ type: wsActionType.wsClose });
-        };
+        if (!isModal) {
+            isUserOrder
+                ? dispatch({ type: wsActionType.wsUserConnecting })
+                : dispatch({ type: wsActionType.wsConnecting });
+            console.log('lllol')
+            return () => {
+                dispatch({ type: wsActionType.wsClose });
+            };
+        }
+
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        orders && setCurrentOrder(orders.find((order) => order._id === feedId));
+        orders && !isUserOrder && setCurrentOrder(orders.find((order) => order._id === number));
         // eslint-disable-next-line
     }, [orders]);
 
     useEffect(() => {
-        // success && dispatch({ type: wsActionType.wsClose });
+        userOrders &&
+            isUserOrder &&
+            setCurrentOrder(userOrders.find((order) => order._id === number));
+        // eslint-disable-next-line
+    }, [userOrders]);
+
+    useEffect(() => {
+        success && !isModal && dispatch({ type: wsActionType.wsClose });
         // eslint-disable-next-line
     }, [success]);
 
@@ -78,7 +91,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
     return (
         <div className={styles.orderIngredients}>
             {ingredientInOrder.map((item, i) => {
-                const count = orderIngredients.filter(i => i === item._id).length;
+                const count = orderIngredients.filter((i) => i === item._id).length;
                 return (
                     <div className={classnames(styles.orderIngredientItem, "mt-6")} key={nanoid()}>
                         <div className={styles.leftBlock}>
@@ -90,7 +103,9 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
                             <p className="text text_type_main-small ml-4">{item.name}</p>
                         </div>
                         <div className={styles.rightBlock}>
-                            <p className="text text_type_digits-default mr-2">{count} x {count * item.price}</p>
+                            <p className="text text_type_digits-default mr-2">
+                                {count} x {count * item.price}
+                            </p>
                             <CurrencyIcon type="primary" />
                         </div>
                     </div>

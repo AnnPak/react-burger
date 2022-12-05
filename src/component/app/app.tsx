@@ -44,9 +44,12 @@ function App() {
 
                 <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
-                    <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
                     <Route path="/feed" element={<FeedPage />} />
-                    <Route path="/feed/:feedId" element={<OrderDetailPage />} />
+                    <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+
+                    <Route path="/profile/orders/:number" element={<OrderDetailPage isUserOrder={true}/>} />
+                    <Route path="/feed/:number" element={<OrderDetailPage />} />
+
                     <Route
                         path="/login"
                         element={<ProtectedRoute anonymous={true} element={<Login />} />}
@@ -103,7 +106,23 @@ function App() {
                                 </Modal>
                             }
                         />
+                        <Route path="/profile/orders/:number" element={
+                            <Modal isRedirect={true}>
+                                <OrderDetailPage isUserOrder={true} isModal={true}/>
+                            </Modal>
+                        } 
+                        />
+
+                        <Route path="/feed/:number" element={
+                            <Modal isRedirect={true}>
+                                <OrderDetailPage isModal={true}/>
+                            </Modal>
+                        } 
+                        />
+
                     </Routes>
+
+
                 )}
             </div>
         );
