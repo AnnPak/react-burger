@@ -6,46 +6,48 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import LinkItem from "../link-item/link-item";
-
 import styles from "./app-header.module.scss";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
-    const pathname = window.location.pathname;
+    const { pathname } = useLocation();
+    const isConstructor = pathname === "/"
+    const isProfile = pathname === "/profile"
+    const isFeed = pathname === "/feed"
+
     return (
         <nav className="mt-4">
             <div className={styles.navbarItem}>
-                <LinkItem 
+                <NavLink 
                     className={classnames(
                         styles.navbarItemLink,
-                        pathname.indexOf("/profile") === -1 && styles.navbarItemLinkActive,
+                        isConstructor && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0"
                     )}
                     to="/"
                 >
                     <BurgerIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Конструктор</p>
-                </LinkItem>
+                </NavLink>
 
-                <LinkItem
+                <NavLink
                     className={classnames(
                         styles.navbarItemLink,
-                        pathname.indexOf("/feed") > -1 && styles.navbarItemLinkActive,
+                        isFeed && styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
                     to="/feed"
                 >
                     <ListIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Лента заказов</p>
-                </LinkItem>
+                </NavLink>
             </div>
 
             <div className={styles.navbarItem}>
-                <LinkItem
+                <NavLink
                     className={classnames(
                         styles.navbarItemLink,
-                        pathname.indexOf("/profile") > -1 &&
-                            pathname.indexOf("/profile/") === -1 &&
+                        isProfile &&
                             styles.navbarItemLinkActive,
                         "mr-2 p-4 pl-0 active"
                     )}
@@ -53,7 +55,7 @@ const Navbar = () => {
                 >
                     <ProfileIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Личный кабинет</p>
-                </LinkItem>
+                </NavLink>
             </div>
         </nav>
     );
