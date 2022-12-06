@@ -66,7 +66,7 @@ const constructorsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(createOrder.fulfilled, (state) => {
+        builder.addCase(createOrder.pending, (state) => {
             state.constructorIngredients = null;
             state.bun = null;
         });

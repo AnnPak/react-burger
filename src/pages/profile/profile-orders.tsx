@@ -5,11 +5,13 @@ import { wsActionType } from "../../redux/middleware/socket-middleware";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 const Orders: FC = () => {
-    const { userOrders } = useAppSelector((store: RootState) => store.feed);
+    const { userOrders,isSocketOpen } = useAppSelector((store: RootState) => store.feed);
     const dispatch = useAppDispatch()
+
+    const userOrdersReverse = userOrders && [...userOrders]
     
     useEffect(() => {
-        dispatch({ type: wsActionType.wsUserConnecting });
+        !isSocketOpen && dispatch({ type: wsActionType.wsUserConnecting });
         return () => {
             dispatch({ type: wsActionType.wsClose });
         };
@@ -19,7 +21,7 @@ const Orders: FC = () => {
     return (
         <>
             {!userOrders && <Preloader />}
-            {userOrders && <OrdersList orders={userOrders} pathname="/profile/orders/"/>}
+            {userOrders && <OrdersList orders={userOrdersReverse?.reverse()} pathname="/profile/orders/"/>}
         </>
     );
 };

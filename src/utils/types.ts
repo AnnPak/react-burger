@@ -81,7 +81,7 @@ export type TIngredientsInOrder = {
 };
 
 export type TOrdersList = {
-    orders: Array<TOrder> | null;
+    orders: Array<TOrder> | null | undefined;
     pathname: string;
 };
 

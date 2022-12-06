@@ -29,13 +29,12 @@ const orderSlice = createSlice({
         builder
             .addCase(createOrder.pending, (state) => {
                 state.orderStatus = "loading";
+                localStorage.removeItem("bun");
+                localStorage.removeItem("constructorIngredients");
             })
             .addCase(createOrder.fulfilled, (state, action) => {
                 state.orderNumber = action.payload.order.number;
                 state.orderStatus = "success";
-                
-                localStorage.removeItem("bun");
-                localStorage.removeItem("constructorIngredients");
             })
             .addCase(createOrder.rejected, (state) => {
                 state.orderStatus = "error";
