@@ -32,7 +32,11 @@ const OrdersList: FC<TOrdersList> = ({ orders, pathname }) => {
                                 {"#" + order.number}
                             </p>
 
-                            <FormattedDate date={new Date(order.createdAt)} />
+                            {order.status === "created" ? (
+                               <FormattedDate date={new Date()} />
+                            ) : (
+                                <FormattedDate date={new Date(order.createdAt)} />
+                            )}
                         </div>
                         <div className={classnames(styles.orderBody)}>
                             <div
@@ -45,11 +49,11 @@ const OrdersList: FC<TOrdersList> = ({ orders, pathname }) => {
                             </div>
 
                             {ingredients && (
-                                    <IngredientsInOrder
-                                        ingredients={ingredients}
-                                        orderIngredients={order.ingredients}
-                                    />
-                                )}
+                                <IngredientsInOrder
+                                    ingredients={ingredients}
+                                    orderIngredients={order.ingredients}
+                                />
+                            )}
                         </div>
                     </Link>
                 ))}
