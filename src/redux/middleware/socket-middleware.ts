@@ -1,7 +1,8 @@
 import { RootState, AppDispatch } from "../store/index";
 import type { Middleware, MiddlewareAPI } from "redux";
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { wsMessage, wsUserMessage } from "../store/feed/slice";
+import { wsMessage, wsUserMessage, wsConnect, wsClose, wsUserConnect, wsUserClose } from "../store/feed/slice";
+import { getCookie } from "../../utils/cookie";
 
 export enum wsActionType {
     wsConnect = "wsConnect",
@@ -46,15 +47,15 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
         return (next) => (action) => {
             const { dispatch } = store;
             const { type, payload } = action;
-            const isUserWsUrl = wsUrl.includes("token");
+            
 
             switch (type) {
                 case "wsConnecting": {
-                    socket = !isUserWsUrl ? new WebSocket(wsUrl) : null;
+                    socket = new WebSocket(`${wsUrl}/all`);
 
                     if (socket) {
-                        socket.onopen = () => {
-                            dispatch({ type: "wsConnect" });
+                        socket.onopen = (event) => {
+                            dispatch(wsConnect(event));
                         };
 
                         socket.onerror = () => {
@@ -66,18 +67,19 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                             const data = JSON.parse(serializedData);
                             dispatch(wsMessage(data));
                         };
-                        socket.onclose = () => {
-                            dispatch({ type: "wsClose" });
+                        socket.onclose = (event) => {
+                            socket &&                           
+                            dispatch(wsClose(event));
                         };
                     }
                     break;
                 }
                 case "wsUserConnecting": {
-                    socket = isUserWsUrl ? new WebSocket(wsUrl) : null;
+                    socket = new WebSocket(`${wsUrl}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}`);
 
                     if (socket) {
-                        socket.onopen = () => {
-                            dispatch({ type: "wsUserConnect" });
+                        socket.onopen = (event) => {
+                            dispatch(wsUserConnect(event));
                         };
 
                         socket.onerror = () => {
@@ -89,8 +91,9 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                             const data = JSON.parse(serializedData);
                             dispatch(wsUserMessage(data));
                         };
-                        socket.onclose = () => {
-                            dispatch({ type: "wsUserClose" });
+                        socket.onclose = (event) => {
+                            socket &&       
+                            dispatch(wsUserClose(event));
                         };
                     }
                     break;
@@ -99,6 +102,14 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
                     const message = payload;
                     // функция для отправки сообщения на сервер
                     socket?.send(JSON.stringify(message));
+                    break;
+                case "wsClose":
+                    socket?.close();
+                    socket = null;
+                    break;
+                case "wsUserClose":
+                    socket?.close();
+                    socket = null;
                     break;
                 case "wsUserMessage":
                     const userMessage = payload;

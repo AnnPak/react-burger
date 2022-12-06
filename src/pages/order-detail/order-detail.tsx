@@ -14,16 +14,15 @@ import classnames from "classnames";
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, success, userOrders } = useAppSelector((store: RootState) => store.feed);
+    const { orders, userOrders, isSocketOpen } = useAppSelector((store: RootState) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
 
     useEffect(() => {
-        if (!isModal) {
+        if (!isModal && !isSocketOpen) {
             isUserOrder
                 ? dispatch({ type: wsActionType.wsUserConnecting })
                 : dispatch({ type: wsActionType.wsConnecting });
-            console.log('lllol')
             return () => {
                 dispatch({ type: wsActionType.wsClose });
             };
@@ -43,11 +42,6 @@ const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
             setCurrentOrder(userOrders.find((order) => order._id === number));
         // eslint-disable-next-line
     }, [userOrders]);
-
-    useEffect(() => {
-        success && !isModal && dispatch({ type: wsActionType.wsClose });
-        // eslint-disable-next-line
-    }, [success]);
 
     return (
         <section className={classnames(styles.orderDetail)}>

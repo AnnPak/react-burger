@@ -9,7 +9,7 @@ const Orders: FC = () => {
     const dispatch = useAppDispatch()
     
     useEffect(() => {
-        dispatch({ type: wsActionType.wsConnecting });
+        dispatch({ type: wsActionType.wsUserConnecting });
         return () => {
             dispatch({ type: wsActionType.wsClose });
         };
