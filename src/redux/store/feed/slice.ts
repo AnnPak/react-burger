@@ -6,7 +6,8 @@ export type OrdersInitState = {
     total?: number | null;
     totalToday?: number | null;
     userOrders: Array<TOrder> | null;
-    isSocketOpen: boolean | null;
+    isWsOpen: boolean | null;
+    isWsUserOpen: boolean | null;
 };
 
 export const initialState: OrdersInitState = {
@@ -14,7 +15,8 @@ export const initialState: OrdersInitState = {
     total: null,
     totalToday: null,
     userOrders: null,
-    isSocketOpen: null,
+    isWsOpen: null,
+    isWsUserOpen: null
 };
 
 const feedSlice = createSlice({
@@ -35,19 +37,19 @@ const feedSlice = createSlice({
         },
         wsClose: (state, action) => {
             const { type } = action.payload;
-            state.isSocketOpen = type === "close" ? true : false;
+            state.isWsOpen = type === "close" ? true : false;
         },
         wsUserClose: (state, action) => {
             const { type } = action.payload;
-            state.isSocketOpen = type === "close" ? true : false;
+            state.isWsUserOpen = type === "close" ? true : false;
         },
         wsConnect: (state, action) => {
             const { type } = action.payload;
-            state.isSocketOpen = type === "open" ? true : false;
+            state.isWsOpen = type === "open" ? true : false;
         },
         wsUserConnect: (state, action) => {
             const { type } = action.payload;
-            state.isSocketOpen = type === "open" ? true : false;
+            state.isWsUserOpen = type === "open" ? true : false;
         },
     },
 });

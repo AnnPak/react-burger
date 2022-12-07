@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import classnames from "classnames";
 
 import { wsActionType } from "../../redux/middleware/socket-middleware";
@@ -11,10 +11,13 @@ import Preloader from "../../component/preloader/preloader";
 
 const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { orders, total, totalToday } = useAppSelector((store: RootState) => store.feed);
-
+    const { orders, total, totalToday, isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const isSecondRender = useRef(false)
+    
     useEffect(() => {
-        dispatch({ type: wsActionType.wsConnecting });
+        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+        isSecondRender.current = true
+
         return () => {
             dispatch({ type: wsActionType.wsClose });
         };

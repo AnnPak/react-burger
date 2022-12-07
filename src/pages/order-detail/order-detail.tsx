@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 import { wsActionType } from "../../redux/middleware/socket-middleware";
@@ -14,21 +14,24 @@ import classnames from "classnames";
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, userOrders, isSocketOpen } = useAppSelector((store: RootState) => store.feed);
+    const { orders, userOrders, isWsOpen, isWsUserOpen } = useAppSelector((store: RootState) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
+    const isSecondRender = useRef(false)
 
     useEffect(() => {
-        if (!isModal && !isSocketOpen) {
-            isUserOrder
-                ? dispatch({ type: wsActionType.wsUserConnecting })
-                : dispatch({ type: wsActionType.wsConnecting });
+        if(!isModal){
+            
+            isUserOrder ? 
+            !isWsUserOpen && isSecondRender.current && dispatch({ type: wsActionType.wsUserConnecting }) :
+            !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+  
+            isSecondRender.current = true
             return () => {
-                dispatch({ type: wsActionType.wsClose });
-            };
+                isUserOrder ? dispatch({ type: wsActionType.wsUserClose }) : dispatch({ type: wsActionType.wsClose });
+            }  
         }
-
-        // eslint-disable-next-line
+        
     }, []);
 
     useEffect(() => {
