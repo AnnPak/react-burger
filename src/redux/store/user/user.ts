@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { updateUserData, fetchWithRefresh, request } from "../../utils/request";
-import { GET_USER, LOGIN_API } from "../../utils/constants";
-import { setCookie } from "../../utils/cookie";
-import { TStringArray } from "../../utils/types";
+import { updateUserData, fetchWithRefresh, request } from "../../../utils/request";
+import { GET_USER, LOGIN_API } from "../../../utils/constants";
+import { getCookie, setCookie } from "../../../utils/cookie";
+import { TStringArray } from "../../../utils/types";
 
 type TUserState = {
     user: any;
@@ -94,7 +94,7 @@ const userSlice = createSlice({
                 state.loginError = false;
                 state.loginSuccess = success ? true : false;
                 state.user = user;
-
+                
                 success && setCookie("accessToken", accessToken, null);
                 success && localStorage.setItem("refreshToken", refreshToken);
                 success && localStorage.setItem("isUserLogged", "true");

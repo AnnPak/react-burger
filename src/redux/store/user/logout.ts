@@ -1,9 +1,9 @@
-import { TStringArray } from './../../utils/types';
+import { TStringArray } from '../../../utils/types';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { request } from "../../utils/request";
-import { LOGOUT_API } from "../../utils/constants";
-import { deleteCookie } from "../../utils/cookie";
+import { request } from "../../../utils/request";
+import { LOGOUT_API } from "../../../utils/constants";
+import { deleteCookie } from "../../../utils/cookie";
 
 type TLogoutState = {
     logoutSending: boolean,

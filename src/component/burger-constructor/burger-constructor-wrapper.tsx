@@ -1,23 +1,22 @@
 import { FC, useCallback, useEffect } from "react";
 import classnames from "classnames";
-import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { TMoveCard, TIngredient } from "../../utils/types";
 import {
     updateBurgerIngredients,
     setIngredientsWithoutBun,
     setBun,
-} from "../../store/constructor/slice";
-import { AppDispatch, RootState } from "../../store";
+} from "../../redux/store/constructor/slice";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 import BurgerConstructorElement from "./burger-constructor-element";
 
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper: FC = () => {
-    const { bun, constructorIngredients } = useSelector(
+    const { bun, constructorIngredients } = useAppSelector(
         (store: RootState) => store.burgerConstructor
     );
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [, dropTargetRef] = useDrop({
         accept: "ingredients",

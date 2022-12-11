@@ -7,11 +7,13 @@ import styles from "./profile.module.scss";
 const ProfileNav:FC = () => {
     const [content, setContent] = useState<string | null>("profile");
 
+
     const pathname = window.location.pathname;
     const changeActiveItem = (e: MouseEvent<HTMLElement>) => {
         const navbarValue = e.currentTarget.getAttribute("data-value");
         setContent(navbarValue);
     };
+
 
     return (
         <div className={styles.navbar}>

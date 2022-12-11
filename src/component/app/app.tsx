@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
     Home,
@@ -12,20 +11,22 @@ import {
     Orders,
     NotFound,
     LogoutPage,
+    FeedPage,
+    OrderDetailPage
 } from "../../pages";
 import { ProtectedRoute } from "../protected-routes";
 import AppHeader from "../app-header/app-header";
-import ProfileNav from "../../pages/profile/profile-nav";
+import ProfileNav from "../../pages/profile/profile";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { userFetchWithRefresh } from "../../store/user/user";
-import { fetchIngredients } from "../../store/ingredients/slice";
-import { AppDispatch } from "../../store";
+import { userFetchWithRefresh } from "../../redux/store/user/user";
+import { fetchIngredients } from "../../redux/store/ingredients/slice";
+import { useAppDispatch } from "../../redux/store";
 
 import styles from "./app.module.scss";
 
 function App() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(userFetchWithRefresh({}));
@@ -43,7 +44,12 @@ function App() {
 
                 <Routes location={background || location}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/feed" element={<FeedPage />} />
                     <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+
+                    <Route path="/profile/orders/:number" element={<OrderDetailPage isUserOrder={true}/>} />
+                    <Route path="/feed/:number" element={<OrderDetailPage />} />
+
                     <Route
                         path="/login"
                         element={<ProtectedRoute anonymous={true} element={<Login />} />}
@@ -100,7 +106,23 @@ function App() {
                                 </Modal>
                             }
                         />
+                        <Route path="/profile/orders/:number" element={
+                            <Modal isRedirect={true}>
+                                <OrderDetailPage isUserOrder={true} isModal={true}/>
+                            </Modal>
+                        } 
+                        />
+
+                        <Route path="/feed/:number" element={
+                            <Modal isRedirect={true}>
+                                <OrderDetailPage isModal={true}/>
+                            </Modal>
+                        } 
+                        />
+
                     </Routes>
+
+
                 )}
             </div>
         );

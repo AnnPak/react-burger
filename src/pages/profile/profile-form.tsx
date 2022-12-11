@@ -1,16 +1,15 @@
 import { useState, useEffect, FormEvent, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 
-import { userUpdate } from "../../store/user/user";
+import { userUpdate } from "../../redux/store/user/user";
 import { useForm } from "../../hooks/useForm";
-import { AppDispatch, RootState } from "../../store";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./profile.module.scss";
 
 const UserDataForm:FC = () => {
-    const { user } = useSelector((store: RootState) => store.user);
+    const { user } = useAppSelector((store: RootState) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
     const { values, setFieldValue, setFieldDisabled, disableValue } = useForm({
         initialValues: {
@@ -25,7 +24,7 @@ const UserDataForm:FC = () => {
         },
     });
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();

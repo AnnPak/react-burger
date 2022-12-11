@@ -1,23 +1,23 @@
 import { FC, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
 import { TIngredient } from "../../utils/types";
 
-import { addOrderToModal } from "../../store/modal/slice";
-import { fetchOrder } from "../../store/order/slice";
-import { getCookie } from "../../utils/cookie";
-import { AppDispatch, RootState } from "../../store";
+import { addOrderToModal } from "../../redux/store/modal/slice";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
+import { createOrder } from "../../redux/store/order/slice";
 
 const BurgerConstructorResult: FC = () => {
-    const { constructorIngredients, bun } = useSelector((store: RootState) => store.burgerConstructor);
-    const dispatch = useDispatch<AppDispatch>();
+    const { constructorIngredients, bun } = useAppSelector(
+        (store: RootState) => store.burgerConstructor
+    );
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const createOrder = () => {
+    const createNewOrder = () => {
         if (localStorage.getItem("isUserLogged") === "true") {
             dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
@@ -27,9 +27,8 @@ const BurgerConstructorResult: FC = () => {
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
 
             dispatch(
-                fetchOrder({
+                createOrder({
                     ingredients: orderIngredientsIds,
-                    Authorization: `${getCookie("accessToken")}`,
                 })
             );
         } else {
@@ -55,7 +54,7 @@ const BurgerConstructorResult: FC = () => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" size="large" htmlType="button" onClick={createOrder}>
+            <Button type="primary" size="large" htmlType="button" onClick={createNewOrder}>
                 Оформить заказ
             </Button>
         </section>

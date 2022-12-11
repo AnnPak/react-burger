@@ -1,18 +1,17 @@
 import { useState, useEffect, FormEvent, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { AppDispatch, RootState } from "../../store";
-import { forgotPassword } from "../../store/user/password";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { forgotPassword } from "../../redux/store/user/password";
 
 import styles from "../login/login.module.scss";
 
 const ForgotPassword: FC = () => {
     const [email, setEmail] = useState<string>("");
-    const { forgotSuccess } = useSelector((store: RootState) => store.password);
+    const { forgotSuccess } = useAppSelector((store: RootState) => store.password);
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const onSubmit = (e: FormEvent) => {

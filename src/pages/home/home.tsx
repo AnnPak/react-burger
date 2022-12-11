@@ -7,7 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../component/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../component/burger-constructor/burger-constructor";
 import Preloader from "../../component/preloader/preloader";
-import { RootState } from "../../store";
+import { RootState } from "../../redux/store";
 
 import styles from "./home.module.scss";
 

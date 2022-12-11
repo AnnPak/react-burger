@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TIngredient } from "../../utils/types";
+import { TIngredient } from "../../../utils/types";
 
 export type TModalState = {
     ingredientInModal: null | Array<TIngredient>

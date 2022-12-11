@@ -6,7 +6,7 @@ import classnames from "classnames";
 import BurgerIngredientsSection from "./burger-ingredients-section";
 
 import styles from "./burger-ingredients-list.module.scss";
-import { RootState } from "../../store";
+import { RootState } from "../../redux/store";
 
 type TBurgerIngredientsList = {
     typesOfIngredients: Array<string> | null;

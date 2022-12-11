@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { request } from "../../utils/request";
-import { FORGOT_PSSWRD } from "../../utils/constants";
-import { TStringArray } from "../../utils/types";
+import { request } from "../../../utils/request";
+import { FORGOT_PSSWRD } from "../../../utils/constants";
+import { TStringArray } from "../../../utils/types";
 
 type TPasswordState = {
     forgotSending: boolean,

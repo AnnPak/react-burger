@@ -1,25 +1,24 @@
 import { useEffect, useState, FC } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector, useDispatch } from "react-redux";
 import classnames from "classnames";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
 
 import { TIngredient } from "../../utils/types";
-import { addIngredientToModal } from "../../store/modal/slice";
-import { AppDispatch, RootState } from "../../store";
+import { addIngredientToModal } from "../../redux/store/modal/slice";
+import { useAppDispatch, RootState, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) => {
-    const { bun, constructorIngredients } = useSelector((store:RootState) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useAppSelector((store:RootState) => store.burgerConstructor);
 
     const [resultIndredients, setResultIndredients] = useState<Array<TIngredient> | null>(null);
 
     const { name, image, price, _id } = ingredient;
 
     const location = useLocation();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const [{ opacity }, dragRef] = useDrag({
         type: "ingredients",

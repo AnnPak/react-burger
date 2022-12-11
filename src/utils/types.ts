@@ -9,23 +9,23 @@ export type TIngredient = {
     calories: number;
     price: number;
     image: string;
-    image_large:string
+    image_large: string;
 };
 
 export type TStringArray = {
     [name: string]: string;
 };
 export type TBooleanArray = {
-    [name:string]: boolean
-}
+    [name: string]: boolean;
+};
 export type TUseForm = {
-    initialValues:{
-        [name:string]: string
-    }
+    initialValues: {
+        [name: string]: string;
+    };
     disableRules: {
-        [name:string]: boolean
-    },
-}
+        [name: string]: boolean;
+    };
+};
 
 export type TMoveCard = (
     dragIndex: number,
@@ -63,8 +63,36 @@ export type TProtectedRoute = {
     element: JSX.Element;
 };
 
-export type TModalOverlay = {closePopup: () => void}
+export type TModalOverlay = { closePopup: () => void };
 
+export type TOrder = {
+    _id: string;
+    ingredients: string[];
+    status: "done" | "created" | "pending";
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+};
 
+export type TIngredientsInOrder = {
+    ingredients: Array<TIngredient>;
+    orderIngredients: Array<string>;
+};
 
+export type TOrdersList = {
+    orders: Array<TOrder> | null | undefined;
+    pathname: string;
+};
+
+export type TOrdersPanel = {
+    orders: Array<TOrder> | null;
+    total: number | null | undefined;
+    totalToday: number | null | undefined;
+};
+
+export type TOrderDetail = {
+    isUserOrder?: boolean;
+    isModal?: boolean;
+}
 

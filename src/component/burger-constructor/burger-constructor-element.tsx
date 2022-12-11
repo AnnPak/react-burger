@@ -1,13 +1,13 @@
 import { useRef, FC, SyntheticEvent } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
-import { deleteBurgerIngredient } from "../../store/constructor/slice";
-import { AppDispatch, RootState } from "../../store";
+import { deleteBurgerIngredient } from "../../redux/store/constructor/slice";
+import { RootState, useAppDispatch } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
 
@@ -16,7 +16,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const { price, image, name, type } = ingredient;
 
     const { constructorIngredients } = useSelector((store:RootState) => store.burgerConstructor);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLInputElement>(null);
     const bunIndicators:TStringArray = {
