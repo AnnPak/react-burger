@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation, HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 
 import {
     Home,
@@ -129,9 +129,9 @@ function App() {
     };
 
     return (
-        <HashRouter>
+        <Router>
             <ModalSwitch />
-        </HashRouter>
+        </Router>
     );
 }
 

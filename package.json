@@ -27,15 +27,14 @@
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://annpak.github.io/react-burger-1/",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy-script": "npm run build && scp -r ./build/* annacloud@84.201.135.47:/home/annacloud/stellar-frontend"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
