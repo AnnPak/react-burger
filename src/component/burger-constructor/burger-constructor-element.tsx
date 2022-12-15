@@ -6,7 +6,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
-import { deleteBurgerIngredient } from "../../redux/store/constructor/slice";
+import { deleteBurgerIngredient } from "../../redux/store/constructor/constructor";
 import { RootState, useAppDispatch } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";

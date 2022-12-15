@@ -6,7 +6,7 @@ import {
     updateBurgerIngredients,
     setIngredientsWithoutBun,
     setBun,
-} from "../../redux/store/constructor/slice";
+} from "../../redux/store/constructor/constructor";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 import BurgerConstructorElement from "./burger-constructor-element";
 

@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
-import burgerConstructor from "./constructor/slice";
+import burgerConstructor from "./constructor/constructor";
 import ingredients from "./ingredients/slice";
 import modal from "./modal/slice";
 import order from "./order/slice";

@@ -109,5 +109,5 @@ const userSlice = createSlice({
 });
 
 const { reducer } = userSlice;
-
+export {reducer as userReducer};
 export default reducer;
