@@ -25,12 +25,17 @@ const BurgerConstructorResult: FC = () => {
                 : []; //список id ингредиентов
             const bunId = bun ? bun._id : null; // id булки
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
-
+            const isArrayEmpty = orderIngredientsIds.some(element => element === null);
+            console.log(orderIngredientsIds)
             dispatch(
                 createOrder({
-                    ingredients: orderIngredientsIds,
+                    ingredients: isArrayEmpty ? [null] : orderIngredientsIds,
                 })
-            );
+            )
+
+            !isArrayEmpty && localStorage.removeItem("bun");
+            !isArrayEmpty && localStorage.removeItem("constructorIngredients");
+
         } else {
             navigate("/login", { replace: true });
         }

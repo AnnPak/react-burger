@@ -22,25 +22,7 @@ const initialState: TModalState = {
 };
 
 describe("Modal redux state tests", () => {
-  let state:TModalState ;
-
-  beforeEach(() => {
-    jest
-      .spyOn(global, "fetch")
-      .mockImplementation(
-        jest.fn(() =>
-          Promise.resolve({
-            json: jest.fn().mockResolvedValue({ result: "OK" }),
-            ok: true,
-          })
-        ) as jest.Mock
-      );
-      state = JSON.parse(JSON.stringify(initialState));
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+  let  state = JSON.parse(JSON.stringify(initialState));
 
   test('Has initial state', () => {
     expect(modalReducer(undefined, { type: 'some action' })).toEqual(

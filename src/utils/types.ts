@@ -96,3 +96,7 @@ export type TOrderDetail = {
     isModal?: boolean;
 }
 
+export type TFetchOrder = {
+    ingredients: Array<string | null >
+}
+
