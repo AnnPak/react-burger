@@ -31,6 +31,6 @@ const modalSlice = createSlice({
 });
 
 const { actions, reducer } = modalSlice;
-
+export {reducer as modalReducer}
 export default reducer;
 export const { addIngredientToModal, addOrderToModal, removeModal } = actions;

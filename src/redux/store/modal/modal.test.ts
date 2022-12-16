@@ -1,6 +1,5 @@
-import { addIngredientToModal, addOrderToModal, removeModal } from "./slice";
+import { addIngredientToModal, addOrderToModal, modalReducer, removeModal } from "./slice";
 import { TModalState } from "./slice";
-import store from "..";
 
 const ingredient = {
   _id: "60666c42cc7b410027a1a9b1",
@@ -22,13 +21,9 @@ const initialState: TModalState = {
   ingredientInModal: null,
 };
 
-type Tdata = {
-  headers: Headers;
-  json: any;
-  ok: boolean;
-};
-
 describe("Modal redux state tests", () => {
+  let state:TModalState ;
+
   beforeEach(() => {
     jest
       .spyOn(global, "fetch")
@@ -40,14 +35,38 @@ describe("Modal redux state tests", () => {
           })
         ) as jest.Mock
       );
+      state = JSON.parse(JSON.stringify(initialState));
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  test("Should initially set ingredint to an empty object", () => {
-    const state = store.getState().modal;
-    expect(state.ingredientInModal).toEqual(undefined);
+  test('Has initial state', () => {
+    expect(modalReducer(undefined, { type: 'some action' })).toEqual(
+      initialState
+    );
   });
+
+  test("Should initially set ingredint to an empty object", () => {
+    expect(state.ingredientInModal).toEqual(null);
+  });
+
+  test("Handles addIngredientToModal action", () => {
+    state = modalReducer(state, addIngredientToModal(ingredient))
+    expect(state.ingredientInModal).toEqual(ingredient);
+  });
+
+  test("Handles addOrderToModal action", () => {
+    state = modalReducer(state, addOrderToModal())
+    expect(state.isOrderModalVisible).toEqual(true);
+  });
+
+  test("Handles removeModal action", () => {
+    state = modalReducer(state, removeModal())
+    expect(state.isOrderModalVisible).toEqual(false);
+    expect(state.ingredientInModal).toEqual(null);
+  });
+
+
 });
