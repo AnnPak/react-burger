@@ -4,7 +4,7 @@ import { request } from "../../../utils/request";
 import { FORGOT_PSSWRD } from "../../../utils/constants";
 import { TStringArray } from "../../../utils/types";
 
-type TPasswordState = {
+export type TPasswordState = {
     forgotSending: boolean,
     forgotSuccess: boolean,
     forgotError: boolean,
@@ -75,4 +75,5 @@ const passwordSlice = createSlice({
 
 const { reducer } = passwordSlice;
 
+export { reducer as passwordReducer };
 export default reducer;
