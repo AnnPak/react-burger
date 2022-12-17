@@ -1,7 +1,7 @@
 import fetch from "jest-fetch-mock";
-import { GET_USER } from "../../../utils/constants";
+import { GET_USER, LOGIN_API } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
-import { TUserState, userFetchWithRefresh, userReducer } from "./user";
+import { loginUser, TUserState, userFetchWithRefresh, userReducer, userUpdate } from "./user";
 
 const initialState: TUserState = {
   user: null,
@@ -16,6 +16,12 @@ const initialState: TUserState = {
   loginSuccess: null,
   loginError: false,
 };
+
+const requestBody = {
+    name: "name",
+    password: "password",
+    login: "login",
+}
 
 describe("userReducer redux state tests", () => {
   beforeEach(() => {
@@ -114,6 +120,101 @@ describe("userReducer redux state tests", () => {
         "Content-Type": "application/json",
       },
       body: null,
+    });
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  test("Update state with loginUser (pending)", () => {
+    const state = userReducer(initialState, {
+      type: "user/loginUser/pending",
+    });
+
+    expect(state.loginSending).toEqual(true);
+    expect(state.loginError).toEqual(false);
+  });
+
+  test("Update state with loginUser (rejected)", () => {
+    const state = userReducer(initialState, {
+      type: "user/loginUser/rejected",
+    });
+
+    expect(state.loginSending).toEqual(false);
+    expect(state.loginSuccess).toEqual(false);
+    expect(state.loginError).toEqual(true);
+  });
+
+  test("loginUser - should be successful", async () => {
+    const action = loginUser(requestBody);
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    await action(dispatch, getState, undefined);
+
+    expect(dispatch.mock.calls.map(([{ type }]) => type)).toEqual([
+      "user/loginUser/pending",
+      "user/loginUser/fulfilled",
+    ]);
+
+    expect(fetch).toHaveBeenCalledWith(LOGIN_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  test("loginUser - should be failed", async () => {
+    fetch.mockImplementationOnce(
+        jest.fn(() =>
+          Promise.resolve({
+            ok: false,
+            json: () => Promise.resolve({ result: "OK" }),
+            status: "500",
+          })
+        ) as jest.Mock
+      );
+
+
+    const action = loginUser(requestBody);
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    await action(dispatch, getState, undefined);
+
+    expect(dispatch.mock.calls.map(([{ type }]) => type)).toEqual([
+      "user/loginUser/pending",
+      "user/loginUser/rejected",
+    ]);
+
+    expect(fetch).toHaveBeenCalledWith(LOGIN_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  test("userUpdate - should be successful", async () => {
+    const action = userUpdate(requestBody);
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+
+    await action(dispatch, getState, undefined);
+
+    expect(fetch).toHaveBeenCalledWith(GET_USER, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${getCookie("accessToken")}`,
+      },
+      body: JSON.stringify(requestBody),
     });
 
     expect(fetch).toHaveBeenCalledTimes(1);
