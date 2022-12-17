@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { updateUserData, fetchWithRefresh, request } from "../../../utils/request";
 import { GET_USER, LOGIN_API } from "../../../utils/constants";
-import { getCookie, setCookie } from "../../../utils/cookie";
+import { setCookie } from "../../../utils/cookie";
 import { TStringArray } from "../../../utils/types";
 
-type TUserState = {
+export type TUserState = {
     user: any;
     userSending: boolean;
     userError: boolean;
@@ -67,6 +67,7 @@ const userSlice = createSlice({
         builder
             .addCase(userFetchWithRefresh.pending, (state) => {
                 state.refreshTokenSending = true;
+                state.refreshTokenError = false;
             })
             .addCase(userFetchWithRefresh.fulfilled, (state, action) => {
                 const { success, user } = action.payload;
@@ -76,6 +77,9 @@ const userSlice = createSlice({
                 success
                     ? localStorage.setItem("isUserLogged", "true")
                     : localStorage.setItem("isUserLogged", "false");
+
+                state.refreshTokenSending = false;
+                state.refreshTokenError = false;
             })
             .addCase(userFetchWithRefresh.rejected, (state) => {
                 localStorage.setItem("isUserLogged", "false");
