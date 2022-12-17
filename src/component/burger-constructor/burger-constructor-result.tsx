@@ -26,7 +26,7 @@ const BurgerConstructorResult: FC = () => {
             const bunId = bun ? bun._id : null; // id булки
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
             const isArrayEmpty = orderIngredientsIds.some(element => element === null);
-            console.log(orderIngredientsIds)
+
             dispatch(
                 createOrder({
                     ingredients: isArrayEmpty ? [null] : orderIngredientsIds,
