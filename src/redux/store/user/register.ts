@@ -5,7 +5,7 @@ import { request } from "../../../utils/request";
 import { setCookie } from "../../../utils/cookie";
 import { REGISTER_API } from "../../../utils/constants";
 
-type TRegisterState = {
+export type TRegisterState = {
     registerSending: boolean,
     registerSuccess: null | boolean,
     registerError: boolean,
@@ -53,4 +53,5 @@ const registerSlice = createSlice({
 
 const { reducer } = registerSlice;
 
+export {reducer as registerReducer}
 export default reducer;
