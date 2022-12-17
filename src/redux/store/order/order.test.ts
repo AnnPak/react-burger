@@ -1,8 +1,10 @@
+import fetch from "jest-fetch-mock";
+
 import { BASE_URL } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
 import { TFetchOrder } from "../../../utils/types";
 import { createOrder, orderReducer, TOrderState } from "./slice";
-import fetch from "jest-fetch-mock";
+
 
 const initialState: TOrderState = {
   orderNumber: null,

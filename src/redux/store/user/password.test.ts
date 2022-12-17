@@ -1,3 +1,6 @@
+import fetch from "jest-fetch-mock";
+
+import { FORGOT_PSSWRD } from "../../../utils/constants";
 import { forgotPassword, passwordReducer, TPasswordState } from "./password";
 
 const initialState:TPasswordState = {
@@ -10,6 +13,7 @@ const initialState:TPasswordState = {
     resetError: false,
 };
 
+const requestBody = {email: 'email'}
 
 describe("Password redux state tests", () => {
 
@@ -74,7 +78,7 @@ describe("Password redux state tests", () => {
 
   
     test("forgotPassword - should be successful", async () => {
-        const action = forgotPassword({ email: 'email' });
+        const action = forgotPassword(requestBody);
         const dispatch = jest.fn();
         const getState = jest.fn();
   
@@ -84,6 +88,47 @@ describe("Password redux state tests", () => {
           'user/forgotPassword/pending',
           'user/forgotPassword/fulfilled',
         ]);
+
+        expect(fetch).toHaveBeenCalledWith(FORGOT_PSSWRD, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    test("forgotPassword - should be failed", async () => {
+        fetch.mockImplementationOnce(
+            jest.fn(() =>
+              Promise.resolve({
+                ok: false,
+                json: () => Promise.resolve({ result: "OK" }),
+                status: "500",
+              })
+            ) as jest.Mock
+        );
+
+        const action = forgotPassword(requestBody);
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+  
+        await action(dispatch, getState, undefined);
+  
+        expect(dispatch.mock.calls.map(([{ type }]) => type)).toEqual([
+          'user/forgotPassword/pending',
+          'user/forgotPassword/rejected',
+        ]);
+
+        expect(fetch).toHaveBeenCalledWith(FORGOT_PSSWRD, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+        });
 
         expect(fetch).toHaveBeenCalledTimes(1);
     });
