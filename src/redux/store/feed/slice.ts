@@ -56,4 +56,5 @@ const feedSlice = createSlice({
 
 const { actions, reducer } = feedSlice;
 export const { wsMessage, wsUserMessage, wsConnect, wsClose, wsUserClose, wsUserConnect } = actions;
+export { reducer as feedReducer}
 export default reducer;
