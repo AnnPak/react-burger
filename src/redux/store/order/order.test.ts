@@ -5,7 +5,6 @@ import { getCookie } from "../../../utils/cookie";
 import { TFetchOrder } from "../../../utils/types";
 import { createOrder, orderReducer, TOrderState } from "./slice";
 
-
 const initialState: TOrderState = {
   orderNumber: null,
   orderStatus: "idle",

@@ -40,7 +40,7 @@ describe("Modal redux state tests", () => {
   });
 
   test("Handles addOrderToModal action", () => {
-    state = modalReducer(state, addOrderToModal())
+    state = modalReducer(state, addOrderToModal());
     expect(state.isOrderModalVisible).toEqual(true);
   });
 

@@ -92,11 +92,11 @@ describe("Logout redux state tests", () => {
     ]);
 
     expect(fetch).toHaveBeenCalledWith(LOGOUT_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
     });
 
     expect(fetch).toHaveBeenCalledTimes(1);
