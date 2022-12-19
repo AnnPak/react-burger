@@ -19,7 +19,7 @@ describe("Ingredients redux state tests", () => {
         ) as jest.Mock
       );
     });
-  
+
     afterEach(() => {
       jest.restoreAllMocks();
     });
