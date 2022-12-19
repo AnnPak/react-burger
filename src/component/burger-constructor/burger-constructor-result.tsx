@@ -54,7 +54,7 @@ const BurgerConstructorResult: FC = () => {
 
     return (
         <section className={classnames(styles.constructorResult, "mt-10")}>
-            <div className={classnames(styles.constructorResultPrice, "mr-10")}>
+            <div className={classnames(styles.constructorResultPrice, "mr-10")} data-test="price">
                 <p className="text text_type_main-large mr-2">{fullprice}</p>
                 <CurrencyIcon type="primary" />
             </div>

@@ -51,6 +51,7 @@ const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) 
             to={`/ingredients/${_id}`}
             state={{ background: location }}
             style={{ opacity }}
+            data-test='ingredient'
         >
             {ingredientsCounter > 0 && <Counter count={ingredientsCounter} size="small" />}
 

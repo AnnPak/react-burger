@@ -85,6 +85,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
             onDrop={preventDefault}
             ref={ref}
             data-handler-id={handlerId}
+            data-test='constructor-ingredient'
             {...(index && {index: {index}})} 
         >
             {!position && <DragIcon type="secondary" />}

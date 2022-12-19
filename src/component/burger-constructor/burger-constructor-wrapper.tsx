@@ -58,7 +58,7 @@ const BurgerConstructorWrapper: FC = () => {
     }, []);
 
     return (
-        <section className={styles.constructorElements}>
+        <section className={styles.constructorElements} data-test='constructor'>
             {bun && (
                 <BurgerConstructorElement
                     moveCard={moveCard}
