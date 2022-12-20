@@ -10,10 +10,19 @@ import OrdersPanel from "../../component/orders-panel/orders-panel";
 import Preloader from "../../component/preloader/preloader";
 
 const FeedPage: FC = () => {
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const { orders, total, totalToday, isWsOpen } = useAppSelector((store: RootState) => store.feed);
-    // const isSecondRender = useRef(false)
+    const isSecondRender = useRef(false)
+    
+    useEffect(() => {
+        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+        isSecondRender.current = true
 
+        return () => {
+            dispatch({ type: wsActionType.wsClose });
+        };
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <section className={classnames(styles.orderFeed)}>

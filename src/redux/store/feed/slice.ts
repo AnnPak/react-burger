@@ -39,16 +39,12 @@ const feedSlice = createSlice({
             const { type } = action.payload;
             state.isWsOpen = type === "close" ? true : false;
         },
-        wsConnecting: (state, action) => {
-            console.log(action.payload);
-        },
         wsUserClose: (state, action) => {
             const { type } = action.payload;
             state.isWsUserOpen = type === "close" ? true : false;
         },
         wsConnect: (state, action) => {
             const { type } = action.payload;
-            console.log(action.payload);
             state.isWsOpen = type === "open" ? true : false;
         },
         wsUserConnect: (state, action) => {
