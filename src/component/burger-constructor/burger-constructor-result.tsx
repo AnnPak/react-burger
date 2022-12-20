@@ -59,7 +59,7 @@ const BurgerConstructorResult: FC = () => {
                 <CurrencyIcon type="primary" />
             </div>
 
-            <Button type="primary" size="large" htmlType="button" onClick={createNewOrder}>
+            <Button type="primary" size="large" htmlType="button" onClick={createNewOrder} data-test="create-order-btn">
                 Оформить заказ
             </Button>
         </section>

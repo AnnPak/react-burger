@@ -48,7 +48,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
             const { dispatch } = store;
             const { type, payload } = action;
             
-
+            console.log('test');
             switch (type) {
                 case "wsConnecting": {
                     socket = new WebSocket(`${wsUrl}/all`);

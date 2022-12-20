@@ -26,7 +26,7 @@ const BurgerConstructor: FC = () => {
                         {orderStatus === "loading" && <Preloader />}
                         {orderStatus === "success" && <OrderDetails />}
                         {orderStatus === "error" && (
-                            <p className="text text_type_main-medium">
+                            <p className="text text_type_main-medium" data-test="order-error">
                                 <InfoIcon type="error" />
                                 Ошибка!
                             </p>
