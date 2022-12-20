@@ -52,7 +52,7 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
             switch (type) {
                 case "wsConnecting": {
                     socket = new WebSocket(`${wsUrl}/all`);
-
+console.log(socket);
                     if (socket) {
                         socket.onopen = (event) => {
                             dispatch(wsConnect(event));
