@@ -39,6 +39,9 @@ const feedSlice = createSlice({
             const { type } = action.payload;
             state.isWsOpen = type === "close" ? true : false;
         },
+        wsConnecting: (state, action) => {
+            console.log(action.payload);
+        },
         wsUserClose: (state, action) => {
             const { type } = action.payload;
             state.isWsUserOpen = type === "close" ? true : false;
