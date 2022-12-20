@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 
 import {
@@ -21,16 +21,30 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { userFetchWithRefresh } from "../../redux/store/user/user";
 import { fetchIngredients } from "../../redux/store/ingredients/slice";
-import { useAppDispatch } from "../../redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./app.module.scss";
+import { wsActionType } from "../../redux/middleware/socket-middleware";
 
 function App() {
     const dispatch = useAppDispatch();
+    const {  isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const isSecondRender = useRef(false)
 
     useEffect(() => {
         dispatch(userFetchWithRefresh({}));
         dispatch(fetchIngredients());
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+        isSecondRender.current = true
+        console.log(!isWsOpen && isSecondRender.current);
+        
+        return () => {
+            dispatch({ type: wsActionType.wsClose });
+        };
         // eslint-disable-next-line
     }, []);
 
