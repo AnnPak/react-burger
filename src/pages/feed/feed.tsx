@@ -17,7 +17,7 @@ const FeedPage: FC = () => {
     useEffect(() => {
         !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
         isSecondRender.current = true
-
+        console.log('feed')
         return () => {
             dispatch({ type: wsActionType.wsClose });
         };
