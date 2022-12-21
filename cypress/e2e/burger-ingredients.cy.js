@@ -1,7 +1,11 @@
+import {ORDERS_API, INGREDIENTS_API} from '../../src/utils/constants';
+
+const homePageUrl = 'http://localhost:3000/react-burger-1';
+
 describe("burger constructor tests", function () {
     beforeEach(() => {
-        cy.visit("http://localhost:3000");
-        cy.intercept("GET", "https://norma.nomoreparties.space/api/ingredients", {
+        cy.visit(homePageUrl);
+        cy.intercept("GET", INGREDIENTS_API, {
             fixture: "ingredients.json",
         });
 
@@ -66,7 +70,7 @@ describe("burger constructor tests", function () {
 
         cy.get("[data-test=create-order-btn]").click();
 
-        cy.visit("http://localhost:3000/login");
+        cy.visit(homePageUrl + "/login");
 
         cy.get('[type="email"]').should("be.visible").type("anna@anna.com");
 
@@ -77,7 +81,7 @@ describe("burger constructor tests", function () {
         cy.get("[data-test=create-order-btn]").click();
         cy.get("[data-test=modal]");
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+        cy.intercept('POST', ORDERS_API, {
             ingredients: [
                 "60d3b41abdacab0026a733cb",
             ],
@@ -97,7 +101,7 @@ describe("burger constructor tests", function () {
 
         cy.get("[data-test=create-order-btn]").click();
 
-        cy.visit("http://localhost:3000/login");
+        cy.visit(homePageUrl + "/login");
 
         cy.get('[type="email"]').should("be.visible").type("anna@anna.com");
 
@@ -107,7 +111,7 @@ describe("burger constructor tests", function () {
 
         cy.get("[data-test=create-order-btn]").click();
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+        cy.intercept('POST', ORDERS_API, {
             body: {
                 ingredients: [
                     "60d3b41abdacab0026a733c6",
