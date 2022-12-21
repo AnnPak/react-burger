@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./app-header.module.scss";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
     const { pathname } = useLocation();
@@ -59,9 +59,9 @@ const Navbar = () => {
 const AppHeader = () => {
     return (
         <header className={styles.header}>
-            <div className="pt-5 pb-5">
+            <Link to="/" className={classnames("pt-5 pb-5", styles.homeLink )}>
                 <Logo />
-            </div>
+            </Link>
             <Navbar />
         </header>
     );
