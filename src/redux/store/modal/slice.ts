@@ -6,7 +6,7 @@ export type TModalState = {
     isOrderModalVisible: boolean
 }
 
-const initialState:TModalState = {
+export const initialState:TModalState = {
     isOrderModalVisible: false,
     ingredientInModal: null,
 };

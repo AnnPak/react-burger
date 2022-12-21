@@ -1,12 +1,6 @@
 import fetch from "jest-fetch-mock";
 import { REGISTER_API } from "../../../utils/constants";
-import { registerReducer, registerUser, TRegisterState } from "./register";
-
-const initialState: TRegisterState = {
-  registerSending: false,
-  registerError: false,
-  registerSuccess: null,
-};
+import { registerReducer, registerUser, initialState } from "./register";
 
 const requestBody = {
   email: "email",

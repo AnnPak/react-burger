@@ -1,5 +1,4 @@
-import { addIngredientToModal, addOrderToModal, modalReducer, removeModal } from "./slice";
-import { TModalState } from "./slice";
+import { addIngredientToModal, addOrderToModal, modalReducer, removeModal, initialState } from "./slice";
 
 const ingredient = {
   _id: "60666c42cc7b410027a1a9b1",
@@ -14,11 +13,6 @@ const ingredient = {
   image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
   image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
   __v: 0,
-};
-
-const initialState: TModalState = {
-  isOrderModalVisible: false,
-  ingredientInModal: null,
 };
 
 describe("Modal redux state tests", () => {

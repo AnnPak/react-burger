@@ -1,21 +1,7 @@
 import fetch from "jest-fetch-mock";
 import { GET_USER, LOGIN_API } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
-import { loginUser, TUserState, userFetchWithRefresh, userReducer, userUpdate } from "./user";
-
-const initialState: TUserState = {
-  user: null,
-  userSending: false,
-  userError: false,
-  isLoggedIn: false,
-
-  refreshTokenSending: false,
-  refreshTokenError: false,
-
-  loginSending: false,
-  loginSuccess: null,
-  loginError: false,
-};
+import { loginUser, userFetchWithRefresh, userReducer, userUpdate, initialState } from "./user";
 
 const requestBody = {
     name: "name",

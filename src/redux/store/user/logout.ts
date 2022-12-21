@@ -10,7 +10,7 @@ export type TLogoutState = {
     logoutError: boolean,
 }
 
-const initialState:TLogoutState = {
+export const initialState:TLogoutState = {
     logoutSending: false,
     logoutError: false,
 };

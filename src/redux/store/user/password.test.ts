@@ -1,17 +1,7 @@
 import fetch from "jest-fetch-mock";
 
 import { FORGOT_PSSWRD } from "../../../utils/constants";
-import { forgotPassword, passwordReducer, TPasswordState } from "./password";
-
-const initialState: TPasswordState = {
-  forgotSending: false,
-  forgotSuccess: false,
-  forgotError: false,
-
-  resetSending: false,
-  resetSuccess: false,
-  resetError: false,
-};
+import { forgotPassword, passwordReducer, initialState } from "./password";
 
 const requestBody = { email: "email" };
 

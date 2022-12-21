@@ -3,12 +3,7 @@ import fetch from "jest-fetch-mock";
 import { BASE_URL } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
 import { TFetchOrder } from "../../../utils/types";
-import { createOrder, orderReducer, TOrderState } from "./slice";
-
-const initialState: TOrderState = {
-  orderNumber: null,
-  orderStatus: "idle",
-};
+import { createOrder, orderReducer, initialState } from "./slice";
 
 const requestBody: TFetchOrder = {
   ingredients: [

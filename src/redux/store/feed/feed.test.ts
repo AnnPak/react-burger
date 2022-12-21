@@ -1,22 +1,13 @@
 import {
   feedReducer,
-  OrdersInitState,
   wsMessage,
   wsUserMessage,
   wsConnect,
   wsClose,
   wsUserClose,
   wsUserConnect,
+  initialState
 } from "./slice";
-
-export const initialState: OrdersInitState = {
-  orders: null,
-  total: null,
-  totalToday: null,
-  userOrders: null,
-  isWsOpen: null,
-  isWsUserOpen: null,
-};
 
 const payload = {
   orders: [

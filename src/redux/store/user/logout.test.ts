@@ -1,11 +1,7 @@
-import { LOGOUT_API } from "../../../utils/constants";
-import { logoutReducer, logoutUser, TLogoutState } from "./logout";
 import fetch from "jest-fetch-mock";
 
-const initialState: TLogoutState = {
-  logoutSending: false,
-  logoutError: false,
-};
+import { LOGOUT_API } from "../../../utils/constants";
+import { logoutReducer, logoutUser, initialState } from "./logout";
 
 const requestBody = { token: "refreshToken" };
 describe("Logout redux state tests", () => {

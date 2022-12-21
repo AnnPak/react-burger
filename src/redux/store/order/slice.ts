@@ -9,7 +9,7 @@ export type TOrderState = {
     orderStatus: string
 }
 
-const initialState:TOrderState = {
+export const initialState:TOrderState = {
     orderNumber: null,
     orderStatus: "idle",
 };

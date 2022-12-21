@@ -11,7 +11,7 @@ export type TRegisterState = {
     registerError: boolean,
 }
 
-const initialState:TRegisterState = {
+export const initialState:TRegisterState = {
     registerSending: false,
     registerError: false,
     registerSuccess: null,

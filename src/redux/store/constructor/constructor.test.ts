@@ -5,6 +5,7 @@ import {
     setIngredientsWithoutBun,
     TConstructorState,
     updateBurgerIngredients,
+    initialState,
 } from "./constructor";
 
 const initialStateTest: TConstructorState = {
@@ -41,23 +42,20 @@ const initialStateTest: TConstructorState = {
     },
 };
 
-const ingredient = 
-  {
-    "_id": "60d3b41abdacab0026a733c9",
-    "name": "Мясо бессмертных моллюсков Protostomia",
-    "type": "main",
-    "proteins": 433,
-    "fat": 244,
-    "carbohydrates": 33,
-    "calories": 420,
-    "price": 1337,
-    "image": "https://code.s3.yandex.net/react/code/meat-02.png",
-    "image_mobile": "https://code.s3.yandex.net/react/code/meat-02-mobile.png",
-    "image_large": "https://code.s3.yandex.net/react/code/meat-02-large.png",
-    "__v": 0,
-  }
-;
-
+const ingredient = {
+    _id: "60d3b41abdacab0026a733c9",
+    name: "Мясо бессмертных моллюсков Protostomia",
+    type: "main",
+    proteins: 433,
+    fat: 244,
+    carbohydrates: 33,
+    calories: 420,
+    price: 1337,
+    image: "https://code.s3.yandex.net/react/code/meat-02.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/meat-02-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/meat-02-large.png",
+    __v: 0,
+};
 const bun = {
     _id: "60d3b41abdacab0026a733c6",
     name: "Краторная булка N-200i",
@@ -73,11 +71,6 @@ const bun = {
     __v: 0,
 };
 
-const initialState: TConstructorState = {
-  constructorIngredients: null,
-  bun: null,
-};
-
 describe("Constructor redux state tests", () => {
     let state = JSON.parse(JSON.stringify(initialState));
 
@@ -87,7 +80,7 @@ describe("Constructor redux state tests", () => {
 
     test("Handles deleteBurgerIngredient action", () => {
         state = JSON.parse(JSON.stringify(initialStateTest));
-        state = constructorReducer(state, deleteBurgerIngredient(0))
+        state = constructorReducer(state, deleteBurgerIngredient(0));
 
         expect(state.constructorIngredients).toEqual([]);
     });
@@ -95,19 +88,18 @@ describe("Constructor redux state tests", () => {
     test("Handles updateBurgerIngredients action", () => {
         state = JSON.parse(JSON.stringify(initialState));
 
-        state = constructorReducer(state, updateBurgerIngredients(ingredient))
+        state = constructorReducer(state, updateBurgerIngredients(ingredient));
         expect(state.constructorIngredients).toEqual(ingredient);
     });
-    
+
     test("Handles setBun action", () => {
-      state = constructorReducer(state, setBun(bun))
-      expect(state.bun).toEqual(bun);
+        state = constructorReducer(state, setBun(bun));
+        expect(state.bun).toEqual(bun);
     });
 
-    test("Handles setIngredientsWithoutBun action", ()=> {
-      state = JSON.parse(JSON.stringify(initialStateTest));
-      state = constructorReducer(state, setIngredientsWithoutBun(ingredient))
-      expect(state.constructorIngredients.length).toEqual(2);
-    })
-
+    test("Handles setIngredientsWithoutBun action", () => {
+        state = JSON.parse(JSON.stringify(initialStateTest));
+        state = constructorReducer(state, setIngredientsWithoutBun(ingredient));
+        expect(state.constructorIngredients.length).toEqual(2);
+    });
 });
