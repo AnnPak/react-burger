@@ -31,7 +31,7 @@ const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
                 isUserOrder ? dispatch({ type: wsActionType.wsUserClose }) : dispatch({ type: wsActionType.wsClose });
             }  
         }
-        
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {

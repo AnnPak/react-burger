@@ -4,11 +4,13 @@ export type TIngredient = {
     type: string;
     proteins: number;
     fat: number;
-    key: string | number;
+    key?: string | number;
     carbohydrates: number;
     calories: number;
     price: number;
     image: string;
+    image_mobile: string;
+    __v: number;
     image_large: string;
 };
 

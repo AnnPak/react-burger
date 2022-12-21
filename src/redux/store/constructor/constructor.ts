@@ -47,8 +47,8 @@ const constructorsSlice = createSlice({
         },
         setIngredientsWithoutBun: {
             reducer: (state, action: PayloadAction<TIngredient>) => {
-                state.constructorIngredients = state.constructorIngredients
-                    ? [...state.constructorIngredients, action.payload]
+                state.constructorIngredients = !!state.constructorIngredients?.forEach 
+                    ? [...state?.constructorIngredients, action.payload]
                     : [action.payload];
 
                 localStorage.removeItem("constructorIngredients");
@@ -76,5 +76,6 @@ const constructorsSlice = createSlice({
 const { actions, reducer } = constructorsSlice;
 
 export default reducer;
+export {reducer as constructorReducer}
 export const { deleteBurgerIngredient, updateBurgerIngredients, setIngredientsWithoutBun, setBun } =
     actions;

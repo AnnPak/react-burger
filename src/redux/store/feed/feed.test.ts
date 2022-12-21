@@ -57,10 +57,6 @@ const payload = {
 describe("Feed redux state tests", () => {
   let state = JSON.parse(JSON.stringify(initialState));
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   test("Has initial state", () => {
     expect(feedReducer(undefined, { type: "action" })).toEqual(initialState);
   });

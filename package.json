@@ -71,5 +71,10 @@
     "jest-watch-typeahead": "^0.6.5",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(nanoid)/)"
+    ]
   }
 }

@@ -55,6 +55,7 @@ const BurgerConstructorWrapper: FC = () => {
         if (localStorage.getItem("bun")) {
             dispatch(setBun(JSON.parse(localStorage.getItem("bun") || "{}")));
         }
+        // eslint-disable-next-line
     }, []);
 
     return (
