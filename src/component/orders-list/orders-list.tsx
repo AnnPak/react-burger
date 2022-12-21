@@ -19,7 +19,7 @@ const OrdersList: FC<TOrdersList> = ({ orders, pathname }) => {
                     <Link
                         to={pathname + order._id}
                         className={classnames(styles.orderItem, "p-6 mt-4 mr-2")}
-                        key={nanoid()}
+                        key={order._id}
                         state={{ background: location }}
                     >
                         <div className={classnames(styles.orderItemHeader, "mb-2")}>
@@ -70,7 +70,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
                     <div
                         className={styles.orderIngredientImg}
                         style={{ zIndex: ingredientInOrder.length - i }}
-                        key={nanoid()}
+                        key={i}
                     >
                         <img src={item.image} alt={item.name} />
 

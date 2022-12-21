@@ -90,7 +90,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
             {ingredientInOrder.map((item, i) => {
                 const count = orderIngredients.filter((i) => i === item._id).length;
                 return (
-                    <div className={classnames(styles.orderIngredientItem, "mt-6")} key={nanoid()}>
+                    <div className={classnames(styles.orderIngredientItem, "mt-6")} key={item._id}>
                         <div className={styles.leftBlock}>
                             <img
                                 src={item.image}

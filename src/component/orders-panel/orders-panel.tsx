@@ -20,7 +20,7 @@ const OrdersPanel: FC<TOrdersPanel> = ({ orders, total, totalToday }) => {
                                         i <= 10 && (
                                             <p
                                                 className="text text_type_digits-default mt-2 mr-3"
-                                                key={nanoid()}
+                                                key={order._id}
                                             >
                                                 {order.number}
                                             </p>
@@ -39,7 +39,7 @@ const OrdersPanel: FC<TOrdersPanel> = ({ orders, total, totalToday }) => {
                                         i <= 15 && (
                                             <p
                                                 className="text text_type_digits-default mt-2 mr-3"
-                                                key={nanoid()}
+                                                key={order._id}
                                             >
                                                 {order.number}
                                             </p>
