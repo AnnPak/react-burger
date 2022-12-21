@@ -5,14 +5,14 @@ import classnames from "classnames";
 import { TIngredient } from "../../utils/types";
 
 import { addOrderToModal } from "../../redux/store/modal/slice";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
 import { createOrder } from "../../redux/store/order/slice";
 
 const BurgerConstructorResult: FC = () => {
     const { constructorIngredients, bun } = useAppSelector(
-        (store: RootState) => store.burgerConstructor
+        (store) => store.burgerConstructor
     );
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

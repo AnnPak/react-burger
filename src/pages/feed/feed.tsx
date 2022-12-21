@@ -2,7 +2,7 @@ import { FC, useEffect, useRef } from "react";
 import classnames from "classnames";
 
 import { wsActionType } from "../../redux/middleware/socket-middleware";
-import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
+import { useAppSelector, useAppDispatch } from "../../redux/store";
 
 import styles from "./feed.module.scss";
 import OrdersList from "../../component/orders-list/orders-list";
@@ -11,7 +11,7 @@ import Preloader from "../../component/preloader/preloader";
 
 const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { orders, total, totalToday, isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const { orders, total, totalToday, isWsOpen } = useAppSelector((store) => store.feed);
     const isSecondRender = useRef(false)
     
     useEffect(() => {

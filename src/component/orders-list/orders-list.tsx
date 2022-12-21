@@ -1,7 +1,7 @@
 import styles from "./orders-list.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { RootState, useAppSelector } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 import classnames from "classnames";
 import { nanoid } from "nanoid";
 import { TIngredientsInOrder, TOrdersList } from "../../utils/types";
@@ -9,7 +9,7 @@ import { FC } from "react";
 import { FullOrderPrice } from "../../utils/full-order-price";
 
 const OrdersList: FC<TOrdersList> = ({ orders, pathname }) => {
-    const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useAppSelector((store) => store.ingredients);
     const location = useLocation();
 
     return (

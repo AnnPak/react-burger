@@ -1,16 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import classnames from "classnames";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { TIngredient } from "../../utils/types";
 
 import styles from "./ingredient-details-modal.module.scss";
-import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 
 const IngredientDetails: FC = () => {
     const { ingredientId } = useParams();
-    const { ingredients } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useAppSelector((store) => store.ingredients);
     const [ingredient, setIngredient] = useState<TIngredient | null | undefined>(null);
 
     useEffect(() => {

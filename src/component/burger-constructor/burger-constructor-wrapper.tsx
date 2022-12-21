@@ -7,14 +7,14 @@ import {
     setIngredientsWithoutBun,
     setBun,
 } from "../../redux/store/constructor/constructor";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import BurgerConstructorElement from "./burger-constructor-element";
 
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper: FC = () => {
     const { bun, constructorIngredients } = useAppSelector(
-        (store: RootState) => store.burgerConstructor
+        (store) => store.burgerConstructor
     );
     const dispatch = useAppDispatch();
 

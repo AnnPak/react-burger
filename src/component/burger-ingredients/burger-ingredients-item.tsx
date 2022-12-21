@@ -6,12 +6,12 @@ import { Link, useLocation } from "react-router-dom";
 
 import { TIngredient } from "../../utils/types";
 import { addIngredientToModal } from "../../redux/store/modal/slice";
-import { useAppDispatch, RootState, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-ingredients-list.module.scss";
 
 const BurgerIngredientsItem: FC<{ ingredient: TIngredient }> = ({ ingredient }) => {
-    const { bun, constructorIngredients } = useAppSelector((store:RootState) => store.burgerConstructor);
+    const { bun, constructorIngredients } = useAppSelector((store) => store.burgerConstructor);
 
     const [resultIndredients, setResultIndredients] = useState<Array<TIngredient> | null>(null);
 

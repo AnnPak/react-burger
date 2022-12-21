@@ -2,10 +2,10 @@ import { FC, useEffect, useRef } from "react";
 import OrdersList from "../../component/orders-list/orders-list";
 import Preloader from "../../component/preloader/preloader";
 import { wsActionType } from "../../redux/middleware/socket-middleware";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 const Orders: FC = () => {
-    const { userOrders,isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const { userOrders,isWsOpen } = useAppSelector((store) => store.feed);
     const dispatch = useAppDispatch()
     const isSecondRender = useRef(false)
     

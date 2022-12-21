@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { wsActionType } from "../../redux/middleware/socket-middleware";
 
 import styles from "./order-detail.module.scss";
@@ -14,9 +14,9 @@ import classnames from "classnames";
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, userOrders, isWsOpen, isWsUserOpen } = useAppSelector((store: RootState) => store.feed);
+    const { orders, userOrders, isWsOpen, isWsUserOpen } = useAppSelector((store) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
-    const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useAppSelector((store) => store.ingredients);
     const isSecondRender = useRef(false)
 
     useEffect(() => {
