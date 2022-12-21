@@ -13,7 +13,7 @@ const BurgerIngredients: FC = () => {
     const [tabsValue, setTabsValue] = useState<string | null>(null);
 
     useEffect(() => {
-        let typesArray = ingredients ? ingredients.map((item:TIngredient):string => item.type) : null; //создаю массив из типов ингредиентов
+        let typesArray = ingredients ? ingredients.map((item) => item.type) : null; //создаю массив из типов ингредиентов
         typesArray = [...new Set(typesArray)]; //убираю повторяющиеся элементы
 
         setTypesOfIngredients(typesArray);

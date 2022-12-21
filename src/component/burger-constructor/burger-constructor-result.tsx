@@ -21,7 +21,7 @@ const BurgerConstructorResult: FC = () => {
         if (localStorage.getItem("isUserLogged") === "true") {
             dispatch(addOrderToModal());
             const constructorIngredientsIds = constructorIngredients
-                ? constructorIngredients.map((item: TIngredient): string => item._id)
+                ? constructorIngredients.map((item) => item._id)
                 : []; //список id ингредиентов
             const bunId = bun ? bun._id : null; // id булки
             const orderIngredientsIds = [bunId, ...constructorIngredientsIds, bunId]; //список всех id ингредиентов
@@ -44,8 +44,8 @@ const BurgerConstructorResult: FC = () => {
     const fullprice = useMemo(() => {
         const ingredientsPrice = constructorIngredients
             ? constructorIngredients
-                  .map((item: TIngredient): number => item.price)
-                  .reduce((prev: number, curr: number): number => prev + curr, 0)
+                  .map((item) => item.price)
+                  .reduce((prev, curr) => prev + curr, 0)
             : 0;
         const bunPrice = bun ? bun.price : 0;
 

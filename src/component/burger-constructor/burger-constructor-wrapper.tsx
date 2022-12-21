@@ -76,7 +76,7 @@ const BurgerConstructorWrapper: FC = () => {
 
             <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargetRef}>
                 {constructorIngredients != null &&
-                    constructorIngredients.map((item: TIngredient, index: number) => (
+                    constructorIngredients.map((item, index) => (
                         <BurgerConstructorElement
                             moveCard={moveCard}
                             classname={styles.constructorElement}
