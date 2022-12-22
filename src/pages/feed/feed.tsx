@@ -16,7 +16,8 @@ const FeedPage: FC = () => {
     const isSecondRender = useRef(false)
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url: `${API_HOST_WS_URL}/all` });
+        isWsOpen && dispatch({ type: wsActionType.wsClose });
+        isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url: `${API_HOST_WS_URL}/all` });
         isSecondRender.current = true
 
         return () => {

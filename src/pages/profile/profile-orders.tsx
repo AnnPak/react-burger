@@ -7,14 +7,15 @@ import { API_HOST_WS_URL } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
 
 const Orders: FC = () => {
-    const { orders,isWsOpen } = useAppSelector((store) => store.feed);
+    const { orders, isWsOpen } = useAppSelector((store) => store.feed);
     const dispatch = useAppDispatch()
     const isSecondRender = useRef(false)
     
     const userOrdersReverse = orders && [...orders]
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` });
+        isWsOpen && dispatch({ type: wsActionType.wsClose });
+        isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` });
         isSecondRender.current = true
         
         return () => {
