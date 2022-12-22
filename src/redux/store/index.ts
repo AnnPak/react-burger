@@ -25,9 +25,7 @@ const store = configureStore({
         logout,
         feed,
     },
-    middleware: getDefaultMiddleware({ serializableCheck: false }).concat(
-        socketMiddleware(API_HOST_WS_URL)
-    ),
+    middleware: getDefaultMiddleware({ serializableCheck: false }).concat(socketMiddleware()),
     devTools: process.env.NODE_ENV !== "production",
 });
 

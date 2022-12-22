@@ -7,7 +7,6 @@ export type OrdersInitState = {
     totalToday?: number | null;
     userOrders: Array<TOrder> | null;
     isWsOpen: boolean | null;
-    isWsUserOpen: boolean | null;
 };
 
 export const initialState: OrdersInitState = {
@@ -16,7 +15,6 @@ export const initialState: OrdersInitState = {
     totalToday: null,
     userOrders: null,
     isWsOpen: null,
-    isWsUserOpen: null
 };
 
 const feedSlice = createSlice({
@@ -24,14 +22,9 @@ const feedSlice = createSlice({
     initialState,
     reducers: {
         wsMessage: (state, action) => {
+            console.log(action)
             const { orders, total, totalToday } = action.payload;
             state.orders = orders;
-            state.total = total;
-            state.totalToday = totalToday;
-        },
-        wsUserMessage: (state, action) => {
-            const { orders, total, totalToday } = action.payload;
-            state.userOrders = orders;
             state.total = total;
             state.totalToday = totalToday;
         },
@@ -39,22 +32,14 @@ const feedSlice = createSlice({
             const { type } = action.payload;
             state.isWsOpen = type === "close" ? true : false;
         },
-        wsUserClose: (state, action) => {
-            const { type } = action.payload;
-            state.isWsUserOpen = type === "close" ? true : false;
-        },
         wsConnect: (state, action) => {
             const { type } = action.payload;
             state.isWsOpen = type === "open" ? true : false;
-        },
-        wsUserConnect: (state, action) => {
-            const { type } = action.payload;
-            state.isWsUserOpen = type === "open" ? true : false;
         },
     },
 });
 
 const { actions, reducer } = feedSlice;
-export const { wsMessage, wsUserMessage, wsConnect, wsClose, wsUserClose, wsUserConnect } = actions;
+export const { wsMessage, wsConnect, wsClose } = actions;
 export { reducer as feedReducer}
 export default reducer;

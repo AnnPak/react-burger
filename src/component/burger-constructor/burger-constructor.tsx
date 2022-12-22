@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
 import classnames from "classnames";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -10,11 +9,11 @@ import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 
 import styles from "./burger-constructor.module.scss";
-import { RootState } from "../../redux/store";
+import {useAppSelector } from "../../redux/store";
 
 const BurgerConstructor: FC = () => {
-    const { isOrderModalVisible } = useSelector((store:RootState) => store.modal);
-    const { orderStatus } = useSelector((store:RootState) => store.order);
+    const { isOrderModalVisible } = useAppSelector((store) => store.modal);
+    const { orderStatus } = useAppSelector((store) => store.order);
 
     return (
         <section className={classnames("mt-25", styles.burgerSectionConstructor)}>

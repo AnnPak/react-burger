@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAppSelector } from "../../redux/store";
 import classnames from "classnames";
-import { nanoid } from "nanoid";
 import { TIngredientsInOrder, TOrdersList } from "../../utils/types";
 import { FC } from "react";
 import { FullOrderPrice } from "../../utils/full-order-price";

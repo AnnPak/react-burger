@@ -3,16 +3,18 @@ import OrdersList from "../../component/orders-list/orders-list";
 import Preloader from "../../component/preloader/preloader";
 import { wsActionType } from "../../redux/middleware/socket-middleware";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { API_HOST_WS_URL } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
 
 const Orders: FC = () => {
-    const { userOrders,isWsOpen } = useAppSelector((store) => store.feed);
+    const { orders,isWsOpen } = useAppSelector((store) => store.feed);
     const dispatch = useAppDispatch()
     const isSecondRender = useRef(false)
     
-    const userOrdersReverse = userOrders && [...userOrders]
+    const userOrdersReverse = orders && [...orders]
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsUserConnecting });
+        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` });
         isSecondRender.current = true
         
         return () => {
@@ -23,8 +25,8 @@ const Orders: FC = () => {
 
     return (
         <>
-            {!userOrders && <Preloader />}
-            {userOrders && <OrdersList orders={userOrdersReverse?.reverse()} pathname="/profile/orders/"/>}
+            {!orders && <Preloader />}
+            {orders && <OrdersList orders={userOrdersReverse?.reverse()} pathname="/profile/orders/"/>}
         </>
     );
 };

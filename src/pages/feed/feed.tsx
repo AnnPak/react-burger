@@ -8,6 +8,7 @@ import styles from "./feed.module.scss";
 import OrdersList from "../../component/orders-list/orders-list";
 import OrdersPanel from "../../component/orders-panel/orders-panel";
 import Preloader from "../../component/preloader/preloader";
+import { API_HOST_WS_URL } from "../../utils/constants";
 
 const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const FeedPage: FC = () => {
     const isSecondRender = useRef(false)
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url: `${API_HOST_WS_URL}/all` });
         isSecondRender.current = true
 
         return () => {

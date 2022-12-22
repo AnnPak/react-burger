@@ -2,7 +2,6 @@ import { FC, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
-import { TIngredient } from "../../utils/types";
 
 import { addOrderToModal } from "../../redux/store/modal/slice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";

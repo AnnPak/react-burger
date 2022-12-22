@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { TOrdersPanel } from "../../utils/types";
 import classnames from "classnames";
-import { nanoid } from "nanoid";
 
 import styles from "./orders-panel.module.scss";
 

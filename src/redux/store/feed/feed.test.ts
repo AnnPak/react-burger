@@ -1,11 +1,8 @@
 import {
   feedReducer,
   wsMessage,
-  wsUserMessage,
   wsConnect,
   wsClose,
-  wsUserClose,
-  wsUserConnect,
   initialState
 } from "./slice";
 
@@ -59,23 +56,10 @@ describe("Feed redux state tests", () => {
     expect(state.totalToday).toEqual(payload.totalToday);
   });
 
-  test("Handles wsUserMessage action", () => {
-    state = feedReducer(state, wsUserMessage(payload));
-    expect(state.userOrders).toEqual(payload.orders);
-    expect(state.total).toEqual(payload.total);
-    expect(state.totalToday).toEqual(payload.totalToday);
-  });
-
   test("Handles wsClose action", () => {
     state = feedReducer(state, wsClose(payload));
 
     expect(state.isWsOpen).toEqual(false);
-  });
-
-  test("Handles wsUserClose action", () => {
-    state = feedReducer(state, wsUserClose(payload));
-
-    expect(state.isWsUserOpen).toEqual(false);
   });
 
   test("Handles wsConnect action", () => {
@@ -84,10 +68,5 @@ describe("Feed redux state tests", () => {
     expect(state.isWsOpen).toEqual(true);
   });
 
-  test("Handles wsUserConnect action", () => {
-    state = feedReducer(state, wsUserConnect(payload));
-
-    expect(state.isWsUserOpen).toEqual(true);
-  });
 
 });

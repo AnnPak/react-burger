@@ -6,45 +6,37 @@ import { wsActionType } from "../../redux/middleware/socket-middleware";
 import styles from "./order-detail.module.scss";
 import { TIngredientsInOrder, TOrder, TOrderDetail } from "../../utils/types";
 import Preloader from "../../component/preloader/preloader";
-import { nanoid } from "nanoid";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FullOrderPrice } from "../../utils/full-order-price";
 import classnames from "classnames";
+import { API_HOST_WS_URL } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
 
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, userOrders, isWsOpen, isWsUserOpen } = useAppSelector((store) => store.feed);
+    const { orders } = useAppSelector((store) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store) => store.ingredients);
     const isSecondRender = useRef(false)
 
     useEffect(() => {
         if(!isModal){
-            
             isUserOrder ? 
-            !isWsUserOpen && isSecondRender.current && dispatch({ type: wsActionType.wsUserConnecting }) :
-            !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+            isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` }) :
+            isSecondRender.current && dispatch({ type: wsActionType.wsConnecting, url: `${API_HOST_WS_URL}/all` });
   
             isSecondRender.current = true
             return () => {
-                isUserOrder ? dispatch({ type: wsActionType.wsUserClose }) : dispatch({ type: wsActionType.wsClose });
+                dispatch({ type: wsActionType.wsClose });
             }  
         }
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        orders && !isUserOrder && setCurrentOrder(orders.find((order) => order._id === number));
-        // eslint-disable-next-line
-    }, [orders]);
-
-    useEffect(() => {
-        userOrders &&
-            isUserOrder &&
-            setCurrentOrder(userOrders.find((order) => order._id === number));
-        // eslint-disable-next-line
-    }, [userOrders]);
+        orders && setCurrentOrder(orders.find((order) => order._id === number));
+    }, [orders, number]);
 
     return (
         <section className={classnames(styles.orderDetail)}>
