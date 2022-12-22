@@ -7,31 +7,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./app-header.module.scss";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-    const { pathname } = useLocation();
     return (
         <nav className="mt-4">
             <div className={styles.navbarItem}>
                 <NavLink
-                    className={classnames(
-                        styles.navbarItemLink,
-                        pathname.indexOf("/profile") === -1 && styles.navbarItemLinkActive,
-                        "mr-2 p-4 pl-0"
-                    )}
+                     className={({ isActive }) =>
+                     classnames("mr-2 p-4 pl-0",
+                     styles.navbarItemLink,
+                     (isActive && styles.navbarItemLinkActive))
+                 }
                     to="/"
+                    end
                 >
                     <BurgerIcon type="primary" />
                     <p className="text text_type_main-default ml-2">Конструктор</p>
                 </NavLink>
 
                 <NavLink
-                    className={classnames(
+                    className={({ isActive }) =>
+                        classnames("mr-2 p-4 pl-0",
                         styles.navbarItemLink,
-                        pathname.indexOf("/feed") > -1 && styles.navbarItemLinkActive,
-                        "mr-2 p-4 pl-0 active"
-                    )}
+                        (isActive && styles.navbarItemLinkActive))
+                    }
                     to="/feed"
                 >
                     <ListIcon type="primary" />
@@ -41,11 +41,11 @@ const Navbar = () => {
 
             <div className={styles.navbarItem}>
                 <NavLink
-                    className={classnames(
-                        styles.navbarItemLink,
-                        pathname.indexOf("/profile") > -1 && styles.navbarItemLinkActive,
-                        "mr-2 p-4 pl-0 active"
-                    )}
+                    className={({ isActive }) =>
+                    classnames("mr-2 p-4 pl-0",
+                    styles.navbarItemLink,
+                    (isActive && styles.navbarItemLinkActive))
+                }
                     to="/profile"
                 >
                     <ProfileIcon type="primary" />
@@ -59,7 +59,7 @@ const Navbar = () => {
 const AppHeader = () => {
     return (
         <header className={styles.header}>
-            <Link to="/" className={classnames("pt-5 pb-5", styles.homeLink )}>
+            <Link to="/" className={classnames("pt-5 pb-5", styles.homeLink)}>
                 <Logo />
             </Link>
             <Navbar />

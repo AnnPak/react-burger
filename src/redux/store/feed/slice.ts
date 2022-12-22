@@ -22,7 +22,6 @@ const feedSlice = createSlice({
     initialState,
     reducers: {
         wsMessage: (state, action) => {
-            console.log(action)
             const { orders, total, totalToday } = action.payload;
             state.orders = orders;
             state.total = total;
