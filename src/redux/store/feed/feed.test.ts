@@ -60,7 +60,7 @@ describe("Feed redux state tests", () => {
     });
 
     test("Handles wsClose_orders action", () => {
-        state = feedReducer(state, wsClose_orders(payload));
+        state = feedReducer(state, wsClose_orders());
         expect(state.isWsOpen).toEqual(false);
     });
 
@@ -77,7 +77,7 @@ describe("Feed redux state tests", () => {
     });
 
     test("Handles wsClose_userOrders action", () => {
-        state = feedReducer(state, wsClose_userOrders(payload));
+        state = feedReducer(state, wsClose_userOrders());
         expect(state.isWsOpen).toEqual(false);
     });
 

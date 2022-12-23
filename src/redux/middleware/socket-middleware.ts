@@ -35,7 +35,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware => {
                         socket.onclose = () => {
                             socket &&
                                 dispatch({
-                                    type: wsActions.wsClose,
+                                    type: wsActions.wsClose
                                 });
                         };
                     }

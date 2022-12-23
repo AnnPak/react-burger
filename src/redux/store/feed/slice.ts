@@ -7,6 +7,7 @@ export type OrdersInitState = {
     totalToday?: number | null;
     userOrders: Array<TOrder> | null;
     isWsOpen: boolean | null;
+    isUserWsOpen: boolean | null;
     wsOrdersStatus: string | null;
     wsUserStatus: string | null;
 };
@@ -17,6 +18,7 @@ export const initialState: OrdersInitState = {
     totalToday: null,
     userOrders: null,
     isWsOpen: null,
+    isUserWsOpen: null,
     wsOrdersStatus: null,
     wsUserStatus: null,
 };
@@ -36,9 +38,8 @@ const feedSlice = createSlice({
             state.isWsOpen = type === "open" ? true : false;
             state.wsOrdersStatus = type;
         },
-        wsClose_orders: (state, action) => {
-            const { type } = action.payload;
-            state.isWsOpen = type === "close" ? true : false;
+        wsClose_orders: (state) => {
+            state.isWsOpen = false;
         },
         wsError_orders: (state, action) => {
             const { type } = action.payload;
@@ -59,11 +60,10 @@ const feedSlice = createSlice({
             const { type } = action.payload;
             state.wsUserStatus = type;
         },
-        wsClose_userOrders: (state, action) => {
-            const { type } = action.payload;
-            state.isWsOpen = type === "close" ? true : false;
+        wsClose_userOrders: (state) => {
+            state.isUserWsOpen = false;
         },
-        
+
         wsConnecting_orders: () => {},
         wsConnecting_userOrders: () => {},
     },
