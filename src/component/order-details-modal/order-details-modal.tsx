@@ -11,7 +11,7 @@ const OrderDetails: FC = () => {
     return (
         <>
             <div className={styles.constructorModalId}>
-                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)}>
+                <p className={classnames("text text_type_digits-large mt-8", styles.orderNumber)} data-test="id-order">
                     {orderNumber}
                 </p>
 

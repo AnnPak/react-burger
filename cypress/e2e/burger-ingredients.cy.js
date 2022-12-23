@@ -122,9 +122,13 @@ describe("burger constructor tests", function () {
                     "60d3b41abdacab0026a733c6",
                 ],
             },
-        })
+        }).as('kek')
 
         cy.get("[data-test=modal]");
-        cy.get("#react-modals").find('[data-test="order-error"]').should("not.exist");
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(17000);
+        cy.get("#react-modals").find('[data-test="id-order"]').should("exist");
+
     });
 });
