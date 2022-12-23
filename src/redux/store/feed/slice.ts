@@ -7,6 +7,8 @@ export type OrdersInitState = {
     totalToday?: number | null;
     userOrders: Array<TOrder> | null;
     isWsOpen: boolean | null;
+    wsOrdersStatus: string | null;
+    wsUserStatus: string | null;
 };
 
 export const initialState: OrdersInitState = {
@@ -15,30 +17,70 @@ export const initialState: OrdersInitState = {
     totalToday: null,
     userOrders: null,
     isWsOpen: null,
+    wsOrdersStatus: null,
+    wsUserStatus: null,
 };
 
 const feedSlice = createSlice({
     name: "feed",
     initialState,
     reducers: {
-        wsMessage: (state, action) => {
+        wsMessage_orders: (state, action) => {
             const { orders, total, totalToday } = action.payload;
             state.orders = orders;
             state.total = total;
             state.totalToday = totalToday;
         },
-        wsClose: (state, action) => {
+        wsConnect_orders: (state, action) => {
+            const { type } = action.payload;
+            state.isWsOpen = type === "open" ? true : false;
+            state.wsOrdersStatus = type;
+        },
+        wsClose_orders: (state, action) => {
             const { type } = action.payload;
             state.isWsOpen = type === "close" ? true : false;
         },
-        wsConnect: (state, action) => {
+        wsError_orders: (state, action) => {
+            const { type } = action.payload;
+            state.wsOrdersStatus = type;
+        },
+        wsMessage_userOrders: (state, action) => {
+            const { orders, total, totalToday } = action.payload;
+            state.userOrders = orders;
+            state.total = total;
+            state.totalToday = totalToday;
+        },
+        wsConnect_userOrders: (state, action) => {
             const { type } = action.payload;
             state.isWsOpen = type === "open" ? true : false;
+            state.wsUserStatus = type;
         },
+        wsError_userOrders: (state, action) => {
+            const { type } = action.payload;
+            state.wsUserStatus = type;
+        },
+        wsClose_userOrders: (state, action) => {
+            const { type } = action.payload;
+            state.isWsOpen = type === "close" ? true : false;
+        },
+        
+        wsConnecting_orders: () => {},
+        wsConnecting_userOrders: () => {},
     },
 });
 
 const { actions, reducer } = feedSlice;
-export const { wsMessage, wsConnect, wsClose } = actions;
-export { reducer as feedReducer}
+export const {
+    wsMessage_orders,
+    wsConnect_orders,
+    wsClose_orders,
+    wsError_orders,
+    wsMessage_userOrders,
+    wsConnect_userOrders,
+    wsClose_userOrders,
+    wsError_userOrders,
+    wsConnecting_userOrders,
+    wsConnecting_orders
+} = actions;
+export { reducer as feedReducer };
 export default reducer;

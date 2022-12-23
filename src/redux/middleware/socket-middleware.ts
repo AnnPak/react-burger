@@ -1,65 +1,51 @@
-import { RootState, AppDispatch } from "../store/index";
 import type { Middleware, MiddlewareAPI } from "redux";
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { wsMessage, wsConnect, wsClose } from "../store/feed/slice";
 
-export enum wsActionType {
-    wsConnect = "wsConnect",
-    wsDisconnect = "wsDisconnect",
-    wsConnecting = "wsConnecting",
-    wsOpen = "wsOpen",
-    wsClose = "wsClose",
-    wsError = "wsError",
-    wsMessage = "wsMessage",
-}
+import { RootState, AppDispatch } from "../store/index";
+import { TwsActionTypes } from "../../utils/types";
 
-export type TwsActionTypes = {
-    wsConnect: ActionCreatorWithPayload<string>;
-    wsDisconnect: ActionCreatorWithoutPayload;
-    wsConnecting: ActionCreatorWithoutPayload;
-    wsOpen: ActionCreatorWithoutPayload;
-    wsClose: ActionCreatorWithoutPayload;
-    wsError: ActionCreatorWithPayload<string>;
-    wsMessage: ActionCreatorWithPayload<string>;
-};
-
-export const socketMiddleware = (): Middleware => {
+export const socketMiddleware = (wsActions: TwsActionTypes): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null;
 
         return (next) => (action) => {
             const { dispatch } = store;
             const { type, url, payload } = action;
-
+            
             switch (type) {
-                case "wsConnecting": {
+                case wsActions.wsConnecting: {
                     socket = new WebSocket(url);
 
                     if (socket) {
                         socket.onopen = (event) => {
-                            dispatch(wsConnect(event));
+                            dispatch({ type: wsActions.wsConnect, payload: event });
                         };
 
                         socket.onerror = () => {
-                            dispatch({ type: "wsError" });
+                            dispatch({ type: wsActions.wsError });
                         };
 
                         socket.onmessage = (event) => {
                             const { data: serializedData } = event;
                             const data = JSON.parse(serializedData);
-                            dispatch(wsMessage(data));
+                            dispatch({
+                                type: wsActions.wsMessage,
+                                payload: data,
+                            });
                         };
-                        socket.onclose = (event) => {
-                            socket && dispatch(wsClose(event));
+                        socket.onclose = () => {
+                            socket &&
+                                dispatch({
+                                    type: wsActions.wsClose,
+                                });
                         };
                     }
                     break;
                 }
-                case "wsMessage":
+                case wsActions.wsMessage:
                     const message = payload;
                     socket?.send(JSON.stringify(message));
                     break;
-                case "wsClose":
+                case wsActions.wsClose:
                     socket?.close();
                     socket = null;
                     break;

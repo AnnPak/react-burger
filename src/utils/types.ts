@@ -1,3 +1,5 @@
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+
 export type TIngredient = {
     _id: string;
     name: string;
@@ -101,4 +103,12 @@ export type TOrderDetail = {
 export type TFetchOrder = {
     ingredients: Array<string | null >
 }
+
+export type TwsActionTypes = {
+    wsConnect: ActionCreatorWithPayload<any, string>;
+    wsConnecting:ActionCreatorWithPayload<any, string>;
+    wsClose: ActionCreatorWithPayload<any, string>;
+    wsError: ActionCreatorWithPayload<any, string>;
+    wsMessage:ActionCreatorWithPayload<any, string>;
+};
 
