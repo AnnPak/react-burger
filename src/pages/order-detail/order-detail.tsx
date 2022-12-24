@@ -1,20 +1,21 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ordersWsActions, useAppDispatch, useAppSelector, userOrdersWsActions } from "../../redux/store";
+import classnames from "classnames";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./order-detail.module.scss";
+import { ordersWsActions, useAppDispatch, useAppSelector, userOrdersWsActions } from "../../redux/store";
 import { TIngredientsInOrder, TOrder, TOrderDetail } from "../../utils/types";
 import Preloader from "../../component/preloader/preloader";
-import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FullOrderPrice } from "../../utils/full-order-price";
-import classnames from "classnames";
 import { API_HOST_WS_URL } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
+
+import styles from "./order-detail.module.scss";
 
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, userOrders } = useAppSelector((store) => store.feed);
+    const { orders, userOrders, isUserWsOpen } = useAppSelector((store) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
     const { ingredients } = useAppSelector((store) => store.ingredients);
     const isSecondRender = useRef(false)
@@ -22,12 +23,14 @@ const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     useEffect(() => {
         if(!isModal){
             isUserOrder ? 
-            isSecondRender.current && dispatch({ type: ordersWsActions.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` }) :
-            isSecondRender.current && dispatch({ type: userOrdersWsActions.wsConnecting, url: `${API_HOST_WS_URL}/all` });
+            isSecondRender.current && dispatch({ type: userOrdersWsActions.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` }) :
+            isSecondRender.current && dispatch({ type: ordersWsActions.wsConnecting, url: `${API_HOST_WS_URL}/all` });
   
             isSecondRender.current = true
             return () => {
-                dispatch({ type: ordersWsActions.wsClose });
+                isUserWsOpen ?
+                    dispatch({ type: userOrdersWsActions.wsClose }):
+                    dispatch({ type: ordersWsActions.wsClose }) ;
             }  
         }
         // eslint-disable-next-line

@@ -40,10 +40,13 @@ const feedSlice = createSlice({
         },
         wsClose_orders: (state) => {
             state.isWsOpen = false;
+            state.wsUserStatus = 'close';
         },
-        wsError_orders: (state, action) => {
-            const { type } = action.payload;
-            state.wsOrdersStatus = type;
+        wsError_orders: (state) => {
+            state.wsUserStatus = 'error';
+        },
+        wsConnecting_orders: (state) => {
+            state.wsOrdersStatus = 'connecting';
         },
         wsMessage_userOrders: (state, action) => {
             const { orders, total, totalToday } = action.payload;
@@ -56,16 +59,16 @@ const feedSlice = createSlice({
             state.isWsOpen = type === "open" ? true : false;
             state.wsUserStatus = type;
         },
-        wsError_userOrders: (state, action) => {
-            const { type } = action.payload;
-            state.wsUserStatus = type;
+        wsError_userOrders: (state) => {
+            state.wsUserStatus = 'error';
         },
         wsClose_userOrders: (state) => {
             state.isUserWsOpen = false;
+            state.wsUserStatus = 'close';
         },
-
-        wsConnecting_orders: () => {},
-        wsConnecting_userOrders: () => {},
+        wsConnecting_userOrders: (state) => {
+            state.wsUserStatus = 'connecting';
+        },
     },
 });
 
