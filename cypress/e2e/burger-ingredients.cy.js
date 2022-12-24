@@ -68,34 +68,7 @@ describe("burger constructor tests", function () {
         cy.get('@modal').find('[data-test="carbohydrates"]').should("have.text", 242);
     });
 
-    it("should create order with error", function () {
-        cy.get("@ingredient").eq(5).trigger("dragstart");
-        cy.get("@constructor").trigger("drop");
-
-        cy.get("@create-order-btn").click();
-
-        cy.visit(homePageUrl + "/login");
-
-        cy.get('[type="email"]').should("be.visible").type("anna@anna.com");
-
-        cy.get('[type="password"]').should("be.visible").type("anna123");;
-
-        cy.get('[type="submit"]').click();
-
-        cy.get("@create-order-btn").click();
-        cy.get("[data-test=modal]");
-
-        cy.intercept('POST', ORDERS_API, {
-            ingredients: [
-                "60d3b41abdacab0026a733cb",
-            ],
-        })
-
-        cy.get("#react-modals").find('[data-test="order-error"]').should("have.text", "Ошибка!");
-
-    });
-
-    it("should create order", function () {
+    it("should open create order modal", function () {
         cy.get("@ingredient").eq(0).trigger("dragstart");
         cy.get("@constructor").trigger("drop");
 
@@ -125,10 +98,6 @@ describe("burger constructor tests", function () {
         }).as('kek')
 
         cy.get("[data-test=modal]");
-
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(17000);
-        cy.get("#react-modals").find('[data-test="id-order"]').should("exist");
 
     });
 });
