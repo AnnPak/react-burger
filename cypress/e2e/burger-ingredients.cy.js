@@ -68,7 +68,7 @@ describe("burger constructor tests", function () {
         cy.get('@modal').find('[data-test="carbohydrates"]').should("have.text", 242);
     });
 
-    it("should open create order modal", function () {
+    it("should create order", function () {
         cy.get("@ingredient").eq(0).trigger("dragstart");
         cy.get("@constructor").trigger("drop");
 
@@ -97,7 +97,9 @@ describe("burger constructor tests", function () {
             },
         }).as('kek')
 
-        cy.get("[data-test=modal]");
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(17000);
+        cy.get("#react-modals").find('[data-test="id-order"]').should("exist");cy.get("[data-test=modal]");
 
     });
 });
