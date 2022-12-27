@@ -87,19 +87,13 @@ describe("burger constructor tests", function () {
 
         cy.get("@create-order-btn").click();
 
-        cy.intercept('POST', ORDERS_API, {
-            body: {
-                ingredients: [
-                    "60d3b41abdacab0026a733c6",
-                    "60d3b41abdacab0026a733cb",
-                    "60d3b41abdacab0026a733c6",
-                ],
-            },
-        }).as('kek')
-
+ 
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(17000);
-        cy.get("#react-modals").find('[data-test="id-order"]').should("exist");cy.get("[data-test=modal]");
+        cy.get("#react-modals").find('[data-test="id-order"]').should("exist");
+        cy.get("[data-test=modal]");
 
     });
+
+
 });

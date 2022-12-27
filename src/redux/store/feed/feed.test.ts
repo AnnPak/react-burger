@@ -78,11 +78,11 @@ describe("Feed redux state tests", () => {
 
     test("Handles wsClose_userOrders action", () => {
         state = feedReducer(state, wsClose_userOrders());
-        expect(state.isWsOpen).toEqual(false);
+        expect(state.isUserWsOpen).toEqual(false);
     });
 
     test("Handles wsConnect_userOrders action", () => {
         state = feedReducer(state, wsConnect_userOrders(payload));
-        expect(state.isWsOpen).toEqual(true);
+        expect(state.isUserWsOpen).toEqual(true);
     });
 });

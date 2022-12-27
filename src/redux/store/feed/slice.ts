@@ -56,7 +56,7 @@ const feedSlice = createSlice({
         },
         wsConnect_userOrders: (state, action) => {
             const { type } = action.payload;
-            state.isWsOpen = type === "open" ? true : false;
+            state.isUserWsOpen = type === "open" ? true : false;
             state.wsUserStatus = type;
         },
         wsError_userOrders: (state) => {
