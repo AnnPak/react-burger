@@ -1,50 +1,46 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
-import { wsActionType } from "../../redux/middleware/socket-middleware";
+import classnames from "classnames";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./order-detail.module.scss";
+import { ordersWsActions, useAppDispatch, useAppSelector, userOrdersWsActions } from "../../redux/store";
 import { TIngredientsInOrder, TOrder, TOrderDetail } from "../../utils/types";
 import Preloader from "../../component/preloader/preloader";
-import { nanoid } from "nanoid";
-import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FullOrderPrice } from "../../utils/full-order-price";
-import classnames from "classnames";
+import { API_HOST_WS_URL } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
+
+import styles from "./order-detail.module.scss";
 
 const OrderDetailPage: FC<TOrderDetail> = ({ isUserOrder, isModal }) => {
     const { number } = useParams();
     const dispatch = useAppDispatch();
-    const { orders, userOrders, isWsOpen, isWsUserOpen } = useAppSelector((store: RootState) => store.feed);
+    const { orders, userOrders, isUserWsOpen } = useAppSelector((store) => store.feed);
     const [currentOrder, setCurrentOrder] = useState<TOrder | null | undefined>(null);
-    const { ingredients } = useAppSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useAppSelector((store) => store.ingredients);
     const isSecondRender = useRef(false)
 
     useEffect(() => {
         if(!isModal){
-            
             isUserOrder ? 
-            !isWsUserOpen && isSecondRender.current && dispatch({ type: wsActionType.wsUserConnecting }) :
-            !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+            isSecondRender.current && dispatch({ type: userOrdersWsActions.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` }) :
+            isSecondRender.current && dispatch({ type: ordersWsActions.wsConnecting, url: `${API_HOST_WS_URL}/all` });
   
             isSecondRender.current = true
             return () => {
-                isUserOrder ? dispatch({ type: wsActionType.wsUserClose }) : dispatch({ type: wsActionType.wsClose });
+                isUserWsOpen ?
+                    dispatch({ type: userOrdersWsActions.wsClose }):
+                    dispatch({ type: ordersWsActions.wsClose }) ;
             }  
         }
-        
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        orders && !isUserOrder && setCurrentOrder(orders.find((order) => order._id === number));
-        // eslint-disable-next-line
-    }, [orders]);
-
-    useEffect(() => {
-        userOrders &&
-            isUserOrder &&
-            setCurrentOrder(userOrders.find((order) => order._id === number));
-        // eslint-disable-next-line
-    }, [userOrders]);
+        isUserOrder ? 
+        userOrders && setCurrentOrder(userOrders.find((order) => order._id === number)) :
+        orders && setCurrentOrder(orders.find((order) => order._id === number));
+    }, [isUserOrder, orders, userOrders, number]);
 
     return (
         <section className={classnames(styles.orderDetail)}>
@@ -90,7 +86,7 @@ const IngredientsInOrder: FC<TIngredientsInOrder> = ({ ingredients, orderIngredi
             {ingredientInOrder.map((item, i) => {
                 const count = orderIngredients.filter((i) => i === item._id).length;
                 return (
-                    <div className={classnames(styles.orderIngredientItem, "mt-6")} key={nanoid()}>
+                    <div className={classnames(styles.orderIngredientItem, "mt-6")} key={item._id}>
                         <div className={styles.leftBlock}>
                             <img
                                 src={item.image}

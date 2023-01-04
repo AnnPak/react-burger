@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
 import { InfoIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -7,12 +6,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../component/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../component/burger-constructor/burger-constructor";
 import Preloader from "../../component/preloader/preloader";
-import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 
 import styles from "./home.module.scss";
 
 const Home: FC = () => {
-    const { isLoading, isError } = useSelector((store: RootState) => store.ingredients);
+    const { isLoading, isError } = useAppSelector((store) => store.ingredients);
 
     return (
         <>

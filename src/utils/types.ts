@@ -1,14 +1,18 @@
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+
 export type TIngredient = {
     _id: string;
     name: string;
     type: string;
     proteins: number;
     fat: number;
-    key: string | number;
+    key?: string | number;
     carbohydrates: number;
     calories: number;
     price: number;
     image: string;
+    image_mobile: string;
+    __v: number;
     image_large: string;
 };
 
@@ -95,4 +99,16 @@ export type TOrderDetail = {
     isUserOrder?: boolean;
     isModal?: boolean;
 }
+
+export type TFetchOrder = {
+    ingredients: Array<string | null >
+}
+
+export type TwsActionTypes = {
+    wsConnect: ActionCreatorWithPayload<any, string>;
+    wsConnecting:ActionCreatorWithPayload<any, string>;
+    wsClose: ActionCreatorWithPayload<any, string>;
+    wsError: ActionCreatorWithPayload<any, string>;
+    wsMessage:ActionCreatorWithPayload<any, string>;
+};
 

@@ -9,7 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { registerUser } from "../../redux/store/user/register";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "../login/login.module.scss";
 
@@ -19,7 +19,7 @@ const Register:FC = () => {
     const [password, setPassword] = useState<string>("");
     const [isError, setIsError] = useState<boolean>(false);
 
-    const { registerSuccess } = useAppSelector((store: RootState) => store.register);
+    const { registerSuccess } = useAppSelector((store) => store.register);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

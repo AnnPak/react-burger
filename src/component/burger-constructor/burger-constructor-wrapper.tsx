@@ -6,15 +6,15 @@ import {
     updateBurgerIngredients,
     setIngredientsWithoutBun,
     setBun,
-} from "../../redux/store/constructor/slice";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+} from "../../redux/store/constructor/constructor";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import BurgerConstructorElement from "./burger-constructor-element";
 
 import styles from "./burger-constructor.module.scss";
 
 const BurgerConstructorWrapper: FC = () => {
     const { bun, constructorIngredients } = useAppSelector(
-        (store: RootState) => store.burgerConstructor
+        (store) => store.burgerConstructor
     );
     const dispatch = useAppDispatch();
 
@@ -55,10 +55,11 @@ const BurgerConstructorWrapper: FC = () => {
         if (localStorage.getItem("bun")) {
             dispatch(setBun(JSON.parse(localStorage.getItem("bun") || "{}")));
         }
+        // eslint-disable-next-line
     }, []);
 
     return (
-        <section className={styles.constructorElements}>
+        <section className={styles.constructorElements} data-test='constructor'>
             {bun && (
                 <BurgerConstructorElement
                     moveCard={moveCard}
@@ -75,7 +76,7 @@ const BurgerConstructorWrapper: FC = () => {
 
             <div className={classnames(styles.constructorElements, "pr-2")} ref={dropTargetRef}>
                 {constructorIngredients != null &&
-                    constructorIngredients.map((item: TIngredient, index: number) => (
+                    constructorIngredients.map((item, index) => (
                         <BurgerConstructorElement
                             moveCard={moveCard}
                             classname={styles.constructorElement}

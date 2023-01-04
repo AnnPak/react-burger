@@ -22,6 +22,7 @@ const LogoutPage: FC = () => {
                     .then(() => navigate("/login", { state: { form: location } }))
                     .catch(() => navigate(from, { state: { form: location } }));
         }
+        // eslint-disable-next-line
     }, []);
 
     return <Preloader/>;

@@ -1,25 +1,27 @@
 import { FC, useEffect, useRef } from "react";
 import classnames from "classnames";
 
-import { wsActionType } from "../../redux/middleware/socket-middleware";
-import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
-
-import styles from "./feed.module.scss";
+import { useAppSelector, useAppDispatch, ordersWsActions } from "../../redux/store";
 import OrdersList from "../../component/orders-list/orders-list";
 import OrdersPanel from "../../component/orders-panel/orders-panel";
 import Preloader from "../../component/preloader/preloader";
+import { API_HOST_WS_URL } from "../../utils/constants";
+
+import styles from "./feed.module.scss";
+
 
 const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { orders, total, totalToday, isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const { orders, total, totalToday, isWsOpen } = useAppSelector((store) => store.feed);
     const isSecondRender = useRef(false)
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsConnecting });
+        isWsOpen && dispatch({ type: ordersWsActions.wsClose });
+        isSecondRender.current && dispatch({ type: ordersWsActions.wsConnecting, url: `${API_HOST_WS_URL}/all` });
         isSecondRender.current = true
 
         return () => {
-            dispatch({ type: wsActionType.wsClose });
+            dispatch({ type: ordersWsActions.wsClose });
         };
         // eslint-disable-next-line
     }, []);

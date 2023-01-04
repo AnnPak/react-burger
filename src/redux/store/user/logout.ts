@@ -5,12 +5,12 @@ import { request } from "../../../utils/request";
 import { LOGOUT_API } from "../../../utils/constants";
 import { deleteCookie } from "../../../utils/cookie";
 
-type TLogoutState = {
+export type TLogoutState = {
     logoutSending: boolean,
     logoutError: boolean,
 }
 
-const initialState:TLogoutState = {
+export const initialState:TLogoutState = {
     logoutSending: false,
     logoutError: false,
 };
@@ -48,5 +48,5 @@ const logoutSlice = createSlice({
 });
 
 const { reducer } = logoutSlice;
-
+export { reducer as logoutReducer };
 export default reducer;

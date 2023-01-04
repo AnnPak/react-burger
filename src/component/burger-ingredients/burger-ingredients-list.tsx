@@ -1,12 +1,11 @@
 import { FC, Dispatch, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import classnames from "classnames";
 
 import BurgerIngredientsSection from "./burger-ingredients-section";
 
 import styles from "./burger-ingredients-list.module.scss";
-import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 
 type TBurgerIngredientsList = {
     typesOfIngredients: Array<string> | null;
@@ -15,7 +14,7 @@ type TBurgerIngredientsList = {
 
 const BurgerIngredientsList: FC<TBurgerIngredientsList> = (props) => {
     const { typesOfIngredients, setTabsValue } = props;
-    const { ingredients } = useSelector((store: RootState) => store.ingredients);
+    const { ingredients } = useAppSelector((store) => store.ingredients);
 
     const [bunsRef, inViewBuns] = useInView({
         threshold: 0,

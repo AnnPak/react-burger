@@ -1,120 +1,53 @@
-import { RootState, AppDispatch } from "../store/index";
 import type { Middleware, MiddlewareAPI } from "redux";
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { wsMessage, wsUserMessage, wsConnect, wsClose, wsUserConnect, wsUserClose } from "../store/feed/slice";
-import { getCookie } from "../../utils/cookie";
 
-export enum wsActionType {
-    wsConnect = "wsConnect",
-    wsDisconnect = "wsDisconnect",
-    wsConnecting = "wsConnecting",
-    wsOpen = "wsOpen",
-    wsClose = "wsClose",
-    wsError = "wsError",
-    wsMessage = "wsMessage",
+import { RootState, AppDispatch } from "../store/index";
+import { TwsActionTypes } from "../../utils/types";
 
-    wsUserConnect = "wsUserConnect",
-    wsUserDisconnect = "wUsersDisconnect",
-    wsUserConnecting = "wsUserConnecting",
-    wsUserOpen = "wsUserOpen",
-    wsUserClose = "wsUserClose",
-    wsUserError = "wsUserError",
-    wsUserMessage = "wsUserMessage",
-}
-
-export type TwsActionTypes = {
-    wsConnect: ActionCreatorWithPayload<string>;
-    wsDisconnect: ActionCreatorWithoutPayload;
-    wsConnecting: ActionCreatorWithoutPayload;
-    wsOpen: ActionCreatorWithoutPayload;
-    wsClose: ActionCreatorWithoutPayload;
-    wsError: ActionCreatorWithPayload<string>;
-    wsMessage: ActionCreatorWithPayload<string>;
-
-    wsUserConnect: ActionCreatorWithPayload<string>;
-    wsUserDisconnect: ActionCreatorWithoutPayload;
-    wsUserConnecting: ActionCreatorWithoutPayload;
-    wsUserOpen: ActionCreatorWithoutPayload;
-    wsUserClose: ActionCreatorWithoutPayload;
-    wsUserError: ActionCreatorWithPayload<string>;
-    wsUserMessage: ActionCreatorWithPayload<string>;
-};
-
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsActions: TwsActionTypes): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null;
 
         return (next) => (action) => {
             const { dispatch } = store;
-            const { type, payload } = action;
+            const { type, url, payload } = action;
             
-
             switch (type) {
-                case "wsConnecting": {
-                    socket = new WebSocket(`${wsUrl}/all`);
+                case wsActions.wsConnecting: {
+                    socket = new WebSocket(url);
 
                     if (socket) {
                         socket.onopen = (event) => {
-                            dispatch(wsConnect(event));
+                            dispatch({ type: wsActions.wsConnect, payload: event });
                         };
 
                         socket.onerror = () => {
-                            dispatch({ type: "wsError" });
+                            dispatch({ type: wsActions.wsError });
                         };
 
                         socket.onmessage = (event) => {
                             const { data: serializedData } = event;
                             const data = JSON.parse(serializedData);
-                            dispatch(wsMessage(data));
+                            dispatch({
+                                type: wsActions.wsMessage,
+                                payload: data,
+                            });
                         };
-                        socket.onclose = (event) => {
-                            socket &&                           
-                            dispatch(wsClose(event));
-                        };
-                    }
-                    break;
-                }
-                case "wsUserConnecting": {
-                    socket = new WebSocket(`${wsUrl}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}`);
-
-                    if (socket) {
-                        socket.onopen = (event) => {
-                            dispatch(wsUserConnect(event));
-                        };
-
-                        socket.onerror = () => {
-                            dispatch({ type: "wsUserError" });
-                        };
-
-                        socket.onmessage = (event) => {
-                            const { data: serializedData } = event;
-                            const data = JSON.parse(serializedData);
-                            dispatch(wsUserMessage(data));
-                        };
-                        socket.onclose = (event) => {
-                            socket &&       
-                            dispatch(wsUserClose(event));
+                        socket.onclose = () => {
+                            socket &&
+                                dispatch({
+                                    type: wsActions.wsClose
+                                });
                         };
                     }
                     break;
                 }
-                case "wsMessage":
+                case wsActions.wsMessage:
                     const message = payload;
-                    // функция для отправки сообщения на сервер
                     socket?.send(JSON.stringify(message));
                     break;
-                case "wsClose":
+                case wsActions.wsClose:
                     socket?.close();
                     socket = null;
-                    break;
-                case "wsUserClose":
-                    socket?.close();
-                    socket = null;
-                    break;
-                case "wsUserMessage":
-                    const userMessage = payload;
-                    // функция для отправки сообщения на сервер
-                    socket?.send(JSON.stringify(userMessage));
                     break;
             }
             next(action);
