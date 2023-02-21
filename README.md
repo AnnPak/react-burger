@@ -1,4 +1,4 @@
-[DEMO] http://annapk.nomoredomains.club/
+[DEMO] https://annpak.github.io/react-burger/
 
 Учебный проект на курсе React-разработчик компании Яндекс Практикум
 

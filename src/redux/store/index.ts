@@ -54,7 +54,7 @@ const store = configureStore({
         feed,
     },
     
-    middleware: getDefaultMiddleware({ serializableCheck: false }).concat(socketMiddleware(ordersWsActions), socketMiddleware(userOrdersWsActions)),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware(ordersWsActions), socketMiddleware(userOrdersWsActions)),
     devTools: process.env.NODE_ENV !== "production",
 });
 
