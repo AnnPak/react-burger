@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/react-burger-1/static/css/main.a5072d01.css",
+    "main.js": "/react-burger-1/static/js/main.eb2efa9a.js",
+    "static/media/JetBrainsMono-Bold.woff": "/react-burger-1/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/react-burger-1/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "/react-burger-1/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/react-burger-1/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/react-burger-1/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/react-burger-1/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/done.png": "/react-burger-1/static/media/done.e036971b1d1e32006499.png",
+    "index.html": "/react-burger-1/index.html",
+    "main.a5072d01.css.map": "/react-burger-1/static/css/main.a5072d01.css.map",
+    "main.eb2efa9a.js.map": "/react-burger-1/static/js/main.eb2efa9a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a5072d01.css",
+    "static/js/main.eb2efa9a.js"
+  ]
+}
