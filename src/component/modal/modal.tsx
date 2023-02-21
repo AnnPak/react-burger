@@ -36,7 +36,7 @@ const Modal: FC<PropsWithChildren<TModal>> = ({ title, isRedirect, children }) =
     return createPortal(
         <>
             <ModalOverlay closePopup={closePopup}/>
-            <div className={classnames(styles.modal, "p-10")} onClick={(e) => e.stopPropagation()}>
+            <div className={classnames(styles.modal, "p-10")} onClick={(e) => e.stopPropagation()} data-test="modal">
                 <div className={styles.modalClose}>
                     <CloseIcon
                         type="primary"

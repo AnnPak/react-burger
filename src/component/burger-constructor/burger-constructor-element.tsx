@@ -1,13 +1,12 @@
 import { useRef, FC, SyntheticEvent } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import classnames from "classnames";
-import { useSelector } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import { nanoid } from "nanoid";
 
 import { TBurgerConstructorElementProps, TStringArray } from "../../utils/types";
-import { deleteBurgerIngredient } from "../../redux/store/constructor/slice";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { deleteBurgerIngredient } from "../../redux/store/constructor/constructor";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./burger-constructor.module.scss";
 
@@ -15,7 +14,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
     const { position, classname, index, moveCard } = props;
     const { price, image, name, type } = ingredient;
 
-    const { constructorIngredients } = useSelector((store:RootState) => store.burgerConstructor);
+    const { constructorIngredients } = useAppSelector((store) => store.burgerConstructor);
     const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLInputElement>(null);
@@ -85,6 +84,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({ ingredie
             onDrop={preventDefault}
             ref={ref}
             data-handler-id={handlerId}
+            data-test='constructor-ingredient'
             {...(index && {index: {index}})} 
         >
             {!position && <DragIcon type="secondary" />}

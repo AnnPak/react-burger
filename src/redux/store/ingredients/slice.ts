@@ -10,7 +10,7 @@ export type TIngredientsState = {
     isError: boolean
 }
 
-const initialState:TIngredientsState = {
+export const initialState:TIngredientsState = {
     ingredients: null,
     isLoading: false,
     isError: false,
@@ -46,4 +46,5 @@ const ingredientsSlice = createSlice({
 
 const { reducer } = ingredientsSlice;
 
+export { reducer as ingredientsReducer}
 export default reducer;

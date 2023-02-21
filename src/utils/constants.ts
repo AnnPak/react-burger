@@ -6,7 +6,7 @@ export const TITLE_LIST:TStringArray = {
     'main': "Начинки",
 };
 
-const BASE_URL = "https://norma.nomoreparties.space/api";
+export const BASE_URL = "https://norma.nomoreparties.space/api";
 export const API_HOST_WS_URL = 'wss://norma.nomoreparties.space/orders'
 
 export const ORDERS_API = `${BASE_URL}/orders`;

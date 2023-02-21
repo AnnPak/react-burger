@@ -4,12 +4,12 @@ import classnames from "classnames";
 
 import { userUpdate } from "../../redux/store/user/user";
 import { useForm } from "../../hooks/useForm";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 import styles from "./profile.module.scss";
 
 const UserDataForm:FC = () => {
-    const { user } = useAppSelector((store: RootState) => store.user);
+    const { user } = useAppSelector((store) => store.user);
     const [isBtnsHidden, setBtnsHidden] = useState<boolean>(true);
     const { values, setFieldValue, setFieldDisabled, disableValue } = useForm({
         initialValues: {

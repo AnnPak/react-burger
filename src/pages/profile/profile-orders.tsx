@@ -1,22 +1,24 @@
 import { FC, useEffect, useRef } from "react";
+
 import OrdersList from "../../component/orders-list/orders-list";
 import Preloader from "../../component/preloader/preloader";
-import { wsActionType } from "../../redux/middleware/socket-middleware";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector, userOrdersWsActions } from "../../redux/store";
+import { API_HOST_WS_URL } from "../../utils/constants";
+import { getCookie } from "../../utils/cookie";
 
 const Orders: FC = () => {
-    const { userOrders,isWsOpen } = useAppSelector((store: RootState) => store.feed);
+    const { userOrders } = useAppSelector((store) => store.feed);
     const dispatch = useAppDispatch()
     const isSecondRender = useRef(false)
     
     const userOrdersReverse = userOrders && [...userOrders]
     
     useEffect(() => {
-        !isWsOpen && isSecondRender.current && dispatch({ type: wsActionType.wsUserConnecting });
+        isSecondRender.current && dispatch({ type: userOrdersWsActions.wsConnecting, url:`${API_HOST_WS_URL}?token=${getCookie("accessToken")?.replace(/Bearer /g, '')}` });
         isSecondRender.current = true
         
         return () => {
-            dispatch({ type: wsActionType.wsClose });
+            dispatch({ type: userOrdersWsActions.wsClose });
         };
         // eslint-disable-next-line
     }, []);

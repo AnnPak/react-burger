@@ -7,7 +7,9 @@ export type OrdersInitState = {
     totalToday?: number | null;
     userOrders: Array<TOrder> | null;
     isWsOpen: boolean | null;
-    isWsUserOpen: boolean | null;
+    isUserWsOpen: boolean | null;
+    wsOrdersStatus: string | null;
+    wsUserStatus: string | null;
 };
 
 export const initialState: OrdersInitState = {
@@ -16,44 +18,72 @@ export const initialState: OrdersInitState = {
     totalToday: null,
     userOrders: null,
     isWsOpen: null,
-    isWsUserOpen: null
+    isUserWsOpen: null,
+    wsOrdersStatus: null,
+    wsUserStatus: null,
 };
 
 const feedSlice = createSlice({
     name: "feed",
     initialState,
     reducers: {
-        wsMessage: (state, action) => {
+        wsMessage_orders: (state, action) => {
             const { orders, total, totalToday } = action.payload;
             state.orders = orders;
             state.total = total;
             state.totalToday = totalToday;
         },
-        wsUserMessage: (state, action) => {
+        wsConnect_orders: (state, action) => {
+            const { type } = action.payload;
+            state.isWsOpen = type === "open" ? true : false;
+            state.wsOrdersStatus = type;
+        },
+        wsClose_orders: (state) => {
+            state.isWsOpen = false;
+            state.wsUserStatus = 'close';
+        },
+        wsError_orders: (state) => {
+            state.wsUserStatus = 'error';
+        },
+        wsConnecting_orders: (state) => {
+            state.wsOrdersStatus = 'connecting';
+        },
+        wsMessage_userOrders: (state, action) => {
             const { orders, total, totalToday } = action.payload;
             state.userOrders = orders;
             state.total = total;
             state.totalToday = totalToday;
         },
-        wsClose: (state, action) => {
+        wsConnect_userOrders: (state, action) => {
             const { type } = action.payload;
-            state.isWsOpen = type === "close" ? true : false;
+            state.isUserWsOpen = type === "open" ? true : false;
+            state.wsUserStatus = type;
         },
-        wsUserClose: (state, action) => {
-            const { type } = action.payload;
-            state.isWsUserOpen = type === "close" ? true : false;
+        wsError_userOrders: (state) => {
+            state.wsUserStatus = 'error';
         },
-        wsConnect: (state, action) => {
-            const { type } = action.payload;
-            state.isWsOpen = type === "open" ? true : false;
+        wsClose_userOrders: (state) => {
+            state.isUserWsOpen = false;
+            state.wsUserStatus = 'close';
         },
-        wsUserConnect: (state, action) => {
-            const { type } = action.payload;
-            state.isWsUserOpen = type === "open" ? true : false;
+        wsConnecting_userOrders: (state) => {
+            state.wsUserStatus = 'connecting';
         },
     },
 });
 
 const { actions, reducer } = feedSlice;
-export const { wsMessage, wsUserMessage, wsConnect, wsClose, wsUserClose, wsUserConnect } = actions;
+export const {
+    wsMessage_orders,
+    wsConnect_orders,
+    wsClose_orders,
+    wsError_orders,
+    wsMessage_userOrders,
+    wsConnect_userOrders,
+    wsClose_userOrders,
+    wsError_userOrders,
+    wsConnecting_userOrders,
+    wsConnecting_orders
+} = actions;
+export { reducer as feedReducer };
 export default reducer;
