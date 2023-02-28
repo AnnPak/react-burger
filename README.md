@@ -6,7 +6,7 @@
 
 ## Запуск проекта локально
 
-git clone git@github.com:AnnPak/react-burger.git
+`git clone git@github.com:AnnPak/react-burger.git`
 
 `npm i`
 `npm run start` -> http://localhost:3000
